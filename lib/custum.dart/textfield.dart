@@ -69,3 +69,28 @@ autovalidateMode: autovalidateMode,
 
 
 
+class serchBar extends StatelessWidget {
+  const serchBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      
+      //  controller: controller,
+       decoration: InputDecoration(
+                hintText: 'Search....',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: const Icon(Icons.backspace_rounded),
+                border: OutlineInputBorder( 
+                  
+                  borderRadius: BorderRadius.circular(23),
+                  borderSide: BorderSide( color: Colors.grey) ,
+                  
+                ),
+                  filled: true,
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                fillColor: Color.fromARGB(255, 255, 255, 255),
+              )
+    );
+  }
+}

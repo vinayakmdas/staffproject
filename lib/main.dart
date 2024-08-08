@@ -5,6 +5,7 @@ import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model.dart/signupmodel.dart';
 import 'package:staff/service.dart/signup_Data_Managing.dart';
+import 'package:staff/splashscreens/splashscreen.dart';
 
 void main()async {
 Hive.initFlutter();
@@ -17,19 +18,14 @@ SharedPreferences prefs = await SharedPreferences.getInstance();
 } 
 
 class MyApp extends StatelessWidget {
- final  bool isLoggedIn ;
-  const MyApp({super.key
-  
-  , this.isLoggedIn=false  
-  });
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
-  Widget build(BuildContext context) { 
-    return  MaterialApp(
-
-          home: isLoggedIn ? ButtonNavigationbar() : Loginpage(),
-          debugShowCheckedModeBanner: false,
-
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: SplashScreen(isLoggedIn: isLoggedIn),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

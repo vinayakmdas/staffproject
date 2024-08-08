@@ -1,20 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:staff/bottomnavoagator/buttomnavigator.dart';
+import 'package:staff/custum.dart/navigator.dart';
+import 'package:staff/login%20and%20%20sign%20up/login.dart';
+import 'package:staff/screen.dart/homescreen.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  final bool isLoggedIn;
+  const SplashScreen({super.key, required this.isLoggedIn});
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToNextScreen();
+  }
+
+  _navigateToNextScreen() async {
+    await Future.delayed(Duration(seconds: 3));
+    
+    if (widget.isLoggedIn) {
+    navigatepushreplacement(context, ButtonNavigationbar());
+    } else {
+            navigatepushreplacement(context,Loginpage());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
-      backgroundColor: Color.fromARGB(255, 3, 50, 61),
-      body:  
-       Center(child: Container(
-        height: 240,
-        width: 240,
-        child: Image(image: AssetImage("lib/assets/splashscreen-photoaidcom-cropped.png"))))
-      
-       , 
-         
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: Center(
+        child: Container(
+          
+          child: const Image(
+            image: AssetImage("lib/asset/gif/loading.gif.gif"),
+          ),
+        ),
+      ),
     );
   }
 }

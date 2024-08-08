@@ -65,120 +65,125 @@ class _LoginpageState extends State<Loginpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-      body: SingleChildScrollView(
-     
-        child: Form(
-          key: _formkey,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 300, left: 19, right: 50),
-            child: Column(
-              children: [
-                const Row(
-                  children: [
-                    Apptext(
-                      "LOG IN",
-                      fontSize: 24,
-                      fontweight: FontWeight.bold,
-                      Colors: Colors.white,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CostomTextField(
-                    controller: _usernamecontroller,
-                    prefixicon: Iconsax.user,
+      body: Center(
+        child: SingleChildScrollView(
+             
+          child: Form(
+            key: _formkey,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                 
+                  const Row(
+                    children: [
+                      Apptext(
+                        "LOG IN",
+                        fontSize: 24,
+                        fontweight: FontWeight.bold,
+                        Colors: Colors.white,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CostomTextField(
+                      controller: _usernamecontroller,
+                      prefixicon: Iconsax.user,
+                      filedcolor: const Color.fromARGB(37, 158, 158, 158),
+                      lebelname: ("Username :"),
+                      lebelcolor: Colors.white,
+                      bordercolor: Colors.white,
+                      textcontrollercolor: Colors.white,
+                         autovalidateMode: AutovalidateMode.onUserInteraction,
+              
+                       inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return " Please enter the username";
+                        } else {
+                          return null;
+                        }
+                      }
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CostomTextField(
+                    controller: _passwordcontroller,
+                    obscureText: _passwordobscure,
+                    prefixicon: Iconsax.lock,
                     filedcolor: const Color.fromARGB(37, 158, 158, 158),
-                    lebelname: ("username"),
+                    lebelname: ("Password :"),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     lebelcolor: Colors.white,
                     bordercolor: Colors.white,
                     textcontrollercolor: Colors.white,
-
-                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return " please enter the username";
-                      } else {
+                    validator: (value){
+                      if(value==null || value.isEmpty){
+                        return " Enter your password";
+                      }
+                      else{
                         return null;
                       }
-                    }
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CostomTextField(
-                  controller: _passwordcontroller,
-                  obscureText: _passwordobscure,
-                  prefixicon: Iconsax.lock,
-                  filedcolor: const Color.fromARGB(37, 158, 158, 158),
-                  lebelname: ("password  :"),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  lebelcolor: Colors.white,
-                  bordercolor: Colors.white,
-                  textcontrollercolor: Colors.white,
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return " enter your password";
-                    }
-                    else{
-                      return null;
-                    }
-                  },
-               suffixicon:   IconButton(
-                      icon: Icon(
-                        _passwordobscure ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordobscure = !_passwordobscure;
-                        });
-                      },
-                    ),
-            
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: 300,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8))),
-                      onPressed: () {
-                        if(_formkey.currentState!.validate()){
- checkLogin();
-
-                        }
-                       
-                      },
-                      child: const Apptext(
-                        "LOG IN",
-                        Colors: Color.fromRGBO(47, 22, 52, 1),
-                        fontweight: FontWeight.bold,
-                      )),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    const Apptext(
-                      "Don't have an account?",
-                      Colors: Colors.white,
-                    ),
-                    TextButton(
+                    },
+                 suffixicon:   IconButton(
+                        icon: Icon(
+                          _passwordobscure ? Icons.visibility_off : Icons.visibility,
+                          color: Colors.white,
+                        ),
                         onPressed: () {
-                          navigatepushreplacement(context, signup());
+                          setState(() {
+                            _passwordobscure = !_passwordobscure;
+                          });
                         },
-                        child: const Apptext('sign up'))
-                  ],
-                )
-              ],
+                      ),
+              
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: 300,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        onPressed: () {
+                          if(_formkey.currentState!.validate()){
+               checkLogin();
+              
+                          }
+                         
+                        },
+                        child: const Apptext(
+                          "LOG IN",
+                          Colors: Color.fromRGBO(47, 22, 52, 1),
+                          fontweight: FontWeight.bold,
+                        )),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: 70,),
+                      const Apptext(
+                        "Don't have an account?",
+                        Colors: Colors.white,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            navigatepushreplacement(context, signup());
+                          },
+                          child: const Apptext('Sign up'))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
