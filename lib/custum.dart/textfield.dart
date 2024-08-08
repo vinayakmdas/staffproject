@@ -11,7 +11,7 @@ class CostomTextField extends StatelessWidget {
   final IconData prefixicon;
   final Color bordercolor;
   final IconData?suffixicon;
-
+ final  validater;
   CostomTextField(
       {super.key,
       this.suffixicon,
@@ -21,6 +21,7 @@ class CostomTextField extends StatelessWidget {
       required this.lebelname,
       required this.lebelcolor,
       required this.bordercolor,
+       this. validater,
       required this.textcontrollercolor});
 
   @override
@@ -43,8 +44,11 @@ class CostomTextField extends StatelessWidget {
         border: OutlineInputBorder(
           borderSide: BorderSide(color: bordercolor),
           borderRadius: BorderRadius.circular(12),
+          
         ),
       ),
+      validator: validater,
+      // inputFormatters: [],
     );
   }
 }

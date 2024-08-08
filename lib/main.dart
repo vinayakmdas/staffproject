@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-
-
-
+import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model.dart/signupmodel.dart';
-
 import 'package:staff/service.dart/signup_Data_Managing.dart';
 
-void main() {
+void main()async {
 Hive.initFlutter();
 Hive.registerAdapter( SignUpModelAdapter());
 DataManaging().openBox;
-  runApp(const MyApp());
-}
+SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  runApp(MyApp(isLoggedIn: isLoggedIn));
+  // runApp(const MyApp());
+} 
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+ final  bool isLoggedIn ;
+  const MyApp({super.key
+  
+  , this.isLoggedIn=false  
+  });
 
   @override
   Widget build(BuildContext context) { 
     return  MaterialApp(
 
-          home: ButtonNavigationbar(),
+          home: isLoggedIn ? ButtonNavigationbar() : Loginpage(),
           debugShowCheckedModeBanner: false,
 
     );

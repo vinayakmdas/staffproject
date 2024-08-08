@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:staff/custum.dart/AppBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/custum.dart/navigator.dart';
-
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 
+
 class Settings extends StatelessWidget {
+
+   Future<void> _logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+   navigatpushremoveuntil(context, Loginpage());
+  }
   const Settings({super.key});
 
   @override
@@ -76,7 +82,8 @@ class Settings extends StatelessWidget {
                           Navigator.pop(context);
                         }, child: const Text('Cancel')),
                         ElevatedButton(onPressed: (){
-                         navigatpushremoveuntil(context, const Loginpage());
+                         _logout(context);
+                         
                         }, child: const Text('OK'))
                       ],
                     );

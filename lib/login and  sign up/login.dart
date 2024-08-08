@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/custum.dart/textcostom.dart';
 import 'package:staff/custum.dart/textfield.dart';
 import 'package:staff/login%20and%20%20sign%20up/signup.dart';
 import 'package:staff/model.dart/signupmodel.dart';
-import 'package:staff/screen.dart/homescreen.dart';
+
 import 'package:staff/service.dart/signup_Data_Managing.dart';
 
 class Loginpage extends StatefulWidget {
@@ -35,9 +36,17 @@ class _LoginpageState extends State<Loginpage> {
     }
 
     if (userFound) {
+      Future<void> saveLoginState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+  }
       navigatepushreplacement(context, ButtonNavigationbar());
+
+      saveLoginState();
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
+
         SnackBar(content: Text('Invalid username or password')),
       );
     }
