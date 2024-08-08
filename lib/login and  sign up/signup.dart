@@ -12,7 +12,6 @@ class signup extends StatefulWidget {
 
   @override
   State<signup> createState() => _signupState();
-
 }
 
 class _signupState extends State<signup> {
@@ -25,35 +24,33 @@ class _signupState extends State<signup> {
   final _passwordcontroller = TextEditingController();
 
   final _confirmpassword = TextEditingController();
-   final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
-bool passwordsecured =true;
-bool passwordunsecured=true;
+  bool passwordsecured = true;
+  bool passwordunsecured = true;
 
- Future registration()async{
-
-    final username=_signupusername.text;
-    final email= _emailcontroller.text;
-    final password= _passwordcontroller.text;
-    final confirm=_confirmpassword.text;
-
-    if(username.isNotEmpty &&email.isNotEmpty && password.isNotEmpty&& confirm.isNotEmpty){
-
-       SignUpModel signUpModel = SignUpModel(
-      username: username,
-       email: email, 
-       password: password, 
-       conformpassword: confirm
-
-       
-       
-       );
-         _dataManaging.adduser(signUpModel);
-       print("signup data saved");
-        navigatepushreplacement(context, Loginpage());
-    }
+  Future registration() async {
    
+    final username = _signupusername.text;
+    final email = _emailcontroller.text;
+    final password = _passwordcontroller.text;
+    final confirm = _confirmpassword.text;
+
+    if (username.isNotEmpty &&
+        email.isNotEmpty &&
+        password.isNotEmpty &&
+        confirm.isNotEmpty) {
+      SignUpModel signUpModel = SignUpModel(
+          username: username,
+          email: email,
+          password: password,
+          conformpassword: confirm);
+      _dataManaging.adduser(signUpModel);
+      print("signup data saved");
+      navigatepushreplacement(context, Loginpage());
+    }
   }
+
   @override
   void initState() {
     _dataManaging.openBox();
@@ -87,68 +84,84 @@ bool passwordunsecured=true;
                 ),
                 CostomTextField(
                     controller: _signupusername,
-                   
                     prefixicon: Iconsax.user,
                     filedcolor: Color.fromARGB(37, 158, 158, 158),
                     lebelname: 'username  :',
                     lebelcolor: Colors.white,
                     bordercolor: Colors.white,
-                    textcontrollercolor: Colors.white
-                    ,validater: (value){
-                      if(value==null|| value.isEmpty){
+                    textcontrollercolor: Colors.white,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return " please enter the username";
-                      }
-                      else{
+                      } else {
                         return null;
-                      }                   
+                      }
+                    }),
+                SizedBox(
+                  height: 20,
+                ),
+                CostomTextField(
+                  controller: _emailcontroller,
+                  prefixicon: Icons.mail,
+                  filedcolor: Color.fromARGB(37, 158, 158, 158),
+                  lebelname: 'E mail  :',
+                  lebelcolor: Colors.white,
+                  bordercolor: Colors.white,
+                  textcontrollercolor: Colors.white,
+                    validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an email';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+                 
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CostomTextField(
+                  controller: _passwordcontroller,
+                  prefixicon: Icons.lock,
+                  filedcolor: const Color.fromARGB(37, 158, 158, 158),
+                  lebelname: 'password :',
+                  suffixicon: Iconsax.eye,
+                  lebelcolor: Colors.white,
+                  bordercolor: Colors.white,
+                  textcontrollercolor: Colors.white,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your user name';
+                    } 
+                    if(value.length<6){
+                      return 'Password must be at least 6 characters long';
                     }
-                    
-                    
-                    ),
-                SizedBox(
-                  height: 20,
+                  },
                 ),
-                CostomTextField(
-                    controller: _emailcontroller,
-                    prefixicon: Icons.mail,
-                    filedcolor: Color.fromARGB(37, 158, 158, 158),
-                    lebelname: 'E mail  :',
-                    lebelcolor: Colors.white,
-                    bordercolor: Colors.white,
-                    textcontrollercolor: Colors.white),
-                SizedBox(
-                  height: 20,
-                ),
-                CostomTextField(
-                    controller: _passwordcontroller,
-                    prefixicon: Icons.lock,
-                    filedcolor: const Color.fromARGB(37, 158, 158, 158),
-                    lebelname: 'password :',
-                    suffixicon: Iconsax.eye,
-                    lebelcolor: Colors.white,
-                    bordercolor: Colors.white,
-                    textcontrollercolor: Colors.white),
                 const SizedBox(
                   height: 20,
                 ),
                 CostomTextField(
-                    controller: _confirmpassword,
-                    prefixicon: Icons.lock_reset,
-                    filedcolor: const Color.fromARGB(37, 158, 158, 158),
-                    lebelname: 'confirm password :',
-                    suffixicon: Iconsax.eye,
-                    lebelcolor: Colors.white,
-                    bordercolor: Colors.white,
-                    textcontrollercolor: Colors.white,
-                    validater: (value) {
-                     if (value == null || value.isEmpty) {
-                   return 'Please confirm your password';
+                  controller: _confirmpassword,
+                  prefixicon: Icons.lock_reset,
+                  filedcolor: const Color.fromARGB(37, 158, 158, 158),
+                  lebelname: 'confirm password :',
+                  suffixicon: Iconsax.eye,
+                  lebelcolor: Colors.white,
+                  bordercolor: Colors.white,
+                  textcontrollercolor: Colors.white,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
                     } else if (value != _passwordcontroller.text) {
-                    return 'Passwords do not match';
-                              }
-                              return null;
-                            },
-                    ),
+                      return 'Passwords do not match';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -159,7 +172,10 @@ bool passwordunsecured=true;
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8))),
                       onPressed: () {
-                       registration();
+                        if(_formkey.currentState!.validate()){
+                          registration();
+                        }
+                 
                       },
                       child: const Apptext(
                         "SIGN UP",
@@ -173,8 +189,11 @@ bool passwordunsecured=true;
                       "Aready you have an account?",
                       Colors: Colors.white,
                     ),
-                    TextButton(onPressed: () { navigatepushreplacement(context, Loginpage());
-                    }, child: const Apptext('Log in'))
+                    TextButton(
+                        onPressed: () {
+                          navigatepushreplacement(context, Loginpage());
+                        },
+                        child: const Apptext('Log in'))
                   ],
                 )
               ],
