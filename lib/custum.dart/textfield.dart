@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class CostomTextField extends StatelessWidget {
   final TextEditingController controller;
-
+  final AutovalidateMode ?autovalidateMode;
+ final bool obscureText ;
   final String lebelname;
   final Color filedcolor;
   final Color textcontrollercolor;
   final Color lebelcolor;
   final IconData prefixicon;
   final Color bordercolor;
-  final IconData?suffixicon;
+  final Widget ?suffixicon;
  final String? Function(String?)? validator;
+   final List<TextInputFormatter>? inputFormatters;
   CostomTextField(
       {super.key,
       this.suffixicon,
+
       required this.controller,
       required this.prefixicon,
       required this.filedcolor,
@@ -22,6 +26,9 @@ class CostomTextField extends StatelessWidget {
       required this.lebelcolor,
       required this.bordercolor,
           this. validator,
+          this.autovalidateMode,
+          this.inputFormatters,
+          this.obscureText = false,
       required this.textcontrollercolor});
 
   @override
@@ -30,13 +37,16 @@ class CostomTextField extends StatelessWidget {
       controller: controller,
       style: TextStyle(color: textcontrollercolor),
       decoration: InputDecoration(
-        suffixIcon: Icon(suffixicon),
+        suffixIcon:suffixicon,
         prefixIcon: Icon(
           prefixicon,
           color: Colors.white,
+          
         ),
+        
         fillColor: filedcolor,
         filled: true,
+      
         label: Text(
           lebelname,
           style: TextStyle(color: lebelcolor),
@@ -47,6 +57,9 @@ class CostomTextField extends StatelessWidget {
           
         ),
       ),
+           obscureText: obscureText,
+autovalidateMode: autovalidateMode,
+      inputFormatters:  inputFormatters,
       validator: validator,
       // inputFormatters: [],
     );

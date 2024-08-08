@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/custum.dart/textcostom.dart';
@@ -17,6 +18,9 @@ class signup extends StatefulWidget {
 class _signupState extends State<signup> {
   DataManaging _dataManaging = DataManaging();
 
+  bool _confirmobscure = true;
+  bool _passwordobscure = true;
+
   final _signupusername = TextEditingController();
 
   final _emailcontroller = TextEditingController();
@@ -30,7 +34,6 @@ class _signupState extends State<signup> {
   bool passwordunsecured = true;
 
   Future registration() async {
-   
     final username = _signupusername.text;
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
@@ -47,7 +50,7 @@ class _signupState extends State<signup> {
           conformpassword: confirm);
       _dataManaging.adduser(signUpModel);
       print("signup data saved");
-      navigatepushreplacement(context, Loginpage());
+      navigatepushreplacement(context, const Loginpage());
     }
   }
 
@@ -61,7 +64,7 @@ class _signupState extends State<signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(22, 38, 52, 1),
+      backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
       body: SingleChildScrollView(
         child: Form(
           key: _formkey,
@@ -85,11 +88,14 @@ class _signupState extends State<signup> {
                 CostomTextField(
                     controller: _signupusername,
                     prefixicon: Iconsax.user,
-                    filedcolor: Color.fromARGB(37, 158, 158, 158),
+                    filedcolor: const Color.fromARGB(37, 158, 158, 158),
                     lebelname: 'username  :',
                     lebelcolor: Colors.white,
                     bordercolor: Colors.white,
                     textcontrollercolor: Colors.white,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
+                    ],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return " please enter the username";
@@ -97,29 +103,28 @@ class _signupState extends State<signup> {
                         return null;
                       }
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 CostomTextField(
                   controller: _emailcontroller,
                   prefixicon: Icons.mail,
-                  filedcolor: Color.fromARGB(37, 158, 158, 158),
+                  filedcolor: const Color.fromARGB(37, 158, 158, 158),
                   lebelname: 'E mail  :',
                   lebelcolor: Colors.white,
                   bordercolor: Colors.white,
                   textcontrollercolor: Colors.white,
-                    validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-                 
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter an email';
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 CostomTextField(
@@ -127,17 +132,35 @@ class _signupState extends State<signup> {
                   prefixicon: Icons.lock,
                   filedcolor: const Color.fromARGB(37, 158, 158, 158),
                   lebelname: 'password :',
-                  suffixicon: Iconsax.eye,
                   lebelcolor: Colors.white,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   bordercolor: Colors.white,
+                  obscureText: _passwordobscure,
                   textcontrollercolor: Colors.white,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                  ],
+                  suffixicon: IconButton(
+                    icon: Icon(
+                      _passwordobscure
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordobscure = !_passwordobscure;
+                      });
+                    },
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your user name';
-                    } 
-                    if(value.length<6){
+                      return 'Please enter your Password';
+                    }
+                    if (value.length < 6) {
                       return 'Password must be at least 6 characters long';
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(
@@ -148,10 +171,24 @@ class _signupState extends State<signup> {
                   prefixicon: Icons.lock_reset,
                   filedcolor: const Color.fromARGB(37, 158, 158, 158),
                   lebelname: 'confirm password :',
-                  suffixicon: Iconsax.eye,
+                  suffixicon: IconButton(
+                    icon: Icon(
+                      _confirmobscure ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _confirmobscure = !_confirmobscure;
+                      });
+                    },
+                  ),
                   lebelcolor: Colors.white,
                   bordercolor: Colors.white,
                   textcontrollercolor: Colors.white,
+                  obscureText: _confirmobscure,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                  ],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please confirm your password';
@@ -172,10 +209,9 @@ class _signupState extends State<signup> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8))),
                       onPressed: () {
-                        if(_formkey.currentState!.validate()){
+                        if (_formkey.currentState!.validate()) {
                           registration();
                         }
-                 
                       },
                       child: const Apptext(
                         "SIGN UP",
@@ -191,7 +227,7 @@ class _signupState extends State<signup> {
                     ),
                     TextButton(
                         onPressed: () {
-                          navigatepushreplacement(context, Loginpage());
+                          navigatepushreplacement(context, const Loginpage());
                         },
                         child: const Apptext('Log in'))
                   ],

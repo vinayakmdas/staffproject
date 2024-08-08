@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/model.dart/signupmodel.dart';
 
 class DataManaging{
@@ -29,13 +28,6 @@ class DataManaging{
     return _box.getAt(index);
   }
 
-//   Future<void> saveLoginState() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   await prefs.setBool('isLoggedIn', true);
-// }
-// Future<void> logout() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   await prefs.setBool('isLoggedIn', false);
-// }
+
 
 }
