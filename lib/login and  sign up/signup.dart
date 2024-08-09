@@ -34,7 +34,7 @@ class _signupState extends State<signup> {
   bool passwordunsecured = true;
 
   Future registration() async {
-    final username = _signupusername.text;
+    final username = _signupusername.text.trim();
     final email = _emailcontroller.text;
     final password = _passwordcontroller.text;
     final confirm = _confirmpassword.text;
@@ -94,9 +94,9 @@ class _signupState extends State<signup> {
                       lebelcolor: Colors.white,
                       bordercolor: Colors.white,
                       textcontrollercolor: Colors.white,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(RegExp(r'\s'))
-                      ],
+                      // inputFormatters: [
+                      //   FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                      // ],
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

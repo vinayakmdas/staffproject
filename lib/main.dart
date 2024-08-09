@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-import 'package:staff/login%20and%20%20sign%20up/login.dart';
+
 import 'package:staff/model.dart/signupmodel.dart';
 import 'package:staff/service.dart/signup_Data_Managing.dart';
 import 'package:staff/splashscreens/splashscreen.dart';

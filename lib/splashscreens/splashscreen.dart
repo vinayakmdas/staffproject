@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
-import 'package:staff/screen.dart/homescreen.dart';
+import 'package:staff/screen.dart/work.dart';
 
 class SplashScreen extends StatefulWidget {
   final bool isLoggedIn;
@@ -21,11 +21,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToNextScreen() async {
     await Future.delayed(Duration(seconds: 3));
-    
+
     if (widget.isLoggedIn) {
-    navigatepushreplacement(context, ButtonNavigationbar());
+      navigatepushreplacement(
+          context,
+          ButtonNavigationbar(
+            currentPage: 0,
+          ));
     } else {
-            navigatepushreplacement(context,Loginpage());
+      navigatepushreplacement(context, Loginpage());
     }
   }
 
@@ -35,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
         child: Container(
-          
           child: const Image(
             image: AssetImage("lib/asset/gif/loading.gif.gif"),
           ),

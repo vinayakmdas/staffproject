@@ -15,7 +15,7 @@ class CostomTextField extends StatelessWidget {
   final Widget ?suffixicon;
  final String? Function(String?)? validator;
    final List<TextInputFormatter>? inputFormatters;
-  CostomTextField(
+ const CostomTextField(
       {super.key,
       this.suffixicon,
 
@@ -69,28 +69,40 @@ autovalidateMode: autovalidateMode,
 
 
 
-class serchBar extends StatelessWidget {
-  const serchBar({super.key});
+class CostomSerchBar extends StatelessWidget {
+final   TextEditingController? controller;
+    final Widget ?suffixicon; 
+ 
+  const CostomSerchBar({super.key 
+  ,this.controller
+, this.suffixicon
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      
-      //  controller: controller,
-       decoration: InputDecoration(
-                hintText: 'Search....',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: const Icon(Icons.backspace_rounded),
-                border: OutlineInputBorder( 
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20,right: 20,top: 23),
+        child: TextFormField(
+          
+           controller: controller,
+           decoration: InputDecoration(
+                    hintText: 'Search....',
                   
-                  borderRadius: BorderRadius.circular(23),
-                  borderSide: BorderSide( color: Colors.grey) ,
-                  
-                ),
-                  filled: true,
-                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                fillColor: Color.fromARGB(255, 255, 255, 255),
-              )
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: suffixicon,
+                    border: OutlineInputBorder( 
+                      
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide( color: const Color.fromARGB(255, 28, 21, 21)) ,
+                      
+                    ),
+                      filled: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    fillColor: Color.fromARGB(255, 255, 255, 255),
+                  )
+        ),
+      ),
     );
   }
 }

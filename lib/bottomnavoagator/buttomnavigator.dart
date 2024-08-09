@@ -7,8 +7,8 @@ import 'package:staff/screen.dart/work.dart';
 
 class ButtonNavigationbar extends StatefulWidget {
 
-
-   ButtonNavigationbar({super.key});
+int currentPage;
+   ButtonNavigationbar({super.key,this.currentPage=0});
 
   @override
   State<ButtonNavigationbar> createState() => _NavigationbarState();
@@ -17,13 +17,22 @@ class ButtonNavigationbar extends StatefulWidget {
 class _NavigationbarState extends State<ButtonNavigationbar> {
    final List<Widget> _screens = [
     const HomeScreen(),
-    const StaffScreen(),
+       StaffScreen(),
     const WorkScreen(),
     const  Settings(),
   ];
 
- int _currentIndex = 0;
 
+
+ int _currentIndex = 0;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _currentIndex=widget.currentPage;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

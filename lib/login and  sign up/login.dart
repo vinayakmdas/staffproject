@@ -98,9 +98,9 @@ class _LoginpageState extends State<Loginpage> {
                       textcontrollercolor: Colors.white,
                          autovalidateMode: AutovalidateMode.onUserInteraction,
               
-                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
-                      ],
+                      //  inputFormatters: [
+                      //   FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
+                      // ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return " Please enter the username";
