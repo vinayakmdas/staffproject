@@ -177,7 +177,7 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                       TextButton(
                           onPressed: () {
-                            navigatepushreplacement(context, signup());
+                            navigatepushreplacement(context, Signup());
                           },
                           child: const Apptext('Sign up'))
                     ],

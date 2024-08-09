@@ -7,8 +7,8 @@ import 'package:staff/screen.dart/work.dart';
 
 class ButtonNavigationbar extends StatefulWidget {
 
-int currentPage;
-   ButtonNavigationbar({super.key,this.currentPage=0});
+  final int currentPage;
+   const ButtonNavigationbar({super.key,this.currentPage=0});
 
   @override
   State<ButtonNavigationbar> createState() => _NavigationbarState();

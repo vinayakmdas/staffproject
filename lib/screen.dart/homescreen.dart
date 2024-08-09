@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(87),
           child: CustomAppBar(
             title: const Text(
-              " Homescreen",
+              " HOMESCREEN",
               style: TextStyle(color: Colors.white, fontSize: 23),
             ),
             trailing: IconButton(
