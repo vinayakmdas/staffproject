@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/service.dart/add_domain_servicepage.dart';
 
@@ -57,16 +58,29 @@ class _DomainState extends State<Domain> {
           ),
         ),
       ),
-      body: ListView.separated(
+      body:
+    
+      
+       ListView.builder(
         itemCount: _list.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (context, index) {
           final domain = _list[index];
           return ListTile(
             title: Text(domain.domain),
+              trailing: IconButton(onPressed: ()async{
+                   _domainBox.delete(index);
+                   setState(() { });
+                   _list.removeAt(index);
+
+              }, icon: Icon(Icons.delete,color: Colors.red,)
+              
+              ),
+            
           );
         },
       ),
+  
+      
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showdiolog();
