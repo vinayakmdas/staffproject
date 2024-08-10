@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/signupmodel.dart';
+
+
+import 'package:staff/service.dart/add_domain_servicepage.dart';
 import 'package:staff/service.dart/signup_Data_Managing.dart';
+
 import 'package:staff/splashscreens/splashscreen.dart';
 
 void main()async {
 Hive.initFlutter();
 Hive.registerAdapter( SignUpModelAdapter());
 DataManaging().openBox;
+Hive.registerAdapter(DomainmodelAdapter());
+   DomainBox().openBox();
+
 SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   runApp(MyApp(isLoggedIn: isLoggedIn));
-  // runApp(const MyApp());
+ 
 } 
 
 class MyApp extends StatelessWidget {

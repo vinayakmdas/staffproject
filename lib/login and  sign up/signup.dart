@@ -6,7 +6,9 @@ import 'package:staff/custum.dart/textcostom.dart';
 import 'package:staff/custum.dart/textfield.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model.dart/signupmodel.dart';
+
 import 'package:staff/service.dart/signup_Data_Managing.dart';
+
 
 class Signup extends StatefulWidget {
   Signup({super.key});
@@ -42,7 +44,7 @@ class _SignupState extends State<Signup> {
     if (username.isNotEmpty &&
         email.isNotEmpty &&
         password.isNotEmpty &&
-        confirm.isNotEmpty) {
+        confirm.isNotEmpty) { 
       SignUpModel signUpModel = SignUpModel(
           username: username,
           email: email,

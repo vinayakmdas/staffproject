@@ -1,6 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:staff/model.dart/signupmodel.dart';
 
+
+
 class DataManaging{
 
   late  Box<SignUpModel> _box;

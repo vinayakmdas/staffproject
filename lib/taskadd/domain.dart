@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:staff/model.dart/domainmodel.dart';
+import 'package:staff/service.dart/add_domain_servicepage.dart';
 
 class Domain extends StatefulWidget {
   const Domain({super.key});
@@ -8,73 +9,136 @@ class Domain extends StatefulWidget {
   @override
   State<Domain> createState() => _DomainState();
 }
- final  domaintext=TextEditingController();
+
+final domaintext = TextEditingController();
+
 class _DomainState extends State<Domain> {
+  DomainBox _domainBox = DomainBox();
+  List<Domainmodel> _list = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await _domainBox.openBox();
+    await _loaddomains();
+  }
+
+  Future<void> _loaddomains() async {
+    _list = await _domainBox.getDomain();
+    setState(() {}); // Ensure the UI updates after loading data
+  }
+
+  Future<void> submit() async {
+    final name = domaintext.text.trim();
+
+    if (name.isNotEmpty) {
+      Domainmodel domainmodel = Domainmodel(domain: name);
+      await _domainBox.adddomain(domainmodel);
+      domaintext.clear(); // Clear the text field after submission
+      await _loaddomains(); // Reload the list to reflect the new data
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-
+    return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
         title: Padding(
           padding: const EdgeInsets.only(left: 72),
-          child: Text("DOMAIN", style: GoogleFonts. getFont('Lato'),),
+          child: Text(
+            "DOMAIN",
+            style: GoogleFonts.getFont('Lato'),
+          ),
         ),
-      ), 
-
-      floatingActionButton: FloatingActionButton(onPressed: 
-      (){
-           showdiolog();
-      } ,backgroundColor: const Color.fromRGBO(22, 38, 52, 1), child:  const Icon(Icons.add,color: Colors.white,),),
-    );
-  }
-
-  Future  showdiolog()async{
-    await showDialog(context: context , builder: (context){
-
-    
-    return 
-           AlertDialog(
-       backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-      content:  Container(
-        height: 212,
-        
-        
-        child:  Column(
-          children: [
-
-             const Row(
-              children: [
-                Text("Enter Domain name",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),)
-              ],
-             ),
-             const SizedBox(height: 23,)
-               , TextField(
-                    controller: domaintext,
-                    style: const TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),
-                    decoration: InputDecoration( 
-                      fillColor: Colors.grey,
-                       filled: true
-                      , border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12), 
-                      )
-                    ),
-                )
-                ,SizedBox(height: 35,)
-               ,  Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    
-                             ElevatedButton(onPressed: (){}, child: Text("Submit",style: TextStyle(color:const Color.fromRGBO(22, 38, 52, 1) ) ,))
-                  ],
-                )
-          ],
+      ),
+      body: ListView.separated(
+        itemCount: _list.length,
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemBuilder: (context, index) {
+          final domain = _list[index];
+          return ListTile(
+            title: Text(domain.domain),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showdiolog();
+        },
+        backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
-    }
+  }
+
+  Future<void> showdiolog() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+          content: Container(
+            height: 212,
+            child: Column(
+              children: [
+                const Row(
+                  children: [
+                    Text(
+                      "Enter Domain name",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 23),
+                TextField(
+                  controller: domaintext,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  decoration: InputDecoration(
+                    fillColor: Colors.grey,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 35),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await submit();
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: const Text(
+                        "Submit",
+                        style: TextStyle(color: Color.fromRGBO(22, 38, 52, 1)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
-  
   }
 }
