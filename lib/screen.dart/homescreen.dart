@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
             
             containerhomescreen(icons: Iconsax.tick_square, heading: 'Complete Work ',color:  Colors.green,),
             containerhomescreen(icons: Iconsax.close_square, heading: 'Pending work ',color:  Colors.red,),
-             containerhomescreen(icons: Iconsax.people, heading: 'Complete Work ',color:  Colors.black,)
+             containerhomescreen(icons: Iconsax.people, heading: ' Total /// ',color:  Colors.black,)
           ],
         ),
         

@@ -26,7 +26,7 @@ class StaffScreen extends StatelessWidget {
           color: Colors.white,
         ),
         onPressed: () {
-          navigatepush(context, const StaffAdd());
+          navigatepush(context,  StaffAdd());
         },
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
       ),

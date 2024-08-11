@@ -39,8 +39,8 @@ class _DomainState extends State<Domain> {
     if (name.isNotEmpty) {
       Domainmodel domainmodel = Domainmodel(domain: name);
       await _domainBox.adddomain(domainmodel);
-      domaintext.clear(); // Clear the text field after submission
-      await _loaddomains(); // Reload the list to reflect the new data
+      domaintext.clear(); 
+      await _loaddomains(); 
     }
   }
 
