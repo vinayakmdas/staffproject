@@ -10,18 +10,26 @@ import 'package:staff/service.dart/signup_Data_Managing.dart';
 
 import 'package:staff/splashscreens/splashscreen.dart';
 
-void main()async {
-Hive.initFlutter();
-Hive.registerAdapter( SignUpModelAdapter());
-DataManaging().openBox;
-Hive.registerAdapter(DomainmodelAdapter());
-   DomainBox().openBox();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-SharedPreferences prefs = await SharedPreferences.getInstance();
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Register Hive Adapters
+  Hive.registerAdapter(SignUpModelAdapter());
+  Hive.registerAdapter(DomainmodelAdapter());
+
+  // Open Hive Boxes
+  await DataManaging().openBox();
+  await DomainBox().openBox();
+
+  // Initialize SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
   runApp(MyApp(isLoggedIn: isLoggedIn));
- 
-} 
+}
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;

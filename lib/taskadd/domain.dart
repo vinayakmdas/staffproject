@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/service.dart/add_domain_servicepage.dart';
 
@@ -30,7 +29,7 @@ class _DomainState extends State<Domain> {
 
   Future<void> _loaddomains() async {
     _list = await _domainBox.getDomain();
-    setState(() {}); // Ensure the UI updates after loading data
+    setState(() {}); 
   }
 
   Future<void> submit() async {
