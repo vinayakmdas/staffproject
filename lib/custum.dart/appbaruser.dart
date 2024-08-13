@@ -36,40 +36,38 @@ PreferredSize userappbar(BuildContext context) {
 }
 
 
-
-
-class UserTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String labelName;
-
-  const UserTextField({
-    super.key,
-    required this.controller,
-    required this.labelName,
+class usertextfield extends StatelessWidget {
+   final  TextEditingController  controller;
+    final String lebelname;
+  const usertextfield({super.key
+   ,required this.controller
+   
+   , required this.lebelname
+   
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        label: Text(
-          labelName,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 22, 42, 77),
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            width: 2,
-            color: Color.fromARGB(255, 32, 58, 81),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
+          controller: controller,
+         decoration: InputDecoration(
+                        label:  Text(
+                       lebelname,
+                        style: const TextStyle(
+                          
+                        color: Color.fromARGB(255, 22, 42, 77)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                         borderSide: const BorderSide(
+                         width: 2,
+                        color: Color.fromARGB(255, 32, 58, 81),)),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+
+
+
     );
   }
 }
