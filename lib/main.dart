@@ -3,30 +3,38 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/signupmodel.dart';
+import 'package:staff/model.dart/staffmodel.dart';
 
 
 import 'package:staff/service.dart/add_domain_servicepage.dart';
 import 'package:staff/service.dart/signup_Data_Managing.dart';
+import 'package:staff/service.dart/staff_Data_managing.dart';
 
 import 'package:staff/splashscreens/splashscreen.dart';
 
+bool isLoggedIn = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Hive
+  
   await Hive.initFlutter();
 
-  // Register Hive Adapters
   Hive.registerAdapter(SignUpModelAdapter());
   Hive.registerAdapter(DomainmodelAdapter());
+  Hive.registerAdapter(StaffModelAdapter());
 
-  // Open Hive Boxes
-  await DataManaging().openBox();
-  await DomainBox().openBox();
+  try {
+    await DataManaging().openBox();
+    await DomainBox().openBox();
+    await StaffDatas().openbox();
+    print('All boxes opened successfully');
+  } catch (e) {
+    print('Error opening boxes: $e');
+  }
 
-  // Initialize SharedPreferences
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  isLoggedIn = prefs.getBool('isLoggedIn') ?? false; 
+  print('isLoggedIn: $isLoggedIn');
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }

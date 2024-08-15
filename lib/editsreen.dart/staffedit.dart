@@ -7,37 +7,75 @@ import 'package:image_picker/image_picker.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum.dart/appbaruser.dart';
 import 'package:staff/custum.dart/navigator.dart';
+
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/staffmodel.dart';
 import 'package:staff/screen.dart/staffscreen.dart';
+
 import 'package:staff/service.dart/add_domain_servicepage.dart';
 import 'package:staff/service.dart/staff_Data_managing.dart';
 
-class StaffAdd extends StatefulWidget {
-  StaffAdd({super.key});
+class EditStaff extends StatefulWidget {
+  final StaffModel staff;
+  final int index;
+
+  EditStaff({super.key, required this.staff,required this .index});
 
   @override
-  State<StaffAdd> createState() => _StaffAddState();
+  State<EditStaff> createState() => _EditStaff();
 }
 
-class _StaffAddState extends State<StaffAdd> {
-    final usernameController = TextEditingController();
-    final userPhoneNumber = TextEditingController();
-    final userEmail = TextEditingController();
+class _EditStaff extends State<EditStaff> {
+  final usernameController = TextEditingController();
+  final userPhoneNumber = TextEditingController();
+  final userEmail = TextEditingController();
 
-    String? image;
-    List<Domainmodel> _domainList = [];
-    String? _selectedDomain;
-    List<String> _genter = ["Male", "Female", "Other"];
-    String? _selectgenter;
-    File? _selectimage;
+  String? image;
+  List<Domainmodel> _domainList = [];
+  String? _selectedDomain;
+  List<String> _genter = ["Male", "Female", "Other"];
+  String? _selectgenter;
+  File? _selectimage;
 
   StaffDatas _staffDatas = StaffDatas();
+
+
+
+  savestaff(){
+   final proofImagePath = _selectimage?.path;
+    final name = usernameController.text.trim();
+    final number = userPhoneNumber.text;
+    final email = userEmail.text;
+
+
+    if(proofImagePath!=null&& name.isNotEmpty
+         &&number.isNotEmpty&&email.isNotEmpty
+         &&_selectedDomain!=null&&_genter.isNotEmpty
+         &&image!=null){
+
+           StaffModel staffModel = StaffModel(
+        username: name,
+        phonenumber: number,
+        email: email,
+        domain: _selectedDomain!,
+        gender: _selectgenter!,
+        image: image,
+        proofimage: _selectimage?.path,
+      );
+          _staffDatas.updatevalue(  widget.index, staffModel);
+           Navigator.of(context).popUntil((route) => route.isFirst);
+    navigatepushreplacement(context, ButtonNavigationbar(currentPage: 1,));
+
+          
+         }
+         
+  }
 
   @override
   void initState() {
     super.initState();
     firstloading();
+    connectdatas();
   }
 
   Future<void> firstloading() async {
@@ -50,45 +88,27 @@ class _StaffAddState extends State<StaffAdd> {
     await domainBox.openBox();
     _domainList = await domainBox.getDomain();
     if (_domainList.isNotEmpty) {
-      _selectedDomain = _domainList.first.domain; // Set default selected value
+      _selectedDomain = _domainList.first.domain;
     }
     setState(() {});
   }
 
-  void savestaff() {
-    final proofImagePath = _selectimage?.path;
-    final name = usernameController.text.trim();
-    final number = userPhoneNumber.text;
-    final email = userEmail.text;
-
-    if (name.isNotEmpty &&
-        number.isNotEmpty &&
-        email.isNotEmpty &&
-        _selectgenter != null &&
-        _selectedDomain != null &&
-        proofImagePath != null) {
-
-      StaffModel staffModel = StaffModel(
-        username: name,
-        phonenumber: number,
-        email: email,
-        domain: _selectedDomain!,
-        gender: _selectgenter!,
-        image: image,
-        proofimage: _selectimage?.path,
-      );
-
-      _staffDatas.adddetails(staffModel);
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    navigatepushreplacement(context, ButtonNavigationbar(currentPage: 1,));
-    }
+  void connectdatas() {
+    usernameController.text = widget.staff.username;
+    userPhoneNumber.text = widget.staff.phonenumber;
+    userEmail.text = widget.staff.email;
+    image = widget.staff.image;
+    _selectgenter = widget.staff.gender;
+    _selectedDomain = widget.staff.domain;
+    _selectimage = widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
-      appBar: userappbar(context,"ADD STAFF"),
+      appBar: userappbar(context, "EDIT STAFF"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(23),
         child: Container(
@@ -294,8 +314,6 @@ class _StaffAddState extends State<StaffAdd> {
       setState(() {
         image = savedFile.path;
       });
-    } else {
-      print("User canceled the file picker");
     }
   }
 
@@ -313,10 +331,10 @@ class _StaffAddState extends State<StaffAdd> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       PlatformFile file = result.files.first;
-      File selectedFile = File(file.path!);
-      Directory directory = await getApplicationDocumentsDirectory();
-      String newPath = '${directory.path}/${file.name}';
-      File savedFile = await selectedFile.copy(newPath);
+      File selectedfile = File(file.path!);
+      Directory direc = await getApplicationDocumentsDirectory();
+      String newPath = '${direc.path}/${file.name}';
+      File savedFile = await selectedfile.copy(newPath);
       setState(() {
         _selectimage = savedFile;
       });

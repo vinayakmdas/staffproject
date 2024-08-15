@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 
-PreferredSize userappbar(BuildContext context) {
+PreferredSize userappbar(BuildContext context,names) {
   return PreferredSize(
     preferredSize: Size.fromHeight(150.0), // Adjusted to a fixed height
     child: Stack(
       children: <Widget>[
-        // Background container with curved bottom
+     
         Container(
           width: MediaQuery.of(context).size.width,
           height: 430.0, 
@@ -18,9 +18,9 @@ PreferredSize userappbar(BuildContext context) {
               bottomRight: Radius.circular(66.0),
             ),
           ),
-          child: const Center(
+          child:  Center(
             child: Text(
-              "ADD STAFF",
+              names,
               style: TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.w600,
