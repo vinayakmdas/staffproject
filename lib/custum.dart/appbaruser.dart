@@ -12,7 +12,7 @@ PreferredSize userappbar(BuildContext context,names) {
           width: MediaQuery.of(context).size.width,
           height: 430.0, 
           decoration: const BoxDecoration(
-            color: Color.fromRGBO(25, 61, 93, 0.525),
+            color: Colors.white,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(66.0), // Adjust the radius as needed
               bottomRight: Radius.circular(66.0),
@@ -24,12 +24,12 @@ PreferredSize userappbar(BuildContext context,names) {
               style: TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
+                color:  const Color.fromRGBO(22, 38, 52, 1),
           ),
+              ),
+            ), 
         ),
-        // Optional: Add more elements like search bar, buttons, etc. in the stack if needed
+   
       ],
     ),
   );

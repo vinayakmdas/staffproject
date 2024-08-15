@@ -28,8 +28,13 @@ class StaffDatas{
 
   Future<void>updatevalue( int index,StaffModel update)async{
     print("before  open update box");
-     _box.put( index, update);
+     _box.putAt( index, update);
      print("complet update");
+  }
+
+  Future<void>delete(int index)async{
+
+  _box.deleteAt(index);
   }
 
 }

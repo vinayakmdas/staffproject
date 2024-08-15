@@ -107,7 +107,7 @@ class _EditStaff extends State<EditStaff> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+       backgroundColor:  const Color.fromRGBO(22, 38, 52, 1),
       appBar: userappbar(context, "EDIT STAFF"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(23),

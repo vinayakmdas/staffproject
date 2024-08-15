@@ -93,8 +93,8 @@ class _StaffScreenState extends State<StaffScreen> {
                             ),
                             const SizedBox(width: 8,)
                             ,IconButton(onPressed: (){
-                                     
-                            }, icon: Icon(Icons.delete,color:Colors.redAccent ,))
+                              showalert(context ,index);
+                    }, icon: Icon(Icons.delete,color:Colors.redAccent ,))
                           ],
                         ),
                       ),
@@ -126,5 +126,31 @@ class _StaffScreenState extends State<StaffScreen> {
     setState(() {
       _list = staffList;
     });
+  }
+
+  showalert( context,index){
+    showDialog(context: context, builder:(context)=>  AlertDialog(
+      backgroundColor:   const Color.fromRGBO(22, 38, 52, 1), 
+      title: const Text("Delete Staff",style: TextStyle(color: Colors.white),),
+      content: const Text("Are you sure you want to delete this\n staff ?",style: TextStyle(color: Colors.white),),
+      actions: [
+                   ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+            },
+            child: const Text("Cancel"),
+                   )
+                   ,      ElevatedButton(
+            onPressed: () {
+             
+                    _staffDatas.delete(index);
+                                     
+                                     loadStaff();
+                                   Navigator.of(context).pop(); 
+            },
+            child: const Text("Delete"),
+                   )
+      ],
+    ));
   }
 }

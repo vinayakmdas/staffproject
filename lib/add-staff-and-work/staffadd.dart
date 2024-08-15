@@ -84,10 +84,15 @@ class _StaffAddState extends State<StaffAdd> {
     }
   }
 
+
+
+
+   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+    backgroundColor:  const Color.fromRGBO(22, 38, 52, 1),
       appBar: userappbar(context,"ADD STAFF"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(23),
