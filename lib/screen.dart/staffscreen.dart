@@ -23,12 +23,21 @@ class _StaffScreenState extends State<StaffScreen> {
 
   StaffDatas _staffDatas = StaffDatas();
   List<StaffModel> _list = [];
+  List<StaffModel>_filterstaffdetails=[];
   
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadStaff();
+    searchcontroller.addListener(_onsearchchanged);
+  }
+ @override
+  void dispose() {
+    // TODO: implement dispose
+    searchcontroller.removeListener(_onsearchchanged);
+    searchcontroller.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,9 +58,10 @@ class _StaffScreenState extends State<StaffScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _list.length,
+              itemCount: _filterstaffdetails.length,
               itemBuilder: (context, index) {
-                final staff = _list[index];
+                final staff = _filterstaffdetails[index];
+               
                
                 Widget leadingWidget = const CircleAvatar(
                   child: Icon(Icons.person),
@@ -61,7 +71,7 @@ class _StaffScreenState extends State<StaffScreen> {
                   leadingWidget = CircleAvatar(
                     radius: 40,
                     backgroundImage: FileImage(
-                        File(staff.image!)), // Display image if exists
+                        File(staff.image!)),
                   );
                 }
 
@@ -125,6 +135,7 @@ class _StaffScreenState extends State<StaffScreen> {
     List<StaffModel> staffList = await _staffDatas.getstaffdetails();
     setState(() {
       _list = staffList;
+      _filterstaffdetails=List.from(_list);
     });
   }
 
@@ -152,5 +163,18 @@ class _StaffScreenState extends State<StaffScreen> {
                    )
       ],
     ));
+  }
+  _onsearchchanged(){
+    String quary=searchcontroller.text.toLowerCase();
+    setState(() {
+      if(quary.isEmpty){
+        _filterstaffdetails=List.from(_list);
+      } 
+      else{
+       _filterstaffdetails= _list.where((staff){
+        return  staff.username.toLowerCase().contains(quary);
+       }).toList();
+      }
+    });
   }
 }
