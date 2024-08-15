@@ -9,7 +9,6 @@ import 'package:staff/custum.dart/appbaruser.dart';
 import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/staffmodel.dart';
-import 'package:staff/screen.dart/staffscreen.dart';
 import 'package:staff/service.dart/add_domain_servicepage.dart';
 import 'package:staff/service.dart/staff_Data_managing.dart';
 
@@ -25,12 +24,12 @@ class _StaffAddState extends State<StaffAdd> {
     final userPhoneNumber = TextEditingController();
     final userEmail = TextEditingController();
 
-    String? image;
+    ValueNotifier <String?>image=ValueNotifier<String?>(null);
     List<Domainmodel> _domainList = [];
-    String? _selectedDomain;
+    ValueNotifier<String?>_selectedDomain = ValueNotifier<String?>(null);
     List<String> _genter = ["Male", "Female", "Other"];
-    String? _selectgenter;
-    File? _selectimage;
+    ValueNotifier<String?>_selectgenter=ValueNotifier<String?>(null);
+    ValueNotifier<File?>_selectimage=ValueNotifier<File?>(null);
 
   StaffDatas _staffDatas = StaffDatas();
 
@@ -50,13 +49,13 @@ class _StaffAddState extends State<StaffAdd> {
     await domainBox.openBox();
     _domainList = await domainBox.getDomain();
     if (_domainList.isNotEmpty) {
-      _selectedDomain = _domainList.first.domain; // Set default selected value
+      _selectedDomain.value  = _domainList.first.domain; 
     }
     setState(() {});
   }
 
   void savestaff() {
-    final proofImagePath = _selectimage?.path;
+    final proofImagePath = _selectimage.value?.path;
     final name = usernameController.text.trim();
     final number = userPhoneNumber.text;
     final email = userEmail.text;
@@ -64,18 +63,18 @@ class _StaffAddState extends State<StaffAdd> {
     if (name.isNotEmpty &&
         number.isNotEmpty &&
         email.isNotEmpty &&
-        _selectgenter != null &&
-        _selectedDomain != null &&
+        _selectgenter.value!= null &&
+        _selectedDomain.value!= null &&
         proofImagePath != null) {
 
       StaffModel staffModel = StaffModel(
         username: name,
         phonenumber: number,
         email: email,
-        domain: _selectedDomain!,
-        gender: _selectgenter!,
-        image: image,
-        proofimage: _selectimage?.path,
+        domain: _selectedDomain.value!,
+        gender: _selectgenter.value!,
+        image: image.value!,
+        proofimage: _selectimage.value?.path,
       );
 
       _staffDatas.adddetails(staffModel);
@@ -107,7 +106,7 @@ class _StaffAddState extends State<StaffAdd> {
               children: [
                 Stack(
                   children: [
-                    image == null
+                    image.value == null
                         ? CircleAvatar(
                             radius: 80,
                             child: IconButton(
@@ -121,7 +120,7 @@ class _StaffAddState extends State<StaffAdd> {
                         : CircleAvatar(
                             radius: 80,
                             backgroundColor: Colors.white,
-                            backgroundImage: FileImage(File(image!)),
+                           backgroundImage: FileImage(File(image.value!)),
                           ),
                     Positioned(
                       child: IconButton(
@@ -166,27 +165,29 @@ class _StaffAddState extends State<StaffAdd> {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Padding(
+                  child:  Padding(
                     padding: const EdgeInsets.only(left: 12),
-                    child: DropdownButton<String>(
-                      iconEnabledColor: Colors.black,
-                      hint: const Text(
-                        "Select Domain",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      value: _selectedDomain,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedDomain = newValue;
-                        });
-                      },
-                      items: _domainList
-                          .map<DropdownMenuItem<String>>((Domainmodel domain) {
-                        return DropdownMenuItem<String>(
-                          value: domain.domain,
-                          child: Text(domain.domain),
+                    child: ValueListenableBuilder<String?>(
+                      valueListenable: _selectedDomain,
+                      builder: (context, value, _) {
+                        return DropdownButton<String>(
+                          iconEnabledColor: Colors.black,
+                          hint: const Text(
+                            "Select Domain",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: value, 
+                          onChanged: (String? newValue) {
+                            _selectedDomain.value = newValue; 
+                          },
+                          items: _domainList.map<DropdownMenuItem<String>>((Domainmodel domain) {
+                            return DropdownMenuItem<String>(
+                              value: domain.domain,
+                              child: Text(domain.domain),
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
+                      },
                     ),
                   ),
                 ),
@@ -196,7 +197,7 @@ class _StaffAddState extends State<StaffAdd> {
                   children: [
                     Container(
                       height: 50,
-                      width: 123,
+                      width: 143,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
@@ -206,24 +207,29 @@ class _StaffAddState extends State<StaffAdd> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButton<String>(
-                          hint: const Text("Gender"),
-                          iconEnabledColor: Colors.black,
-                          value: _selectgenter,
-                          items: _genter.map((String gender) {
-                            return DropdownMenuItem<String>(
-                              value: gender,
-                              child: Text(gender),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectgenter = newValue;
-                            });
-                          },
-                        ),
-                      ),
+  padding: const EdgeInsets.only(left : 12),
+  child: ValueListenableBuilder<String?>(
+    valueListenable: _selectgenter, 
+    builder: (context, value, _) {
+      return DropdownButton<String>(
+        hint: const Text(
+          "Select Gender",
+          style: TextStyle(color: Colors.black),
+        ),
+        value: value, // Use the current value of the notifier
+        items: _genter.map((String gender) {
+          return DropdownMenuItem<String>(
+            value: gender,
+            child: Text(gender),
+          );
+        }).toList(),
+        onChanged: (String? newValue) {
+          _selectgenter.value = newValue; // Update ValueNotifier
+        },
+      );
+    },
+  ),
+),
                     ),
                   ],
                 ),
@@ -249,12 +255,12 @@ class _StaffAddState extends State<StaffAdd> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: _selectimage == null
+                    child: _selectimage.value == null
                         ? const Center(child: Text('No Image Selected'))
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.file(
-                              _selectimage!,
+                              _selectimage.value!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -296,9 +302,7 @@ class _StaffAddState extends State<StaffAdd> {
       Directory direc = await getApplicationDocumentsDirectory();
       String newPath = '${direc.path}/${file.name}';
       File savedFile = await selectedFile.copy(newPath);
-      setState(() {
-        image = savedFile.path;
-      });
+         image.value=savedFile.path;
     } else {
       print("User canceled the file picker");
     }
@@ -308,9 +312,7 @@ class _StaffAddState extends State<StaffAdd> {
     final cameraimage = ImagePicker();
     final camera = await cameraimage.pickImage(source: ImageSource.camera);
     if (camera != null) {
-      setState(() {
-        image = camera.path;
-      });
+ image.value=camera.path;
     }
   }
 
@@ -322,9 +324,7 @@ class _StaffAddState extends State<StaffAdd> {
       Directory directory = await getApplicationDocumentsDirectory();
       String newPath = '${directory.path}/${file.name}';
       File savedFile = await selectedFile.copy(newPath);
-      setState(() {
-        _selectimage = savedFile;
-      });
+     _selectimage.value=savedFile;
     }
   }
 }
