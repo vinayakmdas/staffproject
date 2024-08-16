@@ -59,7 +59,7 @@ class _DomainState extends State<Domain> {
         ),
       ),
       body:
-    
+    _list.isEmpty?Center(child: Text("No Domains Are Added")):
       
        ListView.builder(
         itemCount: _list.length,
@@ -139,7 +139,7 @@ class _DomainState extends State<Domain> {
                     ElevatedButton(
                       onPressed: () async {
                         await submit();
-                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pop() ; 
                       },
                       child: const Text(
                         "Submit",

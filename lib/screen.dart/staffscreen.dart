@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,6 +7,7 @@ import 'package:staff/add-staff-and-work/staffadd.dart';
 
 import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/custum.dart/textfield.dart';
+import 'package:staff/editsreen.dart/staff_view_.dart';
 import 'package:staff/editsreen.dart/staffedit.dart';
 import 'package:staff/model.dart/staffmodel.dart';
 import 'package:staff/service.dart/staff_Data_managing.dart';
@@ -50,7 +51,10 @@ class _StaffScreenState extends State<StaffScreen> {
         title: Text("STAFF SCREEN"),
         centerTitle: true,
       ),
-      body: Column(
+      body: 
+      _list.isEmpty?Center(child: Text("No Staff Add")):
+      
+      Column(
         children: [
           CostomSerchBar(controller: searchcontroller),
           SizedBox(
@@ -58,14 +62,17 @@ class _StaffScreenState extends State<StaffScreen> {
           ),
           Expanded(
             child: ListView.builder(
+              
               itemCount: _filterstaffdetails.length,
               itemBuilder: (context, index) {
+                
                 final staff = _filterstaffdetails[index];
                
                
                 Widget leadingWidget = const CircleAvatar(
                   child: Icon(Icons.person),
                 );
+              
 
                 if (staff.image != null && File(staff.image!).existsSync()) {
                   leadingWidget = CircleAvatar(
@@ -80,6 +87,13 @@ class _StaffScreenState extends State<StaffScreen> {
                   child: Card(
                     elevation: 10,
                     child: ListTile(
+                      onTap: (){
+         Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => ViewStaff(staff: staff), 
+      ),
+);           },
                       title: Text(
                         staff.username,
                         style: TextStyle(
@@ -89,6 +103,7 @@ class _StaffScreenState extends State<StaffScreen> {
                         staff.domain,
                       ),
                       leading: leadingWidget,
+                      
                       trailing: Container(
                         constraints: BoxConstraints(maxWidth: 120),
                         child: Row(
