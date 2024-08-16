@@ -14,7 +14,7 @@ class Domain extends StatefulWidget {
 final domaintext = TextEditingController();
 
 class _DomainState extends State<Domain> {
-  DomainBox _domainBox = DomainBox();
+  final DomainBox _domainBox = DomainBox();
   List<Domainmodel> _list = [];
 
   @override
@@ -59,7 +59,7 @@ class _DomainState extends State<Domain> {
         ),
       ),
       body:
-    _list.isEmpty?Center(child: Text("No Domains Are Added")):
+    _list.isEmpty?const Center(child: Text("No Domains Are Added")):
       
        ListView.builder(
         itemCount: _list.length,
@@ -72,7 +72,7 @@ class _DomainState extends State<Domain> {
                    setState(() { });
                    _list.removeAt(index);
 
-              }, icon: Icon(Icons.delete,color: Colors.red,)
+              }, icon: const Icon(Icons.delete,color: Colors.red,)
               
               ),
             
@@ -139,7 +139,7 @@ class _DomainState extends State<Domain> {
                     ElevatedButton(
                       onPressed: () async {
                         await submit();
-                        Navigator.of(context).pop() ; 
+                        Navigator.of(context).pop() ;
                       },
                       child: const Text(
                         "Submit",
