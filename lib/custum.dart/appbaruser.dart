@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 
@@ -10,11 +11,11 @@ PreferredSize userappbar(BuildContext context,names) {
      
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 430.0, 
+          height: 131.0, 
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(66.0), // Adjust the radius as needed
+              bottomLeft: Radius.circular(66.0), 
               bottomRight: Radius.circular(66.0),
             ),
           ),
@@ -38,12 +39,17 @@ PreferredSize userappbar(BuildContext context,names) {
 
 class usertextfield extends StatelessWidget {
    final  TextEditingController  controller;
+final    List<TextInputFormatter>?inputFormatters;
     final String lebelname;
+     final String? Function(String?)? validator;
+      final AutovalidateMode ?autovalidateMode;
   const usertextfield({super.key
    ,required this.controller
    
    , required this.lebelname
-   
+   ,this.autovalidateMode
+   ,this.validator
+   ,this.inputFormatters
   });
 
   @override
@@ -53,22 +59,25 @@ class usertextfield extends StatelessWidget {
          decoration: InputDecoration(
                         label:  Text(
                        lebelname,
+                       
                         style: const TextStyle(
                           
                         color: Color.fromARGB(255, 22, 42, 77)),
+                        
                         ),
-                        enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                         borderSide: const BorderSide(
-                         width: 2,
-                        color: Color.fromARGB(255, 32, 58, 81),)),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        )),
+                       border: OutlineInputBorder(
+ borderRadius: BorderRadius.circular(12),
+                       ),
+                        
+
+                        )   ,               validator: validator,
+                        autovalidateMode: autovalidateMode,
+                        inputFormatters:inputFormatters,
+                        );
+                  
 
 
 
-    );
   }
 }
 
@@ -127,4 +136,7 @@ Showimageplace( BuildContext context, VoidCallback onGalleryTap, VoidCallback ca
     );
   });
 }
+
+
+
 

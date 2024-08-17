@@ -13,7 +13,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(87),
           child: CustomAppBar(
@@ -22,7 +21,9 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 23),
             ),
             trailing: IconButton(
-                onPressed: () {navigatepush(context, TaskPage());},
+                onPressed: () {
+                  navigatepush(context, TaskPage());
+                },
                 icon: const Icon(
                   Icons.add_circle_outline,
                   size: 43,
@@ -30,22 +31,26 @@ class HomeScreen extends StatelessWidget {
                 )),
           )),
       body: const SingleChildScrollView(
-        
-
-        
-        child:   Column(
-
+        child: Column(
           children: [
-         
-            
-            containerhomescreen(icons: Iconsax.tick_square, heading: 'Complete Work ',color:  Colors.green,),
-            containerhomescreen(icons: Iconsax.close_square, heading: 'Pending work ',color:  Colors.red,),
-             containerhomescreen(icons: Iconsax.people, heading: ' Total /// ',color:  Colors.black,)
+            containerhomescreen(
+              icons: Iconsax.tick_square,
+              heading: 'Complete Work ',
+              color: Colors.green,
+            ),
+            containerhomescreen(
+              icons: Iconsax.close_square,
+              heading: 'Pending work ',
+              color: Colors.red,
+            ),
+            containerhomescreen(
+              icons: Iconsax.people,
+              heading: ' Total Staff ',
+              color: Colors.black,
+            )
           ],
         ),
-        
       ),
-
     );
   }
 }
