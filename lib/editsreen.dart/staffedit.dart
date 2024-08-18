@@ -31,7 +31,7 @@ class _EditStaff extends State<EditStaff> {
 
   ValueNotifier<String?> image = ValueNotifier<String?>(null);
   List<Domainmodel> _domainList = [];
-  final ValueNotifier<String?> _selectedDomain = ValueNotifier<String?>(null);
+  String?_selectedDomain;
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
@@ -49,14 +49,14 @@ class _EditStaff extends State<EditStaff> {
             name.isNotEmpty &&
             number.isNotEmpty &&
             email.isNotEmpty &&
-            _selectedDomain.value != null &&
+            _selectedDomain != null &&
             _genter.isNotEmpty &&
             image.value != null) {
       StaffModel staffModel = StaffModel(
         username: name,
         phonenumber: number,
         email: email,
-        domain: _selectedDomain.value!,
+        domain: _selectedDomain!,
         gender: _selectgenter.value!,
         image: image.value,
         proofimage: _selectimage.value?.path,
@@ -88,7 +88,7 @@ class _EditStaff extends State<EditStaff> {
     await domainBox.openBox();
     _domainList = await domainBox.getDomain();
     if (_domainList.isNotEmpty) {
-      _selectedDomain.value = _domainList.first.domain;
+      _selectedDomain = _domainList.first.domain;
     }
     setState(() {});
   }
@@ -99,7 +99,7 @@ class _EditStaff extends State<EditStaff> {
     userEmail.text = widget.staff.email;
     image.value = widget.staff.image;
     _selectgenter.value = widget.staff.gender;
-    _selectedDomain.value = widget.staff.domain;
+    _selectedDomain = widget.staff.domain;
     _selectimage.value =
         widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
   }
@@ -201,85 +201,70 @@ class _EditStaff extends State<EditStaff> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    height: 50,
-                    width: 330,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        width: 2,
-                        color: const Color.fromARGB(255, 32, 58, 81),
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: ValueListenableBuilder<String?>(
-                        valueListenable: _selectedDomain,
-                        builder: (context, value, _) {
-                          return DropdownButton<String>(
-                            iconEnabledColor: Colors.black,
-                            hint: const Text(
-                              "Select Domain",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: value,
-                            onChanged: (String? newValue) {
-                              _selectedDomain.value = newValue;
-                            },
-                            items: _domainList.map<DropdownMenuItem<String>>(
-                                (Domainmodel domain) {
-                              return DropdownMenuItem<String>(
-                                value: domain.domain,
-                                child: Text(domain.domain),
-                              );
-                            }).toList(),
-                          );
-                        },
-                      ),
-                    ),
+                      DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(width: 2),
                   ),
+                ),
+                value: _selectedDomain,
+                hint: const Text('Select Domain'),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDomain = value;
+                  });
+                },
+                items: _domainList.map((domain) {
+                  return DropdownMenuItem<String>(
+                    value: domain.domain,
+                    child: Text(domain.domain),
+                  );
+                }).toList(),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select a domain';
+                  }
+                  return null;
+                },
+              ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 143,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(255, 32, 58, 81),
-                          ),
-                          borderRadius: BorderRadius.circular(12),
+                  
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _selectgenter,
+                    builder: (context, value, _) {
+                      return DropdownButtonFormField<String>(
+                        decoration:  InputDecoration(
+                          border:  OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)
+                            ,borderSide: BorderSide( width: 1)
+                          )
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: ValueListenableBuilder<String?>(
-                            valueListenable: _selectgenter,
-                            builder: (context, value, _) {
-                              return DropdownButton<String>(
-                                hint: const Text(
-                                  "Select Gender",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                items: _genter.map((String gender) {
-                                  return DropdownMenuItem<String>(
-                                    value: gender,
-                                    child: Text(gender),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  _selectgenter.value = newValue;
-                                },
-                              );
-                            },
-                          ),
+                        hint: const Text(
+                          "Select Gender",
+                          style: TextStyle(color: Colors.black),
                         ),
-                      ),
-                    ],
+                        value: value,
+                        items: _genter.map((String gender) {
+                          return DropdownMenuItem<String>(
+                            value: gender,
+                            child: Text(gender),
+                          );
+                        }).toList(),
+                        
+                        onChanged: (String? newValue) {
+                          _selectgenter.value = newValue;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a gender';
+                          }
+                          return null; 
+                        },
+                      );
+                    },
                   ),
+
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
