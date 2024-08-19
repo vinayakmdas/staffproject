@@ -5,6 +5,7 @@ import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/project_model.dart';
 import 'package:staff/model.dart/signupmodel.dart';
 import 'package:staff/model.dart/staffmodel.dart';
+import 'package:staff/model.dart/work_model.dart';
 
 
 import 'package:staff/service.dart/add_domain_servicepage.dart';
@@ -26,6 +27,7 @@ void main() async {
   Hive.registerAdapter(DomainmodelAdapter());
   Hive.registerAdapter(StaffModelAdapter());
   Hive.registerAdapter(ProjectModelAdapter());
+  Hive.registerAdapter(WorkModelAdapter());
 
   try {
     await DataManaging().openBox();

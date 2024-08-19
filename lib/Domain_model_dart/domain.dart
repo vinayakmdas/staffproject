@@ -4,37 +4,32 @@ Widget customDropdownField({
   required String labelText,
   required String hintText,
   required String? value,
-  required List<String> items,
-  required Function(String?) onChanged,
-  final FormFieldValidator<String>? validator,
+  required List<DropdownMenuItem<String>> items, // Updated to accept DropdownMenuItem<String>
+  required ValueChanged<String?> onChanged,
+  FormFieldValidator<String>? validator,
 }) {
   return DropdownButtonFormField<String>(
-      style: TextStyle(color: Colors.white),
-      dropdownColor: Color(0xFF1E1E1E),
-      iconEnabledColor: Colors.white,
-      value: value,
-      items: items.map((String item) {
-        return DropdownMenuItem<String>(
-          value: item,
-          child: Text(item),
-        );
-      }).toList(),
-      onChanged: onChanged,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(color: Colors.white),
-          labelText: labelText,
-          labelStyle: TextStyle(color: Colors.white)),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: validator);
+    style: const TextStyle(color: Colors.white),
+    dropdownColor:  const Color.fromARGB(210, 4, 46, 82),
+    iconEnabledColor: Colors.white,
+    value: value,
+    items: items, 
+    
+    onChanged: onChanged,
+    decoration: InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.white),
+      labelText: labelText,
+      labelStyle: const TextStyle(color: Colors.white),
+      
+    ),
+    autovalidateMode: AutovalidateMode.onUserInteraction,
+    validator: validator,
+    
+   
+  );
 }
-// (value) {
-//       // if (value == null || value.isEmpty) {
-//       //   return 'Value is empty';
-//       // } else {
-//       //   return null;
-//       // }
-//     },

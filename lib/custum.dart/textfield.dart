@@ -34,7 +34,9 @@ class CostomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+      
+      controller: controller ,
+    
       style: TextStyle(color: textcontrollercolor),
       decoration: InputDecoration(
         suffixIcon:suffixicon,
@@ -103,6 +105,54 @@ final   TextEditingController? controller;
                   )
         ),
       ),
+    );
+  }
+}
+
+class calender extends StatelessWidget {
+   final TextEditingController controller;
+
+  final String lebelname;
+  final Color filedcolor;
+
+  final Color lebelcolor;
+
+  final Color bordercolor;
+  final Widget ?suffixicon;
+  const calender({super.key
+  , required this.bordercolor 
+  ,required this.lebelcolor,
+  required this.filedcolor,
+  required this.suffixicon,
+  required this.lebelname,
+  required this.controller
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  TextFormField(
+      controller: controller,
+      style:  const TextStyle( color: Colors.white),
+      readOnly: true,
+
+       decoration: InputDecoration(
+        suffixIcon:suffixicon,
+       
+        
+        fillColor: filedcolor,
+        filled: true,
+
+        label: Text(
+          lebelname,
+          style: TextStyle(color: lebelcolor),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: bordercolor),
+          borderRadius: BorderRadius.circular(12),
+          ),
+         ),
+        
+      
     );
   }
 }
