@@ -80,7 +80,7 @@ class _StaffAddState extends State<StaffAdd> {
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
         context,
-        const ButtonNavigationbar(currentPage: 1),
+        const ButtonNavigationbar(currentPage: 1 ) ,
       );
     }
   }
@@ -288,21 +288,21 @@ class _StaffAddState extends State<StaffAdd> {
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {
+                            savestaff();
+                          },
+                          child: const Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        onPressed: () {
-                          savestaff();
-                        },
-                        child: const Text(
-                          "Submit",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
                     ],
                   ),
 
@@ -330,7 +330,7 @@ class _StaffAddState extends State<StaffAdd> {
     Directory dir = await getApplicationDocumentsDirectory();
     File temp = File(imagefile.path);
     File newfile = await temp.copy('${dir.path}/${imagefile.name}');
-    _selectimage.value = newfile;
+    image.value = newfile.path;
   }
 
   void proofimage() async {

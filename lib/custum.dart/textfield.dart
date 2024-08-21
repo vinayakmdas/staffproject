@@ -156,3 +156,39 @@ class calender extends StatelessWidget {
     );
   }
 }
+
+
+class Descritton extends StatelessWidget {
+ final TextEditingController controller;
+
+  final Color bordercolor;
+
+  const Descritton({super.key,
+   required this.controller
+ , required this.bordercolor
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  TextFormField(
+
+       controller: controller,
+      style:  const TextStyle( color: Colors.white),
+    
+
+       decoration: InputDecoration(
+    
+        
+      
+        fillColor: const Color.fromRGBO(22, 38, 52, 1),
+        filled: true,
+
+        border: OutlineInputBorder(
+          // borderSide: BorderSide(color: bordercolor),
+          borderRadius: BorderRadius.circular(12),
+          ),
+         ),
+     
+    );
+  }
+}

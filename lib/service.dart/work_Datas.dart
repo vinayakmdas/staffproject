@@ -13,6 +13,8 @@ late Box<WorkModel>_box;
     print(" work box is open");
   }
   
-
+   Future <void> addwork(WorkModel workmodel)async{
+    _box.add(workmodel);
+   }
 
 }
