@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
+
 Widget customDropdownField({
   required String labelText,
   required String hintText,
@@ -35,3 +36,24 @@ Widget customDropdownField({
 }
 
 
+class cusstomContainer extends StatelessWidget {
+ final    Widget data;
+  const cusstomContainer ({super.key
+  ,required this.data
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      height:53,
+                      width: 353,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                        
+                      ),
+                      child: data,
+         );
+    
+  }
+}

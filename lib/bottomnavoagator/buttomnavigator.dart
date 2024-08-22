@@ -32,7 +32,7 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: GNav(
         
@@ -40,8 +40,8 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
         gap: 8,
         activeColor: const Color.fromRGBO(22, 38, 52, 1),
         iconSize: 32,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-        duration: Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+        duration: const Duration(milliseconds: 300),
         color: Colors.grey[800],
         backgroundColor: const Color.fromARGB(255, 250, 250, 250),
         tabs: const [
@@ -54,7 +54,7 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
             text: 'Staff',
           ),
           GButton(
-            icon: Iconsax.home,
+            icon: Iconsax.shop_add,
             text: 'Work',
           ),
           GButton(

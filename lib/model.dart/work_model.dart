@@ -18,7 +18,7 @@ class WorkModel{
 @HiveField(3)
  final DateTime calendarDate;
 @HiveField(4)
-final String  fileproperties;
+final String ? fileproperties;
 @HiveField(5)
 final String   description;
 

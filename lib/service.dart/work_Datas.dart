@@ -16,5 +16,9 @@ late Box<WorkModel>_box;
    Future <void> addwork(WorkModel workmodel)async{
     _box.add(workmodel);
    }
+  Future<List<WorkModel>>getdata()async{
+    return _box.values.toList();
+
+  }
 
 }
