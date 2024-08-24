@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'work_model.dart';
+part of 'complete_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class WorkModelAdapter extends TypeAdapter<WorkModel> {
+class CompleteModelAdapter extends TypeAdapter<CompleteModel> {
   @override
-  final int typeId = 4;
+  final int typeId = 5;
 
   @override
-  WorkModel read(BinaryReader reader) {
+  CompleteModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return WorkModel(
+    return CompleteModel(
       staffname: fields[0] as String,
       domainname: fields[1] as String,
       project: fields[2] as String,
@@ -27,7 +27,7 @@ class WorkModelAdapter extends TypeAdapter<WorkModel> {
   }
 
   @override
-  void write(BinaryWriter writer, WorkModel obj) {
+  void write(BinaryWriter writer, CompleteModel obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -50,7 +50,7 @@ class WorkModelAdapter extends TypeAdapter<WorkModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is WorkModelAdapter &&
+      other is CompleteModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

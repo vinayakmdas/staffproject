@@ -1,10 +1,11 @@
+import 'package:hive_flutter/hive_flutter.dart';
 
-   import 'package:hive_flutter/hive_flutter.dart';
+part 'complete_model.g.dart';
 
-part 'work_model.g.dart';
+@HiveType(typeId: 5)
+class CompleteModel{
+ 
 
-@HiveType(typeId: 4)
-class WorkModel{
 
 @HiveField(0)
  final String  staffname;
@@ -22,11 +23,11 @@ final String ? fileproperties;
 @HiveField(5)
 final String   description;
 
-WorkModel({ required this.staffname ,required this.domainname ,
+CompleteModel({ required this.staffname ,required this.domainname ,
  required this.project , required this.calendarDate
 ,required this.fileproperties, required this.description
 });
 
+
+
 }
-
-

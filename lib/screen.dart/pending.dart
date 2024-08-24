@@ -4,7 +4,9 @@ import 'package:staff/custum.dart/navigator.dart';
 import 'package:staff/custum.dart/textcostom.dart';
 import 'package:staff/custum.dart/textfield.dart';
 import 'package:staff/editsreen.dart/workview.dart';
+import 'package:staff/model.dart/complete_model.dart';
 import 'package:staff/model.dart/work_model.dart';
+import 'package:staff/service.dart/complete_service.dart';
 import 'package:staff/service.dart/work_Datas.dart';
 
 class WorkScreen extends StatefulWidget {
@@ -17,14 +19,34 @@ class WorkScreen extends StatefulWidget {
 class _WorkScreenState extends State<WorkScreen> {
   final worksearchcontroller = TextEditingController();
   final WorkDatas _workDatas = WorkDatas(); 
+  final Complete_Datas _complete_datas = Complete_Datas();
   List<WorkModel> _list = [];
   List<WorkModel> workvalues = [];
+
+  Future<void> datasave(WorkModel work, int index) async {
+    
+    CompleteModel completeModel = CompleteModel(
+      staffname: work.staffname,
+      domainname: work.domainname,
+      project: work.project,
+      calendarDate: work.calendarDate,
+      fileproperties: work.fileproperties,
+      description: work.description,
+    );
+    await _complete_datas.add(completeModel);
+
+    // Delete the work from the current list and Hive box
+    await _workDatas.delete(index);
+    setState(() {
+      workvalues.removeAt(index);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _workDatas.openBox().then((_) {
-      loadwork(); 
+      loadwork();
     });
   }
 
@@ -37,7 +59,6 @@ class _WorkScreenState extends State<WorkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Column(
         children: [
           CostomSerchBar(controller: worksearchcontroller),
@@ -51,22 +72,24 @@ class _WorkScreenState extends State<WorkScreen> {
                   child: ListTile(
                     onTap: () {
                       navigatepush(
-                          context,
-                          Workview(
-                            work: work,
-                          ));
+                        context,
+                        Workview(
+                          work: work,
+                        ),
+                      );
                     },
-                   
                     title: Text(work.staffname),
                     subtitle: Text(work.project),
-                    trailing:  Row(
+                    trailing: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextButton(onPressed: (){
-                          pending(context, index);
-                          
-                        }, child: const Apptext("Pending",Colors:  Colors.red,))
+                        TextButton(
+                          onPressed: () {
+                            pending(context, work, index); // Pass the index here
+                          },
+                          child: const Apptext("Pending", Colors: Colors.red),
+                        ),
                       ],
                     ),
                   ),
@@ -92,6 +115,7 @@ class _WorkScreenState extends State<WorkScreen> {
       _list = workList;
       workvalues = List.from(_list);
     });
+    await _complete_datas.openbox();
   }
 
   void _onsearchchanged() {
@@ -107,28 +131,28 @@ class _WorkScreenState extends State<WorkScreen> {
     });
   }
 
-  pending( context,index){
-    showDialog(context: context, builder:(context)=>  AlertDialog(
-      backgroundColor:  Colors.green, 
-      title: const Apptext("Complete the work",Colors: Colors.white,),
-      
-      actions: [
-                   ElevatedButton(
+  void pending(BuildContext context, WorkModel work, int index) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.green,
+        title: const Apptext("Complete the work", Colors: Colors.white),
+        actions: [
+          ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop(); 
+              Navigator.of(context).pop();
             },
-            child: const Apptext("cancel",Colors: Colors.red,)
-                   )
-                   ,      ElevatedButton(
-            onPressed: () {
-             
-                  
-                              
-                                   Navigator.of(context).pop(); 
+            child: const Apptext("Cancel", Colors: Colors.red),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await datasave(work, index);
+              Navigator.of(context).pop();
             },
-            child: const Apptext("complete",Colors: Colors.green,),
-                   )
-      ],
-    ));
+            child: const Apptext("Complete", Colors: Colors.green),
+          ),
+        ],
+      ),
+    );
   }
 }

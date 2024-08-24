@@ -20,5 +20,7 @@ late Box<WorkModel>_box;
     return _box.values.toList();
 
   }
-
+   Future<void>delete(int index)async{
+    _box.deleteAt(index);
+   }
 }

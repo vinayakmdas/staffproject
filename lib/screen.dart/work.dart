@@ -4,8 +4,8 @@ import 'package:staff/screen.dart/pending.dart';
 
 
 
-class AllWork extends StatelessWidget {
-  const AllWork({super.key});
+class allwork extends StatelessWidget {
+  const allwork({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class AllWork extends StatelessWidget {
           Expanded(
             child: TabBarView(children: [
                   WorkScreen(),
-                  CompleteScreen(),
+                  Completework(),
             ]),
           )
           ],

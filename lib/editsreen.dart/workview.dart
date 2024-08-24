@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff/custum.dart/customdropdown.dart';
 import 'package:staff/custum.dart/textcostom.dart';
+import 'package:staff/model.dart/complete_model.dart';
 import 'package:staff/model.dart/work_model.dart';
 import 'package:staff/pdfview.dart';
 
 class Workview extends StatefulWidget {
   final WorkModel work;
+  
   const Workview({super.key, required this.work});
 
   @override
