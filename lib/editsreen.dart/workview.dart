@@ -119,8 +119,15 @@ class _WorkviewState extends State<Workview> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: displayFile(file),
-                ),
+                ), 
               ),
+              const SizedBox(height: 10,),
+           const   Divider(), 
+        const   SizedBox(height: 10,),
+        cusstomContainer(data: Center(child:TextButton(onPressed: (){}, child: const Apptext("EDIT",Colors: Colors.white,fontSize: 21))))
+       , const SizedBox(height: 10,)
+          ,cusstomContainer(data: Center(child:TextButton(onPressed: (){}, child: const Apptext("DELETE",Colors: Colors.white,fontSize: 21))))
+         , const Divider()
             ],
           ),
         ),
@@ -175,5 +182,6 @@ class _WorkviewState extends State<Workview> {
             style: TextStyle(color: Colors.white)));
   }
 }
+
 
 }

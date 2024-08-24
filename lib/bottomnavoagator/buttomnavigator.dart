@@ -18,7 +18,7 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
   final List<Widget> _screens = [
     const HomeScreen(),
     StaffScreen(),
-    const WorkScreen(),
+    const allwork(),
     const Settings(),
   ];
 

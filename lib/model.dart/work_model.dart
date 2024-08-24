@@ -21,10 +21,13 @@ class WorkModel{
 final String ? fileproperties;
 @HiveField(5)
 final String   description;
+@HiveField(6)
+bool? status;
+
 
 WorkModel({ required this.staffname ,required this.domainname ,
  required this.project , required this.calendarDate
-,required this.fileproperties, required this.description
+,required this.fileproperties, required this.description,this.status=false
 });
 
 }
