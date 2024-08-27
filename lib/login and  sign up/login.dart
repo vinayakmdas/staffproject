@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-import 'package:staff/custum.dart/navigator.dart';
-import 'package:staff/custum.dart/textcostom.dart';
-import 'package:staff/custum.dart/textfield.dart';
+import 'package:staff/custum/navigator.dart';
+import 'package:staff/custum/textcostom.dart';
+import 'package:staff/custum/textfield.dart';
 import 'package:staff/login%20and%20%20sign%20up/signup.dart';
 import 'package:staff/model.dart/signupmodel.dart';
 
 
-import 'package:staff/service.dart/signup_Data_Managing.dart';
+import 'package:staff/service/signup_Data_Managing.dart';
 
 
 class Loginpage extends StatefulWidget {

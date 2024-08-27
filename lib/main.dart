@@ -9,11 +9,11 @@ import 'package:staff/model.dart/staffmodel.dart';
 import 'package:staff/model.dart/work_model.dart';
 
 
-import 'package:staff/service.dart/add_domain_servicepage.dart';
-import 'package:staff/service.dart/complete_service.dart';
-import 'package:staff/service.dart/project_task_service.dart';
-import 'package:staff/service.dart/signup_Data_Managing.dart';
-import 'package:staff/service.dart/staff_Data_managing.dart';
+import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/complete_service.dart';
+import 'package:staff/service/project_task_service.dart';
+import 'package:staff/service/signup_Data_Managing.dart';
+import 'package:staff/service/staff_Data_managing.dart';
 
 import 'package:staff/splashscreens/splashscreen.dart';
 import 'package:staff/taskadd/project.dart';

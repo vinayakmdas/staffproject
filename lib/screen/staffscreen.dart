@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:staff/add-staff-and-work/staffadd.dart';
 
-import 'package:staff/custum.dart/navigator.dart';
-import 'package:staff/custum.dart/textfield.dart';
-import 'package:staff/editsreen.dart/staff_view_.dart';
-import 'package:staff/editsreen.dart/staffedit.dart';
+import 'package:staff/custum/navigator.dart';
+import 'package:staff/custum/textfield.dart';
+import 'package:staff/editsreen/staff_view_.dart';
+import 'package:staff/editsreen/staffedit.dart';
 import 'package:staff/model.dart/staffmodel.dart';
-import 'package:staff/service.dart/staff_Data_managing.dart';
+import 'package:staff/service/staff_Data_managing.dart';
 
 class StaffScreen extends StatefulWidget {
   StaffScreen({super.key});

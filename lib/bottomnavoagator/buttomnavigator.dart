@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';  // Import the google_nav_bar package
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:staff/screen.dart/homescreen.dart';
-import 'package:staff/screen.dart/settings.dart';
-import 'package:staff/screen.dart/staffscreen.dart';
-import 'package:staff/screen.dart/work.dart';
+import 'package:staff/screen/homescreen.dart';
+import 'package:staff/screen/settings.dart';
+import 'package:staff/screen/staffscreen.dart';
+import 'package:staff/screen/work.dart';
 
 class ButtonNavigationbar extends StatefulWidget {
   final int currentPage;

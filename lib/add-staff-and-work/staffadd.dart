@@ -6,12 +6,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-import 'package:staff/custum.dart/appbaruser.dart';
-import 'package:staff/custum.dart/navigator.dart';
+import 'package:staff/custum/appbaruser.dart';
+import 'package:staff/custum/navigator.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/staffmodel.dart';
-import 'package:staff/service.dart/add_domain_servicepage.dart';
-import 'package:staff/service.dart/staff_Data_managing.dart';
+import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/staff_Data_managing.dart';
 
 class StaffAdd extends StatefulWidget {
   StaffAdd({super.key});

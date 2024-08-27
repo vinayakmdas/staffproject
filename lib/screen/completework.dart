@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:staff/add-staff-and-work/workadd.dart';
-import 'package:staff/custum.dart/navigator.dart';
-import 'package:staff/custum.dart/textcostom.dart';
+import 'package:staff/custum/navigator.dart';
+import 'package:staff/custum/textcostom.dart';
 
 
 import 'package:staff/model.dart/complete_model.dart';
-import 'package:staff/service.dart/complete_service.dart';
+import 'package:staff/service/complete_service.dart';
 
 class Completework extends StatefulWidget {
   const Completework({super.key});

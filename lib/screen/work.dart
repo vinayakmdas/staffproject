@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:staff/screen.dart/completework.dart';
-import 'package:staff/screen.dart/pending.dart';
+import 'package:staff/screen/completework.dart';
+import 'package:staff/screen/pending.dart';
 
 
 

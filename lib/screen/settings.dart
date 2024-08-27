@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:staff/custum.dart/navigator.dart';
+import 'package:staff/custum/navigator.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 
 

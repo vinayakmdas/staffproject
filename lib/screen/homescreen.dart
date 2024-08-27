@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import 'package:staff/custum.dart/AppBar.dart';
-import 'package:staff/custum.dart/navigator.dart';
+import 'package:staff/custum/AppBar.dart';
+import 'package:staff/custum/navigator.dart';
 
 import 'package:staff/taskadd/task.dart';
 

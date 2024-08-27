@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staff/model.dart/project_model.dart';
-import 'package:staff/service.dart/project_task_service.dart';
+import 'package:staff/service/project_task_service.dart';
 
 class projecttask extends StatefulWidget {
   const projecttask({super.key});

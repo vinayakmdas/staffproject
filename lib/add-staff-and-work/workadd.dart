@@ -5,19 +5,19 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:staff/Domain_model_dart/domain.dart';
+import 'package:staff/Domain_model/domain.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-import 'package:staff/custum.dart/navigator.dart';
-import 'package:staff/custum.dart/textfield.dart';
+import 'package:staff/custum/navigator.dart';
+import 'package:staff/custum/textfield.dart';
 import 'package:staff/model.dart/domainmodel.dart';
 import 'package:staff/model.dart/project_model.dart';
 import 'package:staff/model.dart/staffmodel.dart';
 import 'package:staff/model.dart/work_model.dart';
 import 'package:staff/pdfview.dart';
-import 'package:staff/service.dart/add_domain_servicepage.dart';
-import 'package:staff/service.dart/project_task_service.dart';
-import 'package:staff/service.dart/staff_Data_managing.dart';
-import 'package:staff/service.dart/work_Datas.dart';
+import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/project_task_service.dart';
+import 'package:staff/service/staff_Data_managing.dart';
+import 'package:staff/service/work_Datas.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Workadd extends StatefulWidget {
