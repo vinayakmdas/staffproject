@@ -7,7 +7,7 @@ import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 import 'package:staff/custum/textfield.dart';
 import 'package:staff/login%20and%20%20sign%20up/signup.dart';
-import 'package:staff/model.dart/signupmodel.dart';
+import 'package:staff/model/signupmodel.dart';
 
 
 import 'package:staff/service/signup_Data_Managing.dart';

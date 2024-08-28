@@ -1,6 +1,6 @@
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:staff/model.dart/project_model.dart';
+import 'package:staff/model/project_model.dart';
 
 class ProjectData{
 

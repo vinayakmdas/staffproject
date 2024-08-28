@@ -1,6 +1,6 @@
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:staff/model.dart/complete_model.dart';
+import 'package:staff/model/complete_model.dart';
 
 
 class Complete_Datas{

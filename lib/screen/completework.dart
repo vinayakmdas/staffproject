@@ -4,7 +4,7 @@ import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 
 
-import 'package:staff/model.dart/complete_model.dart';
+import 'package:staff/model/complete_model.dart';
 import 'package:staff/service/complete_service.dart';
 
 class Completework extends StatefulWidget {
@@ -64,7 +64,7 @@ class _CompleteworkState extends State<Completework> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
-          navigatepush(context, const Workadd());
+          // navigatepush(context, const Workadd());
         },
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
       ),

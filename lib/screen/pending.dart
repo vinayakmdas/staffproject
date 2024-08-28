@@ -4,8 +4,8 @@ import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 import 'package:staff/custum/textfield.dart';
 import 'package:staff/editsreen/workview.dart';
-import 'package:staff/model.dart/complete_model.dart';
-import 'package:staff/model.dart/work_model.dart';
+import 'package:staff/model/complete_model.dart';
+import 'package:staff/model/work_model.dart';
 import 'package:staff/service/complete_service.dart';
 import 'package:staff/service/work_Datas.dart';
 

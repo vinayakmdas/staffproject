@@ -9,7 +9,7 @@ import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textfield.dart';
 import 'package:staff/editsreen/staff_view_.dart';
 import 'package:staff/editsreen/staffedit.dart';
-import 'package:staff/model.dart/staffmodel.dart';
+import 'package:staff/model/staffmodel.dart';
 import 'package:staff/service/staff_Data_managing.dart';
 
 class StaffScreen extends StatefulWidget {

@@ -8,8 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum/appbaruser.dart';
 import 'package:staff/custum/navigator.dart';
-import 'package:staff/model.dart/domainmodel.dart';
-import 'package:staff/model.dart/staffmodel.dart';
+import 'package:staff/model/domainmodel.dart';
+import 'package:staff/model/staffmodel.dart';
 import 'package:staff/service/add_domain_servicepage.dart';
 import 'package:staff/service/staff_Data_managing.dart';
 

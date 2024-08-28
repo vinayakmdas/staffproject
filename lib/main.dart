@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:staff/model.dart/complete_model.dart';
-import 'package:staff/model.dart/domainmodel.dart';
-import 'package:staff/model.dart/project_model.dart';
-import 'package:staff/model.dart/signupmodel.dart';
-import 'package:staff/model.dart/staffmodel.dart';
-import 'package:staff/model.dart/work_model.dart';
+import 'package:staff/model/complete_model.dart';
+import 'package:staff/model/domainmodel.dart';
+import 'package:staff/model/project_model.dart';
+import 'package:staff/model/signupmodel.dart';
+import 'package:staff/model/staffmodel.dart';
+import 'package:staff/model/work_model.dart';
 
 
 import 'package:staff/service/add_domain_servicepage.dart';

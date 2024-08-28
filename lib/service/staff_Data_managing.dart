@@ -2,7 +2,7 @@
 
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:staff/model.dart/staffmodel.dart';
+import 'package:staff/model/staffmodel.dart';
 
 class StaffDatas{
 

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:staff/model.dart/staffmodel.dart';
+import 'package:staff/model/staffmodel.dart';
 
 class ViewStaff extends StatelessWidget {
   final StaffModel staff;

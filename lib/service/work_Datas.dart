@@ -1,7 +1,7 @@
 
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:staff/model.dart/work_model.dart';
+import 'package:staff/model/work_model.dart';
 
 class WorkDatas{
 
