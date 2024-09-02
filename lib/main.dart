@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:staff/model/backend_model.dart';
 import 'package:staff/model/complete_model.dart';
 import 'package:staff/model/domainmodel.dart';
 import 'package:staff/model/project_model.dart';
@@ -10,13 +11,14 @@ import 'package:staff/model/work_model.dart';
 
 
 import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/backendDatas.dart';
 import 'package:staff/service/complete_service.dart';
 import 'package:staff/service/project_task_service.dart';
 import 'package:staff/service/signup_Data_Managing.dart';
 import 'package:staff/service/staff_Data_managing.dart';
 
 import 'package:staff/splashscreens/splashscreen.dart';
-import 'package:staff/taskadd/project.dart';
+import 'package:staff/taskadd/frontend.dart';
 
 bool isLoggedIn = false;
 
@@ -31,13 +33,14 @@ void main() async {
   Hive.registerAdapter(ProjectModelAdapter());
   Hive.registerAdapter(WorkModelAdapter());
   Hive.registerAdapter(CompleteModelAdapter());
-
+  Hive.registerAdapter(BackendModelAdapter());
   try {
     await DataManaging().openBox();
     await DomainBox().openBox();
     await StaffDatas().openbox();
     await ProjectData().openBox();
     await Complete_Datas().openbox();
+    await  BackendDatas().openBox();
     print('All boxes opened successfully');
   } catch (e) {
     print('Error opening boxes: $e');

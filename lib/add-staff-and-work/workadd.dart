@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:staff/Domain_model/domain.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
-import 'package:staff/custum/appbaruser.dart';
 import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 import 'package:staff/custum/textfield.dart';

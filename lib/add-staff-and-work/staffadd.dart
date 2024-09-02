@@ -8,10 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum/appbaruser.dart';
 import 'package:staff/custum/navigator.dart';
+import 'package:staff/custum/textcostom.dart';
 import 'package:staff/model/domainmodel.dart';
 import 'package:staff/model/staffmodel.dart';
 import 'package:staff/service/add_domain_servicepage.dart';
 import 'package:staff/service/staff_Data_managing.dart';
+import 'package:staff/taskadd/backend.dart';
+import 'package:staff/taskadd/frontend.dart';
 
 class StaffAdd extends StatefulWidget {
   StaffAdd({super.key});
@@ -33,8 +36,12 @@ class _StaffAddState extends State<StaffAdd> {
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
+  ValueNotifier<Widget?> _projeccontroller = ValueNotifier<Widget?>(null);
 
   final StaffDatas _staffDatas = StaffDatas();
+  List<Widget>projectlist=[Frontend(), Backend()];
+
+  
 
   @override
   void initState() {
@@ -63,6 +70,7 @@ class _StaffAddState extends State<StaffAdd> {
         name.isNotEmpty &&
         number.isNotEmpty &&
         email.isNotEmpty &&
+        _projeccontroller.value!=null &&
         _selectgenter.value != null &&
         _selectedDomain != null &&
         proofImagePath != null) {
@@ -74,9 +82,12 @@ class _StaffAddState extends State<StaffAdd> {
         gender: _selectgenter.value.toString(),
         image: image.value.toString(),
         proofimage: proofImagePath,
+        dropdowntask: _projeccontroller.toString()
+      
       );
-
+            
       _staffDatas.adddetails(staffModel);
+      print("save staff datas ");
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
         context,
@@ -210,6 +221,65 @@ class _StaffAddState extends State<StaffAdd> {
                       return null;
                     },
                   ),
+               SizedBox(height: 20,),
+ DropdownButtonFormField<Widget>(
+                      borderRadius: BorderRadius.circular(12),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(width: 2))),
+                      hint: const Apptext("project type"),
+                      value: _projeccontroller.value,
+                      items:  projectlist.map((_projectDetails) {
+                        return DropdownMenuItem<Widget>(
+                          value: _projectDetails,
+                          child: Text(_projectDetails.runtimeType.toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        _projeccontroller.value = value;
+                      }
+                       ,validator: (value) {
+                          if (value == null ) {
+                            return 'Please select a gender';
+                          }
+                          return null;
+                        },
+                      ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   const SizedBox(height: 20),
                   ValueListenableBuilder<String?>(
                     valueListenable: _selectgenter,

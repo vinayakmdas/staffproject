@@ -24,13 +24,14 @@ class StaffModelAdapter extends TypeAdapter<StaffModel> {
       gender: fields[4] as String,
       image: fields[5] as String?,
       proofimage: fields[6] as String?,
+      dropdowntask: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, StaffModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.username)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class StaffModelAdapter extends TypeAdapter<StaffModel> {
       ..writeByte(5)
       ..write(obj.image)
       ..writeByte(6)
-      ..write(obj.proofimage);
+      ..write(obj.proofimage)
+      ..writeByte(7)
+      ..write(obj.dropdowntask);
   }
 
   @override

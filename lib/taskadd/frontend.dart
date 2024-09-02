@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staff/model/project_model.dart';
 import 'package:staff/service/project_task_service.dart';
 
-class projecttask extends StatefulWidget {
-  const projecttask({super.key});
+class Frontend extends StatefulWidget {
+  const Frontend({super.key});
 
   @override
-  State<projecttask> createState() => _projecttaskState();
+  State<Frontend> createState() =>_FrontendState();
 }
 
 final projecttext = TextEditingController();
 
-class _projecttaskState extends State<projecttask> {
+class _FrontendState extends State<Frontend> {
   final ProjectData _projectData = ProjectData();
   List<ProjectModel> _list = [];
 
@@ -51,7 +51,7 @@ class _projecttaskState extends State<projecttask> {
         title: Padding(
           padding: const EdgeInsets.only(left: 72),
           child: Text(
-            "PROJECT",
+            "BACKEND DATAS",
             style: GoogleFonts.getFont('Lato'),
           ),
         ),

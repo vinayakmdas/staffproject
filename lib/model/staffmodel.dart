@@ -33,9 +33,12 @@ final String gender;
 @HiveField(6)
 final String ?proofimage;
 
+@HiveField(7)
+String ?dropdowntask;
+
 
 StaffModel({ required this.username, required this.phonenumber,required this.email , required this.domain
-,required this.gender, this.image,  this.proofimage
+,required this.gender, this.image,  this.proofimage,this.dropdowntask
 });
 
 }

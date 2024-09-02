@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staff/taskadd/backend.dart';
 import 'package:staff/taskadd/domain.dart';
-import 'package:staff/taskadd/project.dart';
+import 'package:staff/taskadd/frontend.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage ({super.key});
@@ -41,7 +42,7 @@ class TaskPage extends StatelessWidget {
         const Divider()
         ,ListTile(
           title: Text(
-            " ADD PROJECT",
+            " ADD FRONTEND",
             style: GoogleFonts.getFont('Lato',
                 color: Colors.black,
                 textStyle: const TextStyle(fontWeight: FontWeight.bold)),
@@ -52,11 +53,28 @@ class TaskPage extends StatelessWidget {
             
           ),
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>projecttask()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Frontend()));
           },
           
         )
         ,const Divider()
+        ,ListTile(
+          title: Text(
+            " ADD BACKEND",
+            style: GoogleFonts.getFont('Lato',
+                color: Colors.black,
+                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+          ),
+          trailing: const Icon(
+            Icons.chevron_right,
+            color: Colors.black,
+            
+          ),
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Backend()));
+          },
+          
+        )
         ],
         
       ),
