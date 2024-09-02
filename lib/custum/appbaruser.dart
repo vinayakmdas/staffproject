@@ -1,76 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 
-PreferredSize userappbar(BuildContext context) {
+PreferredSize userappbar(BuildContext context,names) {
   return PreferredSize(
     preferredSize: Size.fromHeight(150.0), // Adjusted to a fixed height
     child: Stack(
       children: <Widget>[
-        // Background container with curved bottom
+     
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 430.0, 
+          height: 131.0, 
           decoration: const BoxDecoration(
-            color: Color.fromRGBO(25, 61, 93, 0.525),
+            color: Colors.white,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(66.0), // Adjust the radius as needed
+              bottomLeft: Radius.circular(66.0), 
               bottomRight: Radius.circular(66.0),
             ),
           ),
-          child: const Center(
+          child:  Center(
             child: Text(
-              "ADD STAFF",
+              names,
               style: TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
+                color:  const Color.fromRGBO(22, 38, 52, 1),
           ),
+              ),
+            ), 
         ),
-        // Optional: Add more elements like search bar, buttons, etc. in the stack if needed
+   
       ],
     ),
   );
 }
 
 
-
-
-class UserTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String labelName;
-
-  const UserTextField({
-    super.key,
-    required this.controller,
-    required this.labelName,
+class usertextfield extends StatelessWidget {
+   final  TextEditingController  controller;
+final    List<TextInputFormatter>?inputFormatters;
+    final String lebelname;
+     final String? Function(String?)? validator;
+      final AutovalidateMode ?autovalidateMode;
+  const usertextfield({super.key
+   ,required this.controller
+   
+   , required this.lebelname
+   ,this.autovalidateMode
+   ,this.validator
+   ,this.inputFormatters
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        label: Text(
-          labelName,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 22, 42, 77),
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            width: 2,
-            color: Color.fromARGB(255, 32, 58, 81),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-    );
+          controller: controller,
+         decoration: InputDecoration(
+                        label:  Text(
+                       lebelname,
+                       
+                        style: const TextStyle(
+                          
+                        color: Color.fromARGB(255, 22, 42, 77)),
+                        
+                        ),
+                       border: OutlineInputBorder(
+ borderRadius: BorderRadius.circular(12),
+                       ),
+                        
+
+                        )   ,               validator: validator,
+                        autovalidateMode: autovalidateMode,
+                        inputFormatters:inputFormatters,
+                        );
+                  
+
+
+
   }
 }
 
@@ -129,4 +136,7 @@ Showimageplace( BuildContext context, VoidCallback onGalleryTap, VoidCallback ca
     );
   });
 }
+
+
+
 

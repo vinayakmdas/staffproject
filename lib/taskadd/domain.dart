@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staff/model.dart/domainmodel.dart';
-import 'package:staff/service.dart/add_domain_servicepage.dart';
+
+import 'package:staff/model/domainmodel.dart';
+import 'package:staff/service/add_domain_servicepage.dart';
 
 class Domain extends StatefulWidget {
   const Domain({super.key});
@@ -13,7 +14,7 @@ class Domain extends StatefulWidget {
 final domaintext = TextEditingController();
 
 class _DomainState extends State<Domain> {
-  DomainBox _domainBox = DomainBox();
+  final DomainBox _domainBox = DomainBox();
   List<Domainmodel> _list = [];
 
   @override
@@ -58,7 +59,7 @@ class _DomainState extends State<Domain> {
         ),
       ),
       body:
-    
+    _list.isEmpty?const Center(child: Text("No Domains Are Added")):
       
        ListView.builder(
         itemCount: _list.length,
@@ -71,7 +72,7 @@ class _DomainState extends State<Domain> {
                    setState(() { });
                    _list.removeAt(index);
 
-              }, icon: Icon(Icons.delete,color: Colors.red,)
+              }, icon: const Icon(Icons.delete,color: Colors.red,)
               
               ),
             
@@ -138,7 +139,7 @@ class _DomainState extends State<Domain> {
                     ElevatedButton(
                       onPressed: () async {
                         await submit();
-                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pop() ;
                       },
                       child: const Text(
                         "Submit",

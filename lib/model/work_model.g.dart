@@ -23,15 +23,13 @@ class WorkModelAdapter extends TypeAdapter<WorkModel> {
       calendarDate: fields[3] as DateTime,
       fileproperties: fields[4] as String?,
       description: fields[5] as String,
-      status: fields[6] as bool,
-      id: fields[7] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, WorkModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.staffname)
       ..writeByte(1)
@@ -43,11 +41,7 @@ class WorkModelAdapter extends TypeAdapter<WorkModel> {
       ..writeByte(4)
       ..write(obj.fileproperties)
       ..writeByte(5)
-      ..write(obj.description)
-      ..writeByte(6)
-      ..write(obj.status)
-      ..writeByte(7)
-      ..write(obj.id);
+      ..write(obj.description);
   }
 
   @override

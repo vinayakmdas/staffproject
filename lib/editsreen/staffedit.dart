@@ -13,33 +13,69 @@ import 'package:staff/model/staffmodel.dart';
 import 'package:staff/service/add_domain_servicepage.dart';
 import 'package:staff/service/staff_Data_managing.dart';
 
-class StaffAdd extends StatefulWidget {
-  StaffAdd({super.key});
+class EditStaff extends StatefulWidget {
+  final StaffModel staff;
+  final int index;
+
+  EditStaff({super.key, required this.staff, required this.index});
 
   @override
-  State<StaffAdd> createState() => _StaffAddState();
+  State<EditStaff> createState() => _EditStaff();
 }
 
-class _StaffAddState extends State<StaffAdd> {
+class _EditStaff extends State<EditStaff> {
   final usernameController = TextEditingController();
   final userPhoneNumber = TextEditingController();
   final userEmail = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
-
   ValueNotifier<String?> image = ValueNotifier<String?>(null);
   List<Domainmodel> _domainList = [];
-  String? _selectedDomain; 
+  String?_selectedDomain;
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
 
   final StaffDatas _staffDatas = StaffDatas();
 
+  savestaff() {
+    final proofImagePath = _selectimage.value?.path;
+    final name = usernameController.text.trim();
+    final number = userPhoneNumber.text;
+    final email = userEmail.text;
+
+    if (_formkey.currentState!.validate() && 
+        proofImagePath != null &&
+            name.isNotEmpty &&
+            number.isNotEmpty &&
+            email.isNotEmpty &&
+            _selectedDomain != null &&
+            _genter.isNotEmpty &&
+            image.value != null) {
+      StaffModel staffModel = StaffModel(
+        username: name,
+        phonenumber: number,
+        email: email,
+        domain: _selectedDomain!,
+        gender: _selectgenter.value!,
+        image: image.value,
+        proofimage: _selectimage.value?.path,
+      );
+      _staffDatas.updatevalue(widget.index, staffModel);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      navigatepushreplacement(
+          context,
+          ButtonNavigationbar(
+            currentPage: 1,
+          ));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     firstloading();
+    connectdatas();
   }
 
   Future<void> firstloading() async {
@@ -51,45 +87,28 @@ class _StaffAddState extends State<StaffAdd> {
     DomainBox domainBox = DomainBox();
     await domainBox.openBox();
     _domainList = await domainBox.getDomain();
+    if (_domainList.isNotEmpty) {
+      _selectedDomain = _domainList.first.domain;
+    }
     setState(() {});
   }
 
-  void savestaff() {
-    final proofImagePath = _selectimage.value?.path;
-    final name = usernameController.text.trim();
-    final number = userPhoneNumber.text;
-    final email = userEmail.text;
-    if (_formkey.currentState!.validate() &&
-        name.isNotEmpty &&
-        number.isNotEmpty &&
-        email.isNotEmpty &&
-        _selectgenter.value != null &&
-        _selectedDomain != null &&
-        proofImagePath != null) {
-      StaffModel staffModel = StaffModel(
-        username: name,
-        phonenumber: number,
-        email: email,
-        domain: _selectedDomain!, 
-        gender: _selectgenter.value.toString(),
-        image: image.value.toString(),
-        proofimage: proofImagePath,
-      );
-
-      _staffDatas.adddetails(staffModel);
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      navigatepushreplacement(
-        context,
-        const ButtonNavigationbar(currentPage: 1 ) ,
-      );
-    }
+  void connectdatas() {
+    usernameController.text = widget.staff.username;
+    userPhoneNumber.text = widget.staff.phonenumber;
+    userEmail.text = widget.staff.email;
+    image.value = widget.staff.image;
+    _selectgenter.value = widget.staff.gender;
+    _selectedDomain = widget.staff.domain;
+    _selectimage.value =
+        widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-      appBar: userappbar(context, "ADD STAFF"),
+      appBar: userappbar(context, "EDIT STAFF"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(23),
         child: Container(
@@ -105,24 +124,22 @@ class _StaffAddState extends State<StaffAdd> {
                 children: [
                   Stack(
                     children: [
-                      ValueListenableBuilder<String?>(
-                        valueListenable: image,
-                        builder: (context, value, _) {
-                          return CircleAvatar(
-                            radius: 80,
-                            backgroundColor: Colors.white,
-                            backgroundImage: value == null
-                                ? null
-                                : FileImage(File(value)),
-                            child: value == null
-                                ? const Icon(
-                                    Icons.person,
-                                    size: 90,
-                                  )
-                                : null,
-                          );
-                        },
-                      ),
+                      image.value == null
+                          ? CircleAvatar(
+                              radius: 80,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.person,
+                                  size: 90,
+                                ),
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 80,
+                              backgroundColor: Colors.white,
+                              backgroundImage: FileImage(File(image.value!)),
+                            ),
                       Positioned(
                         child: IconButton(
                           onPressed: () {
@@ -141,14 +158,15 @@ class _StaffAddState extends State<StaffAdd> {
                   ),
                   const SizedBox(height: 43),
                   usertextfield(
+                    controller: usernameController,
+                    lebelname: 'NAME  :',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return " Please enter Staff name";
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
-                    controller: usernameController,
-                    lebelname: 'NAME  :',
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
@@ -159,8 +177,9 @@ class _StaffAddState extends State<StaffAdd> {
                         return "Please enter your Phone number";
                       } else if (value.length != 10) {
                         return 'Please enter a valid Mobile number';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
@@ -168,49 +187,49 @@ class _StaffAddState extends State<StaffAdd> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
+                    controller: userEmail,
+                    lebelname: "E-MAIL  :",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter E mail";
                       } else if (!value.endsWith('@gmail.com')) {
                         return 'Please enter a valid email';
+                      } else {
+                        null;
                       }
                       return null;
                     },
-                    controller: userEmail,
-                    lebelname: "E-MAIL  :",  
                   ),
                   const SizedBox(height: 20),
-                  DropdownButtonFormField<String>(
-                               
+                      DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    decoration:  InputDecoration(
-                      
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide( width: 2)
-                      )
-                    ),
-                    value: _selectedDomain,
-                    hint: const Text('Select Domain'),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedDomain = value;
-                      });
-                    },
-                    items: _domainList.map((domain) {
-                      return DropdownMenuItem<String>(
-                        value: domain.domain,
-                        child: Text(domain.domain),
-                      );
-                    }).toList(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a domain';
-                      }
-                      return null;
-                    },
+                    borderSide: const BorderSide(width: 2),
                   ),
+                ),
+                value: _selectedDomain,
+                hint: const Text('Select Domain'),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDomain = value;
+                  });
+                },
+                items: _domainList.map((domain) {
+                  return DropdownMenuItem<String>(
+                    value: domain.domain,
+                    child: Text(domain.domain),
+                  );
+                }).toList(),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select a domain';
+                  }
+                  return null;
+                },
+              ),
                   const SizedBox(height: 20),
+                  
                   ValueListenableBuilder<String?>(
                     valueListenable: _selectgenter,
                     builder: (context, value, _) {
@@ -250,8 +269,7 @@ class _StaffAddState extends State<StaffAdd> {
                   TextButton(
                     onPressed: () {
                       proofimage();
-                
-                  },
+                    },
                     child: const Text(
                       "Upload proof",
                       style: TextStyle(fontSize: 21),
@@ -269,43 +287,37 @@ class _StaffAddState extends State<StaffAdd> {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: ValueListenableBuilder<File?>(
-                        valueListenable: _selectimage,
-                        builder: (context, file, _) { 
-                          return file == null
-                              ? const Center(child: Text('No Image Selected'))
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.file(
-                                    file,
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                        },
-                      ),
+                      child: _selectimage.value == null
+                          ? const Center(child: Text('No Image Selected'))
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(
+                                _selectimage.value!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () {
-                            savestaff();
-                          },
-                          child: const Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
+                        onPressed: () {
+                          savestaff();
+                        },
+                        child: const Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ],
                   ),
-
                 ],
               ),
             ),
@@ -315,28 +327,35 @@ class _StaffAddState extends State<StaffAdd> {
     );
   }
 
-  void pickimage() async {
-    FilePickerResult? file = await FilePicker.platform.pickFiles();
-    if (file != null) {
-      image.value = file.files.single.path!;
+  Future<void> pickimage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      File selectedFile = File(file.path!);
+      Directory direc = await getApplicationDocumentsDirectory();
+      String newPath = '${direc.path}/${file.name}';
+      File savedFile = await selectedFile.copy(newPath);
+      image.value = savedFile.path;
     }
   }
 
-  void cameraimage() async {
-    XFile? imagefile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-    );
-    if (imagefile == null) return;
-    Directory dir = await getApplicationDocumentsDirectory();
-    File temp = File(imagefile.path);
-    File newfile = await temp.copy('${dir.path}/${imagefile.name}');
-    image.value = newfile.path;
+  Future<void> cameraimage() async {
+    final cameraimage = ImagePicker();
+    final camera = await cameraimage.pickImage(source: ImageSource.camera);
+    if (camera != null) {
+      image.value = camera.path;
+    }
   }
 
-  void proofimage() async {
+  Future<void> proofimage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      _selectimage.value = File(result.files.single.path!);
+      PlatformFile file = result.files.first;
+      File selectedfile = File(file.path!);
+      Directory direc = await getApplicationDocumentsDirectory();
+      String newPath = '${direc.path}/${file.name}';
+      File savedFile = await selectedfile.copy(newPath);
+      _selectimage.value = savedFile;
     }
   }
 }

@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:staff/model.dart/domainmodel.dart';
-import 'package:staff/model.dart/signupmodel.dart';
+import 'package:staff/model/complete_model.dart';
+import 'package:staff/model/domainmodel.dart';
+import 'package:staff/model/project_model.dart';
+import 'package:staff/model/signupmodel.dart';
+import 'package:staff/model/staffmodel.dart';
+import 'package:staff/model/work_model.dart';
 
 
-import 'package:staff/service.dart/add_domain_servicepage.dart';
-import 'package:staff/service.dart/signup_Data_Managing.dart';
+import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/complete_service.dart';
+import 'package:staff/service/project_task_service.dart';
+import 'package:staff/service/signup_Data_Managing.dart';
+import 'package:staff/service/staff_Data_managing.dart';
 
 import 'package:staff/splashscreens/splashscreen.dart';
+import 'package:staff/taskadd/project.dart';
+
+bool isLoggedIn = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Hive
+  
   await Hive.initFlutter();
 
-  // Register Hive Adapters
   Hive.registerAdapter(SignUpModelAdapter());
   Hive.registerAdapter(DomainmodelAdapter());
+  Hive.registerAdapter(StaffModelAdapter());
+  Hive.registerAdapter(ProjectModelAdapter());
+  Hive.registerAdapter(WorkModelAdapter());
+  Hive.registerAdapter(CompleteModelAdapter());
 
-  // Open Hive Boxes
-  await DataManaging().openBox();
-  await DomainBox().openBox();
+  try {
+    await DataManaging().openBox();
+    await DomainBox().openBox();
+    await StaffDatas().openbox();
+    await ProjectData().openBox();
+    await Complete_Datas().openbox();
+    print('All boxes opened successfully');
+  } catch (e) {
+    print('Error opening boxes: $e');
+  }
 
-  // Initialize SharedPreferences
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  isLoggedIn = prefs.getBool('isLoggedIn') ?? false; 
+  print('isLoggedIn: $isLoggedIn');
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }

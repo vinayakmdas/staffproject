@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:staff/model.dart/domainmodel.dart';
+import 'package:staff/model/domainmodel.dart';
 
 class DomainBox {
   late Box<Domainmodel> _box;
@@ -29,4 +29,5 @@ class DomainBox {
 
     _box.deleteAt(index);
   }
+  
 }
