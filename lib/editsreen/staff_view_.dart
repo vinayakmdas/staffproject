@@ -49,7 +49,7 @@ class ViewStaff extends StatelessWidget {
                           children: [
                             const Text('Name               :',
                                 style: TextStyle(fontSize: 18,color: Colors.white)),
-                            Text("${staff.username}",style: const TextStyle(color: Colors.white),)
+                            Text("       ${staff.username}",style: const TextStyle(color: Colors.white),)
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -66,6 +66,14 @@ class ViewStaff extends StatelessWidget {
                             const Text('Email                :',
                                 style: TextStyle(fontSize: 18,color: Colors.white)),
                             Text("       ${staff.email}",style: const  TextStyle(color: Colors.white),)
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            const Text('Project type     :',
+                                style: TextStyle(fontSize: 18,color: Colors.white)),
+                            Text("       ${staff.dropdowntask}",style: const  TextStyle(color: Colors.white),)
                           ],
                         ),
                         const SizedBox(height: 20),

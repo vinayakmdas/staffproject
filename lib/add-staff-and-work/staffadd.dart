@@ -8,13 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum/appbaruser.dart';
 import 'package:staff/custum/navigator.dart';
-import 'package:staff/custum/textcostom.dart';
 import 'package:staff/model/domainmodel.dart';
 import 'package:staff/model/staffmodel.dart';
 import 'package:staff/service/add_domain_servicepage.dart';
 import 'package:staff/service/staff_Data_managing.dart';
-import 'package:staff/taskadd/backend.dart';
-import 'package:staff/taskadd/frontend.dart';
 
 class StaffAdd extends StatefulWidget {
   StaffAdd({super.key});
@@ -29,19 +26,16 @@ class _StaffAddState extends State<StaffAdd> {
   final userEmail = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
-
   ValueNotifier<String?> image = ValueNotifier<String?>(null);
   List<Domainmodel> _domainList = [];
-  String? _selectedDomain; 
+  String? _selectedDomain;
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
-   final  ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
+  final ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
 
   final StaffDatas _staffDatas = StaffDatas();
-  final  List<String>projectlist=[ "Frontend", "Backend"];
-
-  
+  final List<String> projectlist = ["Frontend", "Backend"];
 
   @override
   void initState() {
@@ -70,29 +64,27 @@ class _StaffAddState extends State<StaffAdd> {
         name.isNotEmpty &&
         number.isNotEmpty &&
         email.isNotEmpty &&
-        _projeccontroller.value!=null &&
+        _projeccontroller.value != null &&
         _selectgenter.value != null &&
         _selectedDomain != null &&
         proofImagePath != null) {
       StaffModel staffModel = StaffModel(
-        username: name,
-        phonenumber: number,
-        email: email,
-        domain: _selectedDomain!, 
-        gender: _selectgenter.value.toString(),
-        image: image.value.toString(),
-        proofimage: proofImagePath,
-        dropdowntask: _projeccontroller.value.toString()
-      
-      );
-            
+          username: name,
+          phonenumber: number,
+          email: email,
+          domain: _selectedDomain!,
+          gender: _selectgenter.value.toString(),
+          image: image.value.toString(),
+          proofimage: proofImagePath,
+          dropdowntask: _projeccontroller.value.toString());
+
       _staffDatas.adddetails(staffModel);
-    print( " save staff project data is : ${staffModel.dropdowntask}");
+      print(" save staff project data is : ${staffModel.dropdowntask}");
       print("save staff datas ");
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
         context,
-        const ButtonNavigationbar(currentPage: 1 ) ,
+        const ButtonNavigationbar(currentPage: 1),
       );
     }
   }
@@ -123,9 +115,8 @@ class _StaffAddState extends State<StaffAdd> {
                           return CircleAvatar(
                             radius: 80,
                             backgroundColor: Colors.white,
-                            backgroundImage: value == null
-                                ? null
-                                : FileImage(File(value)),
+                            backgroundImage:
+                                value == null ? null : FileImage(File(value)),
                             child: value == null
                                 ? const Icon(
                                     Icons.person,
@@ -189,19 +180,15 @@ class _StaffAddState extends State<StaffAdd> {
                       return null;
                     },
                     controller: userEmail,
-                    lebelname: "E-MAIL  :",  
+                    lebelname: "E-MAIL  :",
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
-                               
                     borderRadius: BorderRadius.circular(12),
-                    decoration:  InputDecoration(
-                      
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide( width: 2)
-                      )
-                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(width: 2))),
                     value: _selectedDomain,
                     hint: const Text('Select Domain'),
                     onChanged: (value) {
@@ -222,29 +209,30 @@ class _StaffAddState extends State<StaffAdd> {
                       return null;
                     },
                   ),
-               SizedBox(height: 20,),
-                    ValueListenableBuilder<String?>(
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ValueListenableBuilder<String?>(
                     valueListenable: _projeccontroller,
                     builder: (context, value, _) {
                       return DropdownButtonFormField<String>(
-                        decoration:  InputDecoration(
-                          border:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)
-                            ,borderSide: BorderSide( width: 1)
-                          )
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(width: 1),
+                          ),
                         ),
                         hint: const Text(
                           "Select project model",
                           style: TextStyle(color: Colors.black),
                         ),
-                        value: value,
-                        items: projectlist.map((String _projeccontroller) {
+                        value: projectlist.contains(value) ? value : null,
+                        items: projectlist.map((String project) {
                           return DropdownMenuItem<String>(
-                            value: _projeccontroller,
-                            child: Text(_projeccontroller),
+                            value: project,
+                            child: Text(project),
                           );
                         }).toList(),
-                        
                         onChanged: (String? newValue) {
                           _projeccontroller.value = newValue;
                         },
@@ -252,7 +240,7 @@ class _StaffAddState extends State<StaffAdd> {
                           if (value == null || value.isEmpty) {
                             return 'Please select a Project Type';
                           }
-                          return null; 
+                          return null;
                         },
                       );
                     },
@@ -262,12 +250,10 @@ class _StaffAddState extends State<StaffAdd> {
                     valueListenable: _selectgenter,
                     builder: (context, value, _) {
                       return DropdownButtonFormField<String>(
-                        decoration:  InputDecoration(
-                          border:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)
-                            ,borderSide: BorderSide( width: 1)
-                          )
-                        ),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(width: 1))),
                         hint: const Text(
                           "Select Gender",
                           style: TextStyle(color: Colors.black),
@@ -279,7 +265,6 @@ class _StaffAddState extends State<StaffAdd> {
                             child: Text(gender),
                           );
                         }).toList(),
-                        
                         onChanged: (String? newValue) {
                           _selectgenter.value = newValue;
                         },
@@ -287,18 +272,16 @@ class _StaffAddState extends State<StaffAdd> {
                           if (value == null || value.isEmpty) {
                             return 'Please select a gender';
                           }
-                          return null; 
+                          return null;
                         },
                       );
                     },
                   ),
-
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
                       proofimage();
-                
-                  },
+                    },
                     child: const Text(
                       "Upload proof",
                       style: TextStyle(fontSize: 21),
@@ -318,7 +301,7 @@ class _StaffAddState extends State<StaffAdd> {
                       ),
                       child: ValueListenableBuilder<File?>(
                         valueListenable: _selectimage,
-                        builder: (context, file, _) { 
+                        builder: (context, file, _) {
                           return file == null
                               ? const Center(child: Text('No Image Selected'))
                               : ClipRRect(
@@ -335,24 +318,23 @@ class _StaffAddState extends State<StaffAdd> {
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () {
-                            savestaff();
-                          },
-                          child: const Text(
-                            "Submit",
-                            style: TextStyle(color: Colors.white),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
+                        onPressed: () {
+                          savestaff();
+                        },
+                        child: const Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ],
                   ),
-
                 ],
               ),
             ),
