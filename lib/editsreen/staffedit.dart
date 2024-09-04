@@ -35,8 +35,9 @@ class _EditStaff extends State<EditStaff> {
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
-
+ ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
   final StaffDatas _staffDatas = StaffDatas();
+    final List<String> projectlist = ["Frontend", "Backend"];
 
   savestaff() {
     final proofImagePath = _selectimage.value?.path;
@@ -47,6 +48,7 @@ class _EditStaff extends State<EditStaff> {
     if (_formkey.currentState!.validate() && 
         proofImagePath != null &&
             name.isNotEmpty &&
+          _projeccontroller.value != null &&
             number.isNotEmpty &&
             email.isNotEmpty &&
             _selectedDomain != null &&
@@ -60,6 +62,7 @@ class _EditStaff extends State<EditStaff> {
         gender: _selectgenter.value!,
         image: image.value,
         proofimage: _selectimage.value?.path,
+        dropdowntask:  _projeccontroller.value.toString()
       );
       _staffDatas.updatevalue(widget.index, staffModel);
       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -100,6 +103,7 @@ class _EditStaff extends State<EditStaff> {
     image.value = widget.staff.image;
     _selectgenter.value = widget.staff.gender;
     _selectedDomain = widget.staff.domain;
+    _projeccontroller.value=widget.staff.dropdowntask;
     _selectimage.value =
         widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
   }
@@ -228,6 +232,45 @@ class _EditStaff extends State<EditStaff> {
                   return null;
                 },
               ),
+
+                  SizedBox(height: 20,),
+                  
+ ValueListenableBuilder<String?>(
+                    valueListenable: _projeccontroller,
+                    builder: (context, value, _) {
+                      return DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(width: 1),
+                          ),
+                        ),
+                        hint: const Text(
+                          "Select project model",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        value: projectlist.contains(value) ? value : null,
+                        items: projectlist.map((String project) {
+                          return DropdownMenuItem<String>(
+                            value: project,
+                            child: Text(project),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          _projeccontroller.value = newValue;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a Project Type';
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                  ),
+                
+
+
                   const SizedBox(height: 20),
                   
                   ValueListenableBuilder<String?>(

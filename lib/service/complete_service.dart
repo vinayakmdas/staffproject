@@ -17,7 +17,7 @@ late  Box<CompleteModel>_box;
       
     }
     Future<void>delete(int  index)async{
-    _box.deleteAt(index);
+        _box.deleteAt(index);
    }
     Future<List<CompleteModel>>getdata()async{
       return _box.values.toList();

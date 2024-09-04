@@ -43,10 +43,10 @@ class _WorkaddState extends State<Workadd> {
   List<ProjectModel> _frontendlist = [];
   List<BackendModel> _backendlist = [];
   final ValueNotifier<File?> _workimage = ValueNotifier<File?>(null);
-  // Widget ? selectwidget;
+
   List<String> dropdata = [];
 
-  // All functions
+ 
   Future<void> staffdata() async {
     StaffDatas staffDatas = StaffDatas();
     await staffDatas.openbox();
@@ -75,56 +75,42 @@ class _WorkaddState extends State<Workadd> {
     await workDatas.openBox();
   }
 
-  // stringtowidget(List<dynamic> dropdowntask) {
-  //   if (dropdowntask == 'Frontend') {
-  //     dropdowntask.add(Front());
-  //   } else if (dropdowntask == 'Backend') {
-  //     dropdowntask.add(Back());
-  //   } else {
-  //     return Container(
-  //       padding: EdgeInsets.all(16),
-  //       child: Text('no widget ', style: TextStyle(fontSize: 18)),
-  //     );
-  //   }
-  // }
+ 
 
   void _updateDomain() {
-  if (_selectname != null) {
-    // Find the staff member by username
-    final staff = _staffdrop.firstWhere(
-      (staff) => staff.username == _selectname,
-      orElse: () => StaffModel(
-        username: '',
-        phonenumber: '',
-        email: '',
-        domain: 'No domain assigned',
-        gender: '',
-       // Default value for dropdowntask
-      ),
-    );
+    if (_selectname != null) {
+      final staff = _staffdrop.firstWhere(
+        (staff) => staff.username == _selectname,
+        orElse: () => StaffModel(
+          username: '',
+          phonenumber: '',
+          email: '',
+          domain: 'No domain assigned',
+          gender: '',
 
-    setState(() {
-      Domaincontroller.text =
-          staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
-      _selectDomain =
-          staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
+        ),
+      );
 
-      // Ensure dropdowntask is accessed correctly
-      final dropdowntaskValue = staff.dropdowntask is ValueNotifier<String?> 
-          ? (staff.dropdowntask as ValueNotifier<String?>).value
-          : staff.dropdowntask;
-            print(  "test= $dropdowntaskValue");
-      if (dropdowntaskValue == "Frontend") {
-        dropdata = _frontendlist.map((project) => project.projet).toList();
-      } else if (dropdowntaskValue == "Backend") {
-        dropdata = _backendlist.map((backend) => backend.backend).toList();
-      } else {
-        dropdata = ['No projects available'];
-      }
-    });
+      setState(() {
+        Domaincontroller.text =
+            staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
+        _selectDomain =
+            staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
+
+        final dropdowntaskValue = staff.dropdowntask is ValueNotifier<String?>
+            ? (staff.dropdowntask as ValueNotifier<String?>).value
+            : staff.dropdowntask;
+        print("test= $dropdowntaskValue");
+        if (dropdowntaskValue == "Frontend") {
+          dropdata = _frontendlist.map((project) => project.projet).toList();
+        } else if (dropdowntaskValue == "Backend") {
+          dropdata = _backendlist.map((backend) => backend.backend).toList();
+        } else {
+          dropdata = ['No projects available'];
+        }
+      });
+    }
   }
-}
-
 
   Future<void> saveworks() async {
     final date = datecontroller.text.trim();
@@ -176,7 +162,9 @@ class _WorkaddState extends State<Workadd> {
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
           child: Column(
+            
             children: [
+              
               const SizedBox(height: 20),
               customDropdownField(
                 labelText: "Select Staff",
@@ -191,7 +179,7 @@ class _WorkaddState extends State<Workadd> {
                 onChanged: (value) {
                   setState(() {
                     _selectname = value;
-                    _updateDomain(); // Update domain when staff is selected
+                    _updateDomain(); 
                   });
                 },
               ),

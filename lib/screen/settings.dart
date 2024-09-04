@@ -20,7 +20,7 @@ class Settings extends StatelessWidget {
          
          appBar: AppBar(
           backgroundColor:   const Color.fromRGBO(22, 38, 52, 1),
-          title: const Text("SETTINGS",style: TextStyle(color: Colors.white),),
+          title: const Text("STAGE",style: TextStyle(color: Colors.white),),
           centerTitle: true,
           iconTheme: const IconThemeData(color:  Colors.white),         ),
            endDrawer: Drawer(
@@ -98,6 +98,8 @@ class Settings extends StatelessWidget {
          
        )
      ),
+
+    //  body: ,
 
 
     );

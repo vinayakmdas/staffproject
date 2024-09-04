@@ -47,11 +47,17 @@ class _CompleteworkState extends State<Completework> {
                     // },
                     title: Text(work.staffname),
                     subtitle: Text(work.project),
-                    trailing: const Row(
+                    trailing:  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Apptext("Completed", Colors:Color.fromARGB(255, 15, 122, 19),fontSize: 17)
+                        IconButton(onPressed: ()async{
+
+                          completeDatas.delete(index);
+                          setState(() { });
+                          completeValues.removeAt(index);
+                        }, icon: Icon(Icons.delete,color:Colors.red,))
+                        ,const Apptext("Completed", Colors:Color.fromARGB(255, 15, 122, 19),fontSize: 17)
                       ],
                     ),
                   ),

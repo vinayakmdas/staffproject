@@ -212,39 +212,39 @@ class _StaffAddState extends State<StaffAdd> {
                   SizedBox(
                     height: 20,
                   ),
-                  ValueListenableBuilder<String?>(
-                    valueListenable: _projeccontroller,
-                    builder: (context, value, _) {
-                      return DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(width: 1),
+                    ValueListenableBuilder<String?>(
+                      valueListenable: _projeccontroller,
+                      builder: (context, value, _) {
+                        return DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(width: 1),
+                            ),
                           ),
-                        ),
-                        hint: const Text(
-                          "Select project model",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        value: projectlist.contains(value) ? value : null,
-                        items: projectlist.map((String project) {
-                          return DropdownMenuItem<String>(
-                            value: project,
-                            child: Text(project),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          _projeccontroller.value = newValue;
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a Project Type';
-                          }
-                          return null;
-                        },
-                      );
-                    },
-                  ),
+                          hint: const Text(
+                            "Select project model",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: projectlist.contains(value) ? value : null,
+                          items: projectlist.map((String project) {
+                            return DropdownMenuItem<String>(
+                              value: project,
+                              child: Text(project),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            _projeccontroller.value = newValue;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a Project Type';
+                            }
+                            return null;
+                          },
+                        );
+                      },
+                    ),
                   const SizedBox(height: 20),
                   ValueListenableBuilder<String?>(
                     valueListenable: _selectgenter,
