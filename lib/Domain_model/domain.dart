@@ -4,7 +4,7 @@ Widget customDropdownField({
   required String labelText,
   required String hintText,
   required String? value,
-  required List<DropdownMenuItem<String>> items, // Updated to accept DropdownMenuItem<String>
+  required List<DropdownMenuItem<String>> items, 
   required ValueChanged<String?> onChanged,
   FormFieldValidator<String>? validator,
 }) {

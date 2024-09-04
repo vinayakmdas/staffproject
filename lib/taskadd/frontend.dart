@@ -4,7 +4,9 @@ import 'package:staff/model/project_model.dart';
 import 'package:staff/service/project_task_service.dart';
 
 class Frontend extends StatefulWidget {
-  const Frontend({super.key});
+ 
+
+  const Frontend({super.key,  });
 
   @override
   State<Frontend> createState() =>_FrontendState();
@@ -14,15 +16,14 @@ final projecttext = TextEditingController();
 
 class _FrontendState extends State<Frontend> {
   final ProjectData _projectData = ProjectData();
-  List<ProjectModel> _list = [];
-
+  List<ProjectModel> list = [];
   firstrunning() async {
     await _projectData.openBox();
     getdata();
   }
 
   getdata() async {
-    _list = await _projectData.getprojectdata();
+    list = await _projectData.getprojectdata();
     setState(() {});
   }
 
@@ -57,16 +58,16 @@ class _FrontendState extends State<Frontend> {
         ),
       ),
       body: ListView.builder(
-          itemCount: _list.length,
+          itemCount: list.length,
           itemBuilder: (context, index) {
-            final project = _list[index];
+            final project = list[index];
             return ListTile(
               title: Text(project.projet),
               trailing: IconButton(
                   onPressed: () {
                     _projectData.deletelist(index);
                     setState(() {});
-                    _list.removeAt(index);
+                    list.removeAt(index);
                   },
                   icon: Icon(
                     Icons.delete,

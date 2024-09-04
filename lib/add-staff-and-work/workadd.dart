@@ -9,12 +9,12 @@ import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 import 'package:staff/custum/textfield.dart';
-import 'package:staff/model/domainmodel.dart';
+import 'package:staff/model/backend_model.dart';
 import 'package:staff/model/project_model.dart';
 import 'package:staff/model/staffmodel.dart';
 import 'package:staff/model/work_model.dart';
 import 'package:staff/pdfview.dart';
-import 'package:staff/service/add_domain_servicepage.dart';
+import 'package:staff/service/backendDatas.dart';
 import 'package:staff/service/project_task_service.dart';
 import 'package:staff/service/staff_Data_managing.dart';
 import 'package:staff/service/work_Datas.dart';
@@ -28,19 +28,23 @@ class Workadd extends StatefulWidget {
 }
 
 class _WorkaddState extends State<Workadd> {
+  final BackendDatas _backendDatas = BackendDatas();
+
   final datecontroller = TextEditingController();
   final descritioncontroller = TextEditingController();
   WorkDatas workDatas = WorkDatas();
   final Domaincontroller = TextEditingController();
-
-  // Declare drop items
   String? _selectname;
   List<StaffModel> _staffdrop = [];
   String? _selectDomain;
-  List<Domainmodel> _domainlist = [];
+
   String? _projectdrop;
-  List<ProjectModel> _projectList = [];
+
+  List<ProjectModel> _frontendlist = [];
+  List<BackendModel> _backendlist = [];
   final ValueNotifier<File?> _workimage = ValueNotifier<File?>(null);
+  // Widget ? selectwidget;
+  List<String> dropdata = [];
 
   // All functions
   Future<void> staffdata() async {
@@ -50,48 +54,77 @@ class _WorkaddState extends State<Workadd> {
     setState(() {});
   }
 
-  Future<void> domaindata() async {
-    DomainBox domainBox = DomainBox();
-    await domainBox.openBox();
-    _domainlist = await domainBox.getDomain();
+  Future<void> Front() async {
+    ProjectData projectData = ProjectData();
+    await projectData.openBox();
+    _frontendlist = await projectData.getprojectdata();
     setState(() {});
   }
 
-  Future<void> projectdata() async {
-    ProjectData projectData = ProjectData();
-    await projectData.openBox();
-    _projectList = await projectData.getprojectdata();
+  Future<void> Back() async {
+    await _backendDatas.openBox();
+
+    _backendlist = await _backendDatas.getbackenddata();
     setState(() {});
   }
 
   Future alldropdatas() async {
     await staffdata();
-    await domaindata();
-    await projectdata();
+    await Front();
+    await Back();
     await workDatas.openBox();
   }
 
+  // stringtowidget(List<dynamic> dropdowntask) {
+  //   if (dropdowntask == 'Frontend') {
+  //     dropdowntask.add(Front());
+  //   } else if (dropdowntask == 'Backend') {
+  //     dropdowntask.add(Back());
+  //   } else {
+  //     return Container(
+  //       padding: EdgeInsets.all(16),
+  //       child: Text('no widget ', style: TextStyle(fontSize: 18)),
+  //     );
+  //   }
+  // }
+
   void _updateDomain() {
-    if (_selectname != null) {
-      // Find the staff member by username
-      final staff = _staffdrop.firstWhere(
-        (staff) => staff.username == _selectname,
-        orElse: () => StaffModel(
-            username: '',
-            phonenumber: '',
-            email: '',
-            domain: 'No domain assigned',
-            gender: ''),
-      );
-      // Update domain field based on the selected staff
-      setState(() {
-        Domaincontroller.text =
-            staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
-        _selectDomain =
-            staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
-      });
-    }
+  if (_selectname != null) {
+    // Find the staff member by username
+    final staff = _staffdrop.firstWhere(
+      (staff) => staff.username == _selectname,
+      orElse: () => StaffModel(
+        username: '',
+        phonenumber: '',
+        email: '',
+        domain: 'No domain assigned',
+        gender: '',
+       // Default value for dropdowntask
+      ),
+    );
+
+    setState(() {
+      Domaincontroller.text =
+          staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
+      _selectDomain =
+          staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
+
+      // Ensure dropdowntask is accessed correctly
+      final dropdowntaskValue = staff.dropdowntask is ValueNotifier<String?> 
+          ? (staff.dropdowntask as ValueNotifier<String?>).value
+          : staff.dropdowntask;
+            print(  "test= $dropdowntaskValue");
+      if (dropdowntaskValue == "Frontend") {
+        dropdata = _frontendlist.map((project) => project.projet).toList();
+      } else if (dropdowntaskValue == "Backend") {
+        dropdata = _backendlist.map((backend) => backend.backend).toList();
+      } else {
+        dropdata = ['No projects available'];
+      }
+    });
   }
+}
+
 
   Future<void> saveworks() async {
     final date = datecontroller.text.trim();
@@ -182,10 +215,10 @@ class _WorkaddState extends State<Workadd> {
                 labelText: "Select Project",
                 hintText: "Select Project",
                 value: _projectdrop,
-                items: _projectList.map((project) {
+                items: dropdata.map((drop) {
                   return DropdownMenuItem<String>(
-                    value: project.projet,
-                    child: Text(project.projet),
+                    value: drop.toString(),
+                    child: Text(drop.toString()),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -324,18 +357,21 @@ class _WorkaddState extends State<Workadd> {
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 80,right: 80),
+                  padding: const EdgeInsets.only(left: 80, right: 80),
                   child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () {
-                          saveworks();
-                          },
-                          child: const Apptext("Save",Colors:  const Color.fromRGBO(22, 38, 52, 1),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      saveworks();
+                    },
+                    child: const Apptext(
+                      "Save",
+                      Colors: const Color.fromRGBO(22, 38, 52, 1),
+                    ),
                   ),
                 ),
               ),
@@ -445,16 +481,17 @@ class _WorkaddState extends State<Workadd> {
     }
   }
 
-void pdfFile() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: ['pdf'], // Limit the file picker to PDFs only
-  );
+  void pdfFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'], // Limit the file picker to PDFs only
+    );
 
-  if (result != null && result.files.single.path != null) {
-    _workimage.value = File(result.files.single.path!);
+    if (result != null && result.files.single.path != null) {
+      _workimage.value = File(result.files.single.path!);
+    }
   }
-}
+
   void cameraimage() async {
     XFile? imagefile = await ImagePicker().pickImage(
       source: ImageSource.camera,

@@ -49,7 +49,7 @@ class ViewStaff extends StatelessWidget {
                           children: [
                             const Text('Name               :',
                                 style: TextStyle(fontSize: 18,color: Colors.white)),
-                            Text("       ${staff.username}",style: const TextStyle(color: Colors.white),)
+                            Text("${staff.username}",style: const TextStyle(color: Colors.white),)
                           ],
                         ),
                         const SizedBox(height: 20),

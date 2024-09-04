@@ -36,10 +36,10 @@ class _StaffAddState extends State<StaffAdd> {
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
-  ValueNotifier<Widget?> _projeccontroller = ValueNotifier<Widget?>(null);
+   final  ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
 
   final StaffDatas _staffDatas = StaffDatas();
-  List<Widget>projectlist=[Frontend(), Backend()];
+  final  List<String>projectlist=[ "Frontend", "Backend"];
 
   
 
@@ -82,11 +82,12 @@ class _StaffAddState extends State<StaffAdd> {
         gender: _selectgenter.value.toString(),
         image: image.value.toString(),
         proofimage: proofImagePath,
-        dropdowntask: _projeccontroller.toString()
+        dropdowntask: _projeccontroller.value.toString()
       
       );
             
       _staffDatas.adddetails(staffModel);
+    print( " save staff project data is : ${staffModel.dropdowntask}");
       print("save staff datas ");
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
@@ -222,64 +223,40 @@ class _StaffAddState extends State<StaffAdd> {
                     },
                   ),
                SizedBox(height: 20,),
- DropdownButtonFormField<Widget>(
-                      borderRadius: BorderRadius.circular(12),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(width: 2))),
-                      hint: const Apptext("project type"),
-                      value: _projeccontroller.value,
-                      items:  projectlist.map((_projectDetails) {
-                        return DropdownMenuItem<Widget>(
-                          value: _projectDetails,
-                          child: Text(_projectDetails.runtimeType.toString()),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        _projeccontroller.value = value;
-                      }
-                       ,validator: (value) {
-                          if (value == null ) {
-                            return 'Please select a gender';
-                          }
-                          return null;
+                    ValueListenableBuilder<String?>(
+                    valueListenable: _projeccontroller,
+                    builder: (context, value, _) {
+                      return DropdownButtonFormField<String>(
+                        decoration:  InputDecoration(
+                          border:  OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)
+                            ,borderSide: BorderSide( width: 1)
+                          )
+                        ),
+                        hint: const Text(
+                          "Select project model",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        value: value,
+                        items: projectlist.map((String _projeccontroller) {
+                          return DropdownMenuItem<String>(
+                            value: _projeccontroller,
+                            child: Text(_projeccontroller),
+                          );
+                        }).toList(),
+                        
+                        onChanged: (String? newValue) {
+                          _projeccontroller.value = newValue;
                         },
-                      ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a Project Type';
+                          }
+                          return null; 
+                        },
+                      );
+                    },
+                  ),
                   const SizedBox(height: 20),
                   ValueListenableBuilder<String?>(
                     valueListenable: _selectgenter,
