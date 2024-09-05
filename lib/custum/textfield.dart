@@ -116,16 +116,17 @@ class calender extends StatelessWidget {
   final Color filedcolor;
 
   final Color lebelcolor;
-
+ FormFieldValidator<String>? validator;
   final Color bordercolor;
   final Widget ?suffixicon;
-  const calender({super.key
+   calender({super.key
   , required this.bordercolor 
   ,required this.lebelcolor,
   required this.filedcolor,
   required this.suffixicon,
   required this.lebelname,
   required this.controller
+   ,this.validator
   });
 
   @override
@@ -134,7 +135,7 @@ class calender extends StatelessWidget {
       controller: controller,
       style:  const TextStyle( color: Colors.white),
       readOnly: true,
-
+           validator: validator,
        decoration: InputDecoration(
         suffixIcon:suffixicon,
        

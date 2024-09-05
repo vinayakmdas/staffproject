@@ -23,4 +23,9 @@ late Box<WorkModel>_box;
    Future<void>delete(int index)async{
     _box.deleteAt(index);
    }
+    Future<void>updatevalue( int index,WorkModel update)async{
+    print("before  open update box");
+     _box.putAt( index, update);
+     print("complet update");
+  }
 }

@@ -3,6 +3,7 @@ import 'package:staff/add-staff-and-work/workadd.dart';
 import 'package:staff/custum/navigator.dart';
 import 'package:staff/custum/textcostom.dart';
 import 'package:staff/custum/textfield.dart';
+import 'package:staff/editsreen/workedit.dart';
 import 'package:staff/editsreen/workview.dart';
 import 'package:staff/model/complete_model.dart';
 import 'package:staff/model/work_model.dart';
@@ -18,13 +19,12 @@ class WorkScreen extends StatefulWidget {
 
 class _WorkScreenState extends State<WorkScreen> {
   final worksearchcontroller = TextEditingController();
-  final WorkDatas _workDatas = WorkDatas(); 
+  final WorkDatas _workDatas = WorkDatas();
   final Complete_Datas _complete_datas = Complete_Datas();
   List<WorkModel> _list = [];
   List<WorkModel> workvalues = [];
 
   Future<void> datasave(WorkModel work, int index) async {
-    
     CompleteModel completeModel = CompleteModel(
       staffname: work.staffname,
       domainname: work.domainname,
@@ -86,10 +86,60 @@ class _WorkScreenState extends State<WorkScreen> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            pending(context, work, index); // Pass the index here
+                            pending(
+                                context, work, index); // Pass the index here
                           },
                           child: const Apptext("Pending", Colors: Colors.red),
                         ),
+                        IconButton(
+                          onPressed: () {
+                            showMenu(
+                              context: context,
+                              position: const RelativeRect.fromLTRB(100, 100, 0,0), // Adjust the position if needed
+                              items: <PopupMenuEntry<String>>[
+                                PopupMenuItem(
+                                  value: "Edit",
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.edit,
+                                          color: Color.fromARGB(
+                                              255, 34, 40, 229)),
+                                      TextButton(
+                                        onPressed: () {
+                                          navigatepush(context,const Workedit());
+                                        },
+                                        child: const Apptext("Edit",
+                                            Colors:  Color.fromARGB(
+                                                255, 34, 40, 229)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: "delete",
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.delete,
+                                        color: Color.fromARGB(
+                                            255, 165, 8, 8),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          // Implement your delete logic here
+                                        },
+                                        child: const Apptext("Delete",
+                                            Colors: Color.fromARGB(
+                                                255, 165, 8, 8)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          icon: const Icon(Icons.more_vert_outlined),
+                        )
                       ],
                     ),
                   ),

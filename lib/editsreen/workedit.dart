@@ -20,14 +20,14 @@ import 'package:staff/service/staff_Data_managing.dart';
 import 'package:staff/service/work_Datas.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Workadd extends StatefulWidget {
-  const Workadd({super.key});
+class Workedit extends StatefulWidget {
+  const Workedit({super.key});
 
   @override
-  State<Workadd> createState() => _WorkaddState();
+  State<Workedit> createState() => _WorkeditState();
 }
 
-class _WorkaddState extends State<Workadd> {
+class _WorkeditState extends State<Workedit> {
   final BackendDatas _backendDatas = BackendDatas();
 
   final datecontroller = TextEditingController();
@@ -155,7 +155,7 @@ class _WorkaddState extends State<Workadd> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
         foregroundColor: Colors.white,
-        title: const Text("ADD WORK"),
+      title: const Text("EDIT WORK~"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
