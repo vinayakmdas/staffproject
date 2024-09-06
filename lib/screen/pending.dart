@@ -11,7 +11,8 @@ import 'package:staff/service/complete_service.dart';
 import 'package:staff/service/work_Datas.dart';
 
 class WorkScreen extends StatefulWidget {
-  const WorkScreen({super.key});
+ 
+   WorkScreen({super.key});
 
   @override
   State<WorkScreen> createState() => _WorkScreenState();
@@ -106,7 +107,7 @@ class _WorkScreenState extends State<WorkScreen> {
                                               255, 34, 40, 229)),
                                       TextButton(
                                         onPressed: () {
-                                          navigatepush(context,const Workedit());
+                                          navigatepush(context, Workedit(work:work,index:index ,));
                                         },
                                         child: const Apptext("Edit",
                                             Colors:  Color.fromARGB(

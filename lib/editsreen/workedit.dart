@@ -21,7 +21,9 @@ import 'package:staff/service/work_Datas.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Workedit extends StatefulWidget {
-  const Workedit({super.key});
+  final WorkModel ?work;
+   final int? index;
+   Workedit({super.key ,this.work,this.index});
 
   @override
   State<Workedit> createState() => _WorkeditState();
@@ -49,7 +51,8 @@ class _WorkeditState extends State<Workedit> {
  
   Future<void> staffdata() async {
     StaffDatas staffDatas = StaffDatas();
-    await staffDatas.openbox();
+    valueassign();  
+    await staffDatas.openbox();   
     _staffdrop = await staffDatas.getstaffdetails();
     setState(() {});
   }
@@ -111,7 +114,7 @@ class _WorkeditState extends State<Workedit> {
       });
     }
   }
-
+// ===========================================================================================================
   Future<void> saveworks() async {
     final date = datecontroller.text.trim();
     final description = descritioncontroller.text.trim();
@@ -142,10 +145,28 @@ class _WorkeditState extends State<Workedit> {
     }
   }
 
+
+void valueassign(){
+
+  _selectname = widget.work?.staffname;
+  Domaincontroller.text=widget.work?.domainname??" ";
+  _projectdrop=widget.work?.project;
+  descritioncontroller.text = widget.work?.description ?? '';
+   datecontroller.text = DateFormat('dd/MM/yyyy').format(widget.work!.calendarDate);
+  _workimage.value = File(widget.work!.fileproperties!); 
+// _updateDomain();
+}
+
+
+
+
   @override
   void initState() {
-    super.initState();
+   valueassign();
     alldropdatas();
+    super.initState();
+
+   
   }
 
   @override
@@ -155,7 +176,7 @@ class _WorkeditState extends State<Workedit> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
         foregroundColor: Colors.white,
-      title: const Text("EDIT WORK~"),
+        title: const Text("EDIT WORk"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
