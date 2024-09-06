@@ -169,6 +169,7 @@ class _WorkaddState extends State<Workadd> {
                 
                 const SizedBox(height: 20),
                 customDropdownField(
+                  
                   labelText: "Select Staff",
                   hintText: "Select staff",
                   value: _selectname,
@@ -242,9 +243,10 @@ class _WorkaddState extends State<Workadd> {
                 ),
                 const SizedBox(height: 20),
                 calender(
+                  
                   validator:  (value) {
                       if (value == null || value.isEmpty) {
-                        return " Please select  project type ";
+                        return " Please select Date ";
                       }
                       return null;
                     } ,
@@ -363,7 +365,7 @@ class _WorkaddState extends State<Workadd> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator:   (value) {
                       if (value == null || value.isEmpty) {
                         return " Please add description name";

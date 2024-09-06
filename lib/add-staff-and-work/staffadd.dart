@@ -150,11 +150,13 @@ class _StaffAddState extends State<StaffAdd> {
                       }
                       return null;
                     },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: usernameController,
                     lebelname: 'NAME  :',
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
+                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: userPhoneNumber,
                     lebelname: "PHONE NUMBER  :",
                     validator: (value) {
@@ -171,6 +173,7 @@ class _StaffAddState extends State<StaffAdd> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
+                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter E mail";
@@ -184,6 +187,7 @@ class _StaffAddState extends State<StaffAdd> {
                   ),
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
+                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     borderRadius: BorderRadius.circular(12),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -198,6 +202,7 @@ class _StaffAddState extends State<StaffAdd> {
                     },
                     items: _domainList.map((domain) {
                       return DropdownMenuItem<String>(
+                        
                         value: domain.domain,
                         child: Text(domain.domain),
                       );
@@ -213,9 +218,11 @@ class _StaffAddState extends State<StaffAdd> {
                     height: 20,
                   ),
                     ValueListenableBuilder<String?>(
+                      
                       valueListenable: _projeccontroller,
                       builder: (context, value, _) {
                         return DropdownButtonFormField<String>(
+                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -247,9 +254,11 @@ class _StaffAddState extends State<StaffAdd> {
                     ),
                   const SizedBox(height: 20),
                   ValueListenableBuilder<String?>(
+                    
                     valueListenable: _selectgenter,
                     builder: (context, value, _) {
                       return DropdownButtonFormField<String>(
+                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),

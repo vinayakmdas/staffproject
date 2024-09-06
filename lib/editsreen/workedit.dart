@@ -391,6 +391,7 @@ class _WorkeditState extends State<Workedit> {
                   },
                   controller: descritioncontroller,
                   maxLines: 4,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),

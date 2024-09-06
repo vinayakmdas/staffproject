@@ -162,8 +162,10 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 43),
                   usertextfield(
+                  
                     controller: usernameController,
                     lebelname: 'NAME  :',
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return " Please enter Staff name";
@@ -174,8 +176,11 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
+                   
                     controller: userPhoneNumber,
+                      
                     lebelname: "PHONE NUMBER  :",
+                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter your Phone number";
@@ -191,8 +196,10 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
+                    
                     controller: userEmail,
                     lebelname: "E-MAIL  :",
+                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter E mail";

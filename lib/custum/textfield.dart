@@ -132,6 +132,7 @@ class calender extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       style:  const TextStyle( color: Colors.white),
       readOnly: true,

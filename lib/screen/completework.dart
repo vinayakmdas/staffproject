@@ -52,10 +52,8 @@ class _CompleteworkState extends State<Completework> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(onPressed: ()async{
-
-                          completeDatas.delete(index);
-                          setState(() { });
-                          completeValues.removeAt(index);
+showalertdelete(context,index);
+                          
                         }, icon: Icon(Icons.delete,color:Colors.red,))
                         ,const Apptext("Completed", Colors:Color.fromARGB(255, 15, 122, 19),fontSize: 17)
                       ],
@@ -70,7 +68,7 @@ class _CompleteworkState extends State<Completework> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
-          // navigatepush(context, const Workadd());
+           navigatepush(context, const Workadd());
         },
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
       ),
@@ -83,6 +81,36 @@ class _CompleteworkState extends State<Completework> {
       completeValues = completeList;
     });
   }
+  
 
   
+  showalertdelete(context,index){
+    showDialog(context: context, builder:(context)=>AlertDialog(
+    title:Apptext("Delte the work.."),
+    actions: [
+        Column(
+          children: [
+            Row(
+            
+              children: [
+                TextButton(onPressed: (){
+                dleted(index);
+                }, child: Apptext("Delete")),
+                TextButton(onPressed: (){
+                          Navigator.of(context).pop(); 
+                }, child: Apptext("cancel")),
+              ],
+            )
+
+          ],
+        )
+    ],
+    ) );
+  }
+  dleted(index)async{
+   await completeDatas.delete(index);
+   setState(() { });
+completeValues.removeAt(index);
+         Navigator.of(context).pop();
+  }
 }

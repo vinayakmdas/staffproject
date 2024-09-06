@@ -13,7 +13,7 @@ import 'package:staff/service/work_Datas.dart';
 class WorkScreen extends StatefulWidget {
  
    WorkScreen({super.key});
-
+  
   @override
   State<WorkScreen> createState() => _WorkScreenState();
 }
@@ -24,6 +24,7 @@ class _WorkScreenState extends State<WorkScreen> {
   final Complete_Datas _complete_datas = Complete_Datas();
   List<WorkModel> _list = [];
   List<WorkModel> workvalues = [];
+
 
   Future<void> datasave(WorkModel work, int index) async {
     CompleteModel completeModel = CompleteModel(
@@ -48,6 +49,7 @@ class _WorkScreenState extends State<WorkScreen> {
     super.initState();
     _workDatas.openBox().then((_) {
       loadwork();
+      worksearchcontroller.addListener(_onsearchchanged);
     });
   }
 
@@ -127,7 +129,7 @@ class _WorkScreenState extends State<WorkScreen> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          // Implement your delete logic here
+                                         showalert(context,index);
                                         },
                                         child: const Apptext("Delete",
                                             Colors: Color.fromARGB(
@@ -205,5 +207,38 @@ class _WorkScreenState extends State<WorkScreen> {
         ],
       ),
     );
+  }
+
+  showalert(context,index){
+    showDialog(context: context, builder:(context)=>AlertDialog(
+    title:Apptext("Delte the work.."),
+    actions: [
+        Column(
+          children: [
+            Row(
+            
+              children: [
+                TextButton(onPressed: (){
+                deletedata(index);
+                }, child: Apptext("Delete")),
+                TextButton(onPressed: (){
+                          Navigator.of(context).pop(); 
+                }, child: Apptext("cancel")),
+              ],
+            )
+
+          ],
+        )
+    ],
+    ) );
+  }
+  deletedata(index)async{
+    
+  await _workDatas.delete(index);
+
+   workvalues.removeAt(index);
+   setState(() { });
+    Navigator.of(context).pop();
+    
   }
 }
