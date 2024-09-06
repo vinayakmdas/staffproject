@@ -21,9 +21,9 @@ import 'package:staff/service/work_Datas.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Workedit extends StatefulWidget {
-  final WorkModel ?work;
-   final int? index;
-   Workedit({super.key ,this.work,this.index});
+  final WorkModel? work;
+  final int index;
+  Workedit({super.key, this.work, required this.index});
 
   @override
   State<Workedit> createState() => _WorkeditState();
@@ -39,8 +39,9 @@ class _WorkeditState extends State<Workedit> {
   String? _selectname;
   List<StaffModel> _staffdrop = [];
   String? _selectDomain;
- final _formkey = GlobalKey<FormState>();
-  String? _projectdrop;
+  final _formkey = GlobalKey<FormState>();
+
+  final ValueNotifier<String?> _projectdrop = ValueNotifier<String?>(null);
 
   List<ProjectModel> _frontendlist = [];
   List<BackendModel> _backendlist = [];
@@ -48,11 +49,19 @@ class _WorkeditState extends State<Workedit> {
 
   List<String> dropdata = [];
 
- 
+  trail() {
+    if (_frontendlist
+        .any((project) => project.projet == widget.work?.project)) {
+      dropdata = _frontendlist.map((project) => project.projet).toList();
+    } else {
+      dropdata = _backendlist.map((backend) => backend.backend).toList();
+    }
+  }
+
   Future<void> staffdata() async {
     StaffDatas staffDatas = StaffDatas();
-    valueassign();  
-    await staffDatas.openbox();   
+    valueassign();
+    await staffDatas.openbox();
     _staffdrop = await staffDatas.getstaffdetails();
     setState(() {});
   }
@@ -76,9 +85,9 @@ class _WorkeditState extends State<Workedit> {
     await Front();
     await Back();
     await workDatas.openBox();
+    print("dropdata is $dropdata");
+    trail();
   }
-
- 
 
   void _updateDomain() {
     if (_selectname != null) {
@@ -90,7 +99,6 @@ class _WorkeditState extends State<Workedit> {
           email: '',
           domain: 'No domain assigned',
           gender: '',
-
         ),
       );
 
@@ -99,31 +107,21 @@ class _WorkeditState extends State<Workedit> {
             staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
         _selectDomain =
             staff.domain.isNotEmpty ? staff.domain : 'No domain assigned';
-
-        final dropdowntaskValue = staff.dropdowntask is ValueNotifier<String?>
-            ? (staff.dropdowntask as ValueNotifier<String?>).value
-            : staff.dropdowntask;
-        print("test= $dropdowntaskValue");
-        if (dropdowntaskValue == "Frontend") {
-          dropdata = _frontendlist.map((project) => project.projet).toList();
-        } else if (dropdowntaskValue == "Backend") {
-          dropdata = _backendlist.map((backend) => backend.backend).toList();
-        } else {
-          dropdata = ['No projects available'];
-        }
       });
     }
   }
+
 // ===========================================================================================================
   Future<void> saveworks() async {
     final date = datecontroller.text.trim();
     final description = descritioncontroller.text.trim();
     final _image = _workimage.value?.path;
 
-    if (_formkey.currentState!.validate()&&_selectname != null &&
+    if (_formkey.currentState!.validate() &&
+        _selectname != null &&
         date.isNotEmpty &&
         _selectDomain != null &&
-        _projectdrop != null &&
+        dropdata.isNotEmpty &&
         _image != null &&
         description.isNotEmpty) {
       DateFormat dateFormat = DateFormat("dd/MM/yyyy");
@@ -131,12 +129,12 @@ class _WorkeditState extends State<Workedit> {
       WorkModel workModel = WorkModel(
         staffname: _selectname!,
         domainname: _selectDomain!,
-        project: _projectdrop!,
+        project: _projectdrop.value!,
         calendarDate: calendarDate,
         fileproperties: _image,
         description: description,
       );
-      workDatas.addwork(workModel);
+      workDatas.updatevalue( widget.index,workModel);
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
         context,
@@ -145,28 +143,23 @@ class _WorkeditState extends State<Workedit> {
     }
   }
 
-
-void valueassign(){
-
-  _selectname = widget.work?.staffname;
-  Domaincontroller.text=widget.work?.domainname??" ";
-  _projectdrop=widget.work?.project;
-  descritioncontroller.text = widget.work?.description ?? '';
-   datecontroller.text = DateFormat('dd/MM/yyyy').format(widget.work!.calendarDate);
-  _workimage.value = File(widget.work!.fileproperties!); 
-// _updateDomain();
-}
-
-
-
+  void valueassign() {
+    _selectname = widget.work?.staffname;
+    Domaincontroller.text = widget.work?.domainname ?? " ";
+    _projectdrop.value = widget.work?.project;
+    descritioncontroller.text = widget.work?.description ?? '';
+    datecontroller.text =
+        DateFormat('dd/MM/yyyy').format(widget.work!.calendarDate);
+    _workimage.value = File(widget.work!.fileproperties!);
+  }
 
   @override
   void initState() {
-   valueassign();
-    alldropdatas();
     super.initState();
-
-   
+    valueassign();
+    alldropdatas().then((_) {
+      setState(() {});
+    });
   }
 
   @override
@@ -185,9 +178,7 @@ void valueassign(){
           child: Form(
             key: _formkey,
             child: Column(
-            
               children: [
-                
                 const SizedBox(height: 20),
                 customDropdownField(
                   labelText: "Select Staff",
@@ -202,25 +193,25 @@ void valueassign(){
                   onChanged: (value) {
                     setState(() {
                       _selectname = value;
-                      _updateDomain(); 
+                      _updateDomain();
                     });
                   },
-                  validator:  (value) {
-                      if (value == null || value.isEmpty) {
-                        return " Please select staff name ";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return " Please select staff name ";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: Domaincontroller,
-                    validator:  (value) {
-                      if (value == null || value.isEmpty) {
-                        return " First  select staff name ";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return " First  select staff name ";
+                    }
+                    return null;
+                  },
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -234,41 +225,51 @@ void valueassign(){
                   readOnly: true,
                 ),
                 const SizedBox(height: 20),
-                customDropdownField(
-                    
-                           
-                  labelText: "Select Project",
-                  hintText: "Select Project",
-                  value: _projectdrop,
-                    validator:  (value) {
-                      if (value == null || value.isEmpty) {
-                        return " Please select  project type ";
-                      }
-                      return null;
-                    },
-                  items: dropdata.map((drop) {
-                    return DropdownMenuItem<String>(
-                      value: drop.toString(),
-                      child: Text(drop.toString()),
+                ValueListenableBuilder<String?>(
+                  valueListenable: _projectdrop,
+                  builder: (context, value, _) {
+                    return DropdownButtonFormField<String>(
+                      dropdownColor: const Color.fromARGB(210, 4, 46, 82),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(width: 1),
+                        ),
+                      ),
+                      hint: const Text(
+                        "Select project model",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      value: dropdata.contains(value) ? value : null,
+                      items: dropdata.map((String project) {
+                        return DropdownMenuItem<String>(
+                          value: project,
+                          child: Text(
+                            project,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        _projectdrop.value = newValue;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a Project Type';
+                        }
+                        return null;
+                      },
                     );
-                      
-                  }).toList(),
-                  
-                  onChanged: (value) {
-                    setState(() {
-                      _projectdrop = value;
-                    });
                   },
-                  
                 ),
                 const SizedBox(height: 20),
                 calender(
-                  validator:  (value) {
-                      if (value == null || value.isEmpty) {
-                        return " Please select  project type ";
-                      }
-                      return null;
-                    } ,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return " Please select  project type ";
+                    }
+                    return null;
+                  },
                   bordercolor: Colors.white,
                   controller: datecontroller,
                   lebelcolor: Colors.white,
@@ -304,7 +305,6 @@ void valueassign(){
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
-                  
                   onTap: () {
                     if (_workimage.value != null &&
                         _workimage.value!.path.endsWith('.pdf')) {
@@ -318,27 +318,24 @@ void valueassign(){
                     }
                   },
                   child: Container(
-                    
                     height: 200,
                     width: 290,
                     decoration: BoxDecoration(
-                    
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ValueListenableBuilder<File?>(
                       valueListenable: _workimage,
-                      
                       builder: (context, file, _) {
                         if (file == null) {
                           return const Center(
                               child: Text("No Document",
                                   style: TextStyle(color: Colors.white)));
                         }
-            
+
                         final fileExtension =
                             file.path.split('.').last.toLowerCase();
-            
+
                         if (fileExtension == 'pdf') {
                           return Center(
                             child: Column(
@@ -347,7 +344,8 @@ void valueassign(){
                                 const Icon(Icons.picture_as_pdf,
                                     size: 50, color: Colors.red),
                                 Text('PDF File: ${file.uri.pathSegments.last}',
-                                    style: const TextStyle(color: Colors.white)),
+                                    style:
+                                        const TextStyle(color: Colors.white)),
                               ],
                             ),
                           );
@@ -369,7 +367,8 @@ void valueassign(){
                                     size: 50, color: Colors.blue),
                                 Text(
                                     'Document File: ${file.uri.pathSegments.last}',
-                                    style: const TextStyle(color: Colors.white)),
+                                    style:
+                                        const TextStyle(color: Colors.white)),
                               ],
                             ),
                           );
@@ -384,13 +383,12 @@ void valueassign(){
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  
-                  validator:   (value) {
-                      if (value == null || value.isEmpty) {
-                        return " Please add description name";
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return " Please add description name";
+                    }
+                    return null;
+                  },
                   controller: descritioncontroller,
                   maxLines: 4,
                   decoration: InputDecoration(
@@ -402,7 +400,6 @@ void valueassign(){
                     labelText: "Description",
                     errorStyle: TextStyle(color: Colors.red),
                     labelStyle: const TextStyle(color: Colors.white),
-                    
                   ),
                   style: const TextStyle(color: Colors.white),
                 ),
