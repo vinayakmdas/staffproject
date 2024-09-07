@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:staff/custum/dashboarditem.dart';
 
 import 'package:staff/custum/navigator.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
@@ -17,7 +18,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-         
+          backgroundColor:   const Color.fromRGBO(22, 38, 52, 1), 
          appBar: AppBar(
           backgroundColor:   const Color.fromRGBO(22, 38, 52, 1),
           title: const Text("STAGE",style: TextStyle(color: Colors.white),),
@@ -99,7 +100,17 @@ class Settings extends StatelessWidget {
        )
      ),
 
-    //  body: ,
+    body:  Padding(
+      padding: const EdgeInsets.only(left: 25,right: 25,top: 30),
+      child: Column(
+         children: [
+                DashboardItemWidget(onTap1: 
+                (){}, onTap2: (){}, titleOne: "Pending", titleTwo: "Complete")
+               , SizedBox(height: 20,)
+               , Divider(color:Colors.orange ,)
+         ],
+      ),
+    ) ,
 
 
     );
