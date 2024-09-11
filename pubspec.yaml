@@ -47,7 +47,8 @@ dependencies:
   pdfx: ^2.6.0
   intl: ^0.17.0
   google_nav_bar: ^5.0.6
-
+  timeline_tile: ^2.0.0
+  
 
 dev_dependencies:
   flutter_test:
