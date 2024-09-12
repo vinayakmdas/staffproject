@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: title
-                      
+                       
                       ?? Text(
                         "Title",
                         style: GoogleFonts.getFont('Lato', color: Colors.white, fontSize: 23),
@@ -65,11 +65,13 @@ class containerhomescreen extends StatelessWidget {
   final String  heading;
   final IconData icons;
   final Color   color;
+  final int  count;
   const containerhomescreen({super.key,
-  
+   required this.count,
   required this.icons,
   required this.heading
   ,required this.color
+
   });
 
   @override
@@ -90,9 +92,10 @@ class containerhomescreen extends StatelessWidget {
                     children: [
                       SizedBox(height: 20),
                       Icon(icons, size: 43, color: color),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Text( heading, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 15),
+                      Text( count.toString(), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
