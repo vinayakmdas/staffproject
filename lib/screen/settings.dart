@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/custum/dashboarditem.dart';
 
 import 'package:staff/custum/navigator.dart';
+import 'package:staff/drawer/drawer.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model/complete_model.dart';
 import 'package:staff/model/work_model.dart';
@@ -100,7 +101,9 @@ int totalTasks = 0;
                       ),
                       title: const Text('Privacy and policy',
                           style: TextStyle(color: Colors.white)),
-                      onTap: () {}),
+                      onTap: () {
+                        navigatepush(context, Privacy_policy());
+                      }),
                   ListTile(
                       leading: const Icon(
                         Icons.note_sharp,
