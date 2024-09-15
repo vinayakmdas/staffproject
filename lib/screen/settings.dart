@@ -3,7 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:staff/custum/dashboarditem.dart';
 
 import 'package:staff/custum/navigator.dart';
-import 'package:staff/drawer/drawer.dart';
+import 'package:staff/drawer/about.dart';
+import 'package:staff/drawer/contact.dart';
+import 'package:staff/drawer/privacy_policy.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model/complete_model.dart';
 import 'package:staff/model/work_model.dart';
@@ -90,10 +92,12 @@ int totalTasks = 0;
                         color: Colors.white,
                       ),
                       title: const Text(
-                        'About us ',
+                        'About Us ',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onTap: () {}),
+                      onTap: () {
+                        navigatepush(context, const Aboutscreen());
+                      }),
                   ListTile(
                       leading: const Icon(
                         Icons.security_outlined,
@@ -102,7 +106,7 @@ int totalTasks = 0;
                       title: const Text('Privacy and policy',
                           style: TextStyle(color: Colors.white)),
                       onTap: () {
-                        navigatepush(context, Privacy_policy());
+                        navigatepush(context, const Privacy_policy());
                       }),
                   ListTile(
                       leading: const Icon(
@@ -119,7 +123,7 @@ int totalTasks = 0;
                       ),
                       title: const Text(' contact Us ',
                           style: TextStyle(color: Colors.white)),
-                      onTap: () {}),
+                      onTap: () {navigatepush(context, Contact());}),
                   ListTile(
                       leading: const Icon(
                         Icons.logout,
