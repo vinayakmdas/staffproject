@@ -6,6 +6,7 @@ import 'package:staff/custum/navigator.dart';
 import 'package:staff/drawer/about.dart';
 import 'package:staff/drawer/contact.dart';
 import 'package:staff/drawer/privacy_policy.dart';
+import 'package:staff/drawer/terms%20_and%20_condition.dart';
 import 'package:staff/login%20and%20%20sign%20up/login.dart';
 import 'package:staff/model/complete_model.dart';
 import 'package:staff/model/work_model.dart';
@@ -115,7 +116,7 @@ int totalTasks = 0;
                       ),
                       title: const Text('Terms and condition ',
                           style: TextStyle(color: Colors.white)),
-                      onTap: () {}),
+                      onTap: () {navigatepush(context, Terms_And_Condition());}),
                   ListTile(
                       leading: const Icon(
                         Icons.connect_without_contact_outlined,
