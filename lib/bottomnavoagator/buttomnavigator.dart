@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';  // Import the google_nav_bar package
+import 'package:google_nav_bar/google_nav_bar.dart'; 
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:staff/screen/homescreen.dart';
+import 'package:staff/screen/milestone.dart';
 import 'package:staff/screen/settings.dart';
 import 'package:staff/screen/staffscreen.dart';
 import 'package:staff/screen/work.dart';
@@ -19,6 +20,7 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
     const HomeScreen(),
     StaffScreen(),
     const allwork(),
+    const Milestone(),
     const Settings(),
   ];
 
@@ -39,7 +41,7 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
         hoverColor: const Color.fromARGB(255, 255, 255, 255),
         gap: 8,
         activeColor: const Color.fromRGBO(22, 38, 52, 1),
-        iconSize: 32,
+        iconSize: 21           ,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
         duration: const Duration(milliseconds: 300),
         color: Colors.grey[800],
@@ -58,9 +60,13 @@ class _ButtonNavigationbarState extends State<ButtonNavigationbar> {
             text: 'Work',
           ),
           GButton(
-            icon: Iconsax.setting,
+            icon: Iconsax.chart_21,
+            text: 'Milestone',
+          ),GButton(
+            icon: Iconsax.home,
             text: 'Settings',
           ),
+          
         ],
         selectedIndex: _currentIndex,
         onTabChange: (index) {
