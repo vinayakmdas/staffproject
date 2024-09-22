@@ -54,12 +54,10 @@ saveproject() async {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 72),
-          child: Text(
-            "BACKEND DATAS",
-            style: GoogleFonts.getFont('Lato'),
-          ),
+        centerTitle: true,
+        title: Text(
+          "BACKEND DATAS",
+          style: GoogleFonts.getFont('Lato'),
         ),
       ),
       body: ListView.builder(

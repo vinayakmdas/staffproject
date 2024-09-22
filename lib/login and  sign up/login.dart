@@ -43,6 +43,7 @@ class _LoginpageState extends State<Loginpage> {
       Future<void> saveLoginState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
+    await prefs.setString('userpassword', logpassword);
   }
       navigatepushreplacement(context, ButtonNavigationbar());
 
@@ -99,6 +100,7 @@ class _LoginpageState extends State<Loginpage> {
                       bordercolor: Colors.white,
                       textcontrollercolor: Colors.white,
                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                         iconcolors: Colors.white,
               
                       //  inputFormatters: [
                       //   FilteringTextInputFormatter.allow(RegExp('[a-z,A-Z]')),
@@ -115,6 +117,7 @@ class _LoginpageState extends State<Loginpage> {
                     height: 20,
                   ),
                   CostomTextField(
+                    iconcolors: Colors.white,
                     controller: _passwordcontroller,
                     obscureText: _passwordobscure,
                     prefixicon: Iconsax.lock,

@@ -49,13 +49,11 @@ class _DomainState extends State<Domain> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
+        centerTitle: true,
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 72),
-          child: Text(
-            "DOMAIN",
-            style: GoogleFonts.getFont('Lato'),
-          ),
+        title: Text(
+          "DOMAIN",
+          style: GoogleFonts.getFont('Lato'),
         ),
       ),
       body:

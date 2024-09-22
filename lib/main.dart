@@ -25,34 +25,35 @@ bool isLoggedIn = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(SignUpModelAdapter());
-  Hive.registerAdapter(DomainmodelAdapter());
-  Hive.registerAdapter(StaffModelAdapter());
-  Hive.registerAdapter(ProjectModelAdapter());
-  Hive.registerAdapter(WorkModelAdapter());
-  Hive.registerAdapter(CompleteModelAdapter());
-  Hive.registerAdapter(BackendModelAdapter());
   try {
+    await Hive.initFlutter();
+
+    Hive.registerAdapter(SignUpModelAdapter());
+    Hive.registerAdapter(DomainmodelAdapter());
+    Hive.registerAdapter(StaffModelAdapter());
+    Hive.registerAdapter(ProjectModelAdapter());
+    Hive.registerAdapter(WorkModelAdapter());
+    Hive.registerAdapter(CompleteModelAdapter());
+    Hive.registerAdapter(BackendModelAdapter());
+
     await DataManaging().openBox();
     await DomainBox().openBox();
     await StaffDatas().openbox();
     await ProjectData().openBox();
     await Complete_Datas().openbox();
-    await  BackendDatas().openBox();
+    await BackendDatas().openBox();
     print('All boxes opened successfully');
-  } catch (e) {
-    print('Error opening boxes: $e');
-  }
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  isLoggedIn = prefs.getBool('isLoggedIn') ?? false; 
-  print('isLoggedIn: $isLoggedIn');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    print('isLoggedIn: $isLoggedIn');
+
+  } catch (e) {
+    print('Error during initialization: $e');
+  }
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
-
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
   const MyApp({super.key, required this.isLoggedIn});

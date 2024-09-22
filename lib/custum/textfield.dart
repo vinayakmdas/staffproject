@@ -12,13 +12,14 @@ class CostomTextField extends StatelessWidget {
   final Color lebelcolor;
   final IconData prefixicon;
   final Color bordercolor;
+   final Color  iconcolors;
   final Widget ?suffixicon;
  final String? Function(String?)? validator;
    final List<TextInputFormatter>? inputFormatters;
  const CostomTextField(
       {super.key,
       this.suffixicon,
-
+      required this.iconcolors,
       required this.controller,
       required this.prefixicon,
       required this.filedcolor,
@@ -42,7 +43,7 @@ class CostomTextField extends StatelessWidget {
         suffixIcon:suffixicon,
         prefixIcon: Icon(
           prefixicon,
-          color: Colors.white,
+          color: iconcolors,
           
         ),
         

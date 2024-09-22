@@ -77,33 +77,35 @@ int totalTasks = 0;
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       
-      body: Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-        child: Column(
-          children: [
-            DashboardItemWidget(
-                onTap1: () {},
-                onTap2: () {},
-                titleOne: "Pending",
-                titleTwo: "Complete"),
-            SizedBox(
-              height: 20,
-            ),
-            Divider(
-              color: Colors.orange,
-            ),
-
-_buildTimelineTile("Start", isCompleted: true, isFirst: true),
-            _buildTimelineTile("25% Complete", isCompleted: percentage >= 0.25),
-            _buildTimelineTile("50% Complete", isCompleted: percentage >= 0.50),
-            _buildTimelineTile("75% Complete", isCompleted: percentage >= 0.75),
-            _buildTimelineTile("100% Complete",
-                  isCompleted: percentage == 1.0, isLast: true)
-
-
-            
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
+          child: Column(
+            children: [
+              DashboardItemWidget(
+                  onTap1: () {},
+                  onTap2: () {},
+                  titleOne: "Pending",
+                  titleTwo: "Complete"),
+              SizedBox(
+                height: 20,
+              ),
+              Divider(
+                color: Colors.orange,
+              ),
         
-          ],
+        _buildTimelineTile("Start", isCompleted: true, isFirst: true),
+              _buildTimelineTile("25% Complete", isCompleted: percentage >= 0.25),
+              _buildTimelineTile("50% Complete", isCompleted: percentage >= 0.50),
+              _buildTimelineTile("75% Complete", isCompleted: percentage >= 0.75),
+              _buildTimelineTile("100% Complete",
+                    isCompleted: percentage == 1.0, isLast: true)
+        
+        
+              
+          
+            ],
+          ),
         ),
       ),
     );

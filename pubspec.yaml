@@ -80,6 +80,7 @@ flutter:
   assets:
    - lib/asset/gif/loading.gif.gif
    - lib/asset/gif/animation/Animation - 1726423818558.json
+   - lib/asset/gif/animation/Animation - 1726819887165.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

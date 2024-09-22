@@ -89,6 +89,7 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CostomTextField(
+                    iconcolors: Colors.white,
                       controller: _signupusername,
                       prefixicon: Iconsax.user,
                       filedcolor: const Color.fromARGB(37, 158, 158, 158),
@@ -111,6 +112,7 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CostomTextField(
+                                 iconcolors: Colors.white,
                     controller: _emailcontroller,
                     prefixicon: Icons.mail,
                     filedcolor: const Color.fromARGB(37, 158, 158, 158),
@@ -133,6 +135,7 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CostomTextField(
+                                 iconcolors: Colors.white,
                     controller: _passwordcontroller,
                     prefixicon: Icons.lock,
                     filedcolor: const Color.fromARGB(37, 158, 158, 158),
@@ -172,6 +175,7 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CostomTextField(
+                                 iconcolors: Colors.white,
                     controller: _confirmpassword,
                     prefixicon: Icons.lock_reset,
                     autovalidateMode: AutovalidateMode.onUserInteraction,

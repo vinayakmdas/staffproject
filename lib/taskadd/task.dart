@@ -13,12 +13,9 @@ class TaskPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         foregroundColor: Colors.white,
+        centerTitle: true,
         backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-        title: Padding(
-          padding:  EdgeInsets.only(left: 72),
-          child: Text("ADD ITEMS", style: GoogleFonts. getFont('Lato'),),
-          
-        ),
+        title: Text("ADD ITEMS", style: GoogleFonts. getFont('Lato'),),
       ), 
     body: ListView(
         children: [
