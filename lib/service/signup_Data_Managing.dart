@@ -32,7 +32,7 @@ class DataManaging{
 
      Future<void>updatevalue( int index,SignUpModel update)async{
     print("before  open update box");
-     _box.putAt( index, update);
+    await  _box.putAt( index, update);
      print("complet update");
   }
 

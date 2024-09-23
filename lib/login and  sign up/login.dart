@@ -26,6 +26,7 @@ class _LoginpageState extends State<Loginpage> {
   final DataManaging _dataManaging = DataManaging();
   bool _passwordobscure=true;
   final _formkey = GlobalKey<FormState>();
+
    void checkLogin() {
     final logusername = _usernamecontroller.text.trim();
     final logpassword = _passwordcontroller.text.trim();
@@ -35,7 +36,7 @@ class _LoginpageState extends State<Loginpage> {
     for (SignUpModel user in users) {
       if (user.username == logusername && user.password == logpassword) {
         userFound = true;
-        break;
+        break;  
       }
     }
 
@@ -44,7 +45,9 @@ class _LoginpageState extends State<Loginpage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
     await prefs.setString('userpassword', logpassword);
+    
   }
+  
       navigatepushreplacement(context, ButtonNavigationbar());
 
       saveLoginState();

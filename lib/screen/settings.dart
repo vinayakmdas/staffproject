@@ -27,13 +27,19 @@ class _SettingsState extends State<Settings> {
   String? currentpassword;
 final datamanging=DataManaging();
 
-
-  changepassword() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      currentpassword = prefs.getString("userpassword");
-    });
-  }
+changepassword() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? password = prefs.getString("userpassword"); // retrieve password
+  setState(() {
+    currentpassword = password; 
+  });
+} // changepassword() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     currentpassword = prefs.getString("userpassword");
+    
+  //   });
+  // }
   
 
   @override
@@ -41,6 +47,7 @@ final datamanging=DataManaging();
     // TODO: implement initState
     super.initState();
     changepassword();
+    datamanging.openBox();
   }
 
   @override
@@ -50,10 +57,11 @@ final datamanging=DataManaging();
     Future<void> _logout(BuildContext context) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', false);
-      navigatpushremoveuntil(context, Loginpage());
+    navigatepushreplacement(context, Loginpage());
     }
 
     checkpassword()async{
+        await datamanging.openBox();
       final newpassword=newpasswordcontroller.text.trim();
       final conformpasword=conformpassword.text.trim();
 
@@ -65,8 +73,24 @@ final datamanging=DataManaging();
         
         print("password is equal");
       
+                                 
+                int userIndex = 0; 
+                  SignUpModel user = datamanging.getUserAt(userIndex)!; 
+                  user.password=newpassword;
+                   await datamanging.openBox();
+
+
+                  await datamanging.updatevalue(userIndex, user);
+                  
+                 print(user.password);
+                 SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("userpassword", newpassword); 
+                  
+                 _logout(context);
                  
-   
+                  ScaffoldMessenger.of(context).showSnackBar(
+  const SnackBar(content: Text('Password changed successfully'))
+);
        }
        else{
                  ScaffoldMessenger.of(context).showSnackBar(

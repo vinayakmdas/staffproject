@@ -14,7 +14,7 @@ final String  username;
  final  String  email;
 
  @HiveField(2)
-  final  String password;
+    String password;
 @HiveField(3)
   final  String conformpassword;
 
