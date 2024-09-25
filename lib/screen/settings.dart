@@ -21,25 +21,27 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+
+  final ValueNotifier<String> currentPasswordNotifier = ValueNotifier("");
+  final ValueNotifier<String> newPasswordNotifier = ValueNotifier("");
+  final ValueNotifier<String> confirmPasswordNotifier = ValueNotifier("");
+
   final passwordcontroller = TextEditingController();
   final newpasswordcontroller = TextEditingController();
   final conformpassword = TextEditingController();
   String? currentpassword;
+  
 final datamanging=DataManaging();
 
 changepassword() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? password = prefs.getString("userpassword"); // retrieve password
+  String? password = prefs.getString("userpassword");
+  print("Current password retrieved: $password");
   setState(() {
-    currentpassword = password; 
+    currentpassword = password;
   });
-} // changepassword() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     currentpassword = prefs.getString("userpassword");
-    
-  //   });
-  // }
+}
+
   
 
   @override
@@ -57,51 +59,38 @@ changepassword() async {
     Future<void> _logout(BuildContext context) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', false);
-    navigatepushreplacement(context, Loginpage());
+    navigatpushremoveuntil(context, Loginpage());
     }
 
-    checkpassword()async{
-        await datamanging.openBox();
-      final newpassword=newpasswordcontroller.text.trim();
-      final conformpasword=conformpassword.text.trim();
+  checkpassword() async {
+  await datamanging.openBox();
+  final newpassword = newpasswordcontroller.text.trim();
+  final conformpasword = conformpassword.text.trim();
 
-      print(currentpassword);
-      if (currentpassword == passwordcontroller.text) {
-    
+  print(currentpassword);  // For debugging
+  if (currentpassword == passwordcontroller.text) {
+    if (newpassword == conformpasword) {
+      print("Password is equal");
 
-       if( newpassword==conformpasword){
-        
-        print("password is equal");
-      
-                                 
-                int userIndex = 0; 
-                  SignUpModel user = datamanging.getUserAt(userIndex)!; 
-                  user.password=newpassword;
-                   await datamanging.openBox();
+      int userIndex = 0;  // Assuming userIndex is 0
+      SignUpModel user = datamanging.getUserAt(userIndex)!;
+      user.password = newpassword;
 
+      await datamanging.updatevalue(userIndex, user);
+      print("New password in Hive: ${user.password}");
 
-                  await datamanging.updatevalue(userIndex, user);
-                  
-                 print(user.password);
-                 SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("userpassword", newpassword); 
-                  
-                 _logout(context);
-                 
-                  ScaffoldMessenger.of(context).showSnackBar(
-  const SnackBar(content: Text('Password changed successfully'))
-);
-       }
-       else{
-                 ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar( backgroundColor: Color.fromARGB(255, 236, 0, 0),content: Text('password is do not match')));
-       }
-      } else {
-         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar( backgroundColor: Color.fromARGB(255, 236, 0, 0),content: Text('Current password is incorrect')));
-      }
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("userpassword", newpassword);
+
+      _logout(context);  // Logout after successful password change
+      navigatepushreplacement(context, Loginpage());
+    } else {
+      print("Passwords do not match");
     }
-
+  } else {
+    print("Current password is incorrect");
+  }
+}
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 72, 180, 76),

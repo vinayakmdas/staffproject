@@ -26,40 +26,43 @@ class _LoginpageState extends State<Loginpage> {
   final DataManaging _dataManaging = DataManaging();
   bool _passwordobscure=true;
   final _formkey = GlobalKey<FormState>();
+void checkLogin() {
+  final logusername = _usernamecontroller.text.trim();
+  final logpassword = _passwordcontroller.text.trim();
+  final List<SignUpModel> users = _dataManaging.getUsers();
 
-   void checkLogin() {
-    final logusername = _usernamecontroller.text.trim();
-    final logpassword = _passwordcontroller.text.trim();
-    final List<SignUpModel> users = _dataManaging.getUsers();
+  // Log the entered username and password
+  print('Entered Username: $logusername');
+  print('Entered Password: $logpassword');
 
-    bool userFound = false;
-    for (SignUpModel user in users) {
-      if (user.username == logusername && user.password == logpassword) {
-        userFound = true;
-        break;  
-      }
-    }
+  bool userFound = false;
+  for (SignUpModel user in users) {
+    // Log the stored username and password for comparison
+    print('Stored Username: ${user.username}');
+    print('Stored Password: ${user.password}');
 
-    if (userFound) {
-      Future<void> saveLoginState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', true);
-    await prefs.setString('userpassword', logpassword);
-    
-  }
-  
-      navigatepushreplacement(context, ButtonNavigationbar());
-
-      saveLoginState();
-
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-
-        const SnackBar(content: Text('Invalid username or password')),
-      );
+    if (user.username == logusername && user.password == logpassword) {
+      userFound = true;
+      break;
     }
   }
 
+  if (userFound) {
+    Future<void> saveLoginState() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('userpassword', logpassword);
+    }
+
+    navigatepushreplacement(context, ButtonNavigationbar());
+
+    saveLoginState();
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid username or password')),
+    );
+  }
+}
   @override
   void initState() {
     _dataManaging.openBox();
