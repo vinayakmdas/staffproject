@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Container(
           child: const Image(
-            image: AssetImage("lib/asset/gif/loading.gif.gif"),
+            image: AssetImage("asset/gif/loading.gif.gif"),
           ),
         ),
       ),

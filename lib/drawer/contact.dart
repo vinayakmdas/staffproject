@@ -20,7 +20,7 @@ class Contact extends StatelessWidget {
         child: Column(
           children: [
             Center(
-              child: LottieBuilder.asset('lib/asset/gif/animation/Animation - 1726423818558.json',) ,
+              child: LottieBuilder.asset('asset/gif/animation/Animation - 1726423818558.json',) ,
               
               
             ),
