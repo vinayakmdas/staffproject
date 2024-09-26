@@ -31,13 +31,13 @@ void checkLogin() {
   final logpassword = _passwordcontroller.text.trim();
   final List<SignUpModel> users = _dataManaging.getUsers();
 
-  // Log the entered username and password
+  
   print('Entered Username: $logusername');
   print('Entered Password: $logpassword');
 
   bool userFound = false;
   for (SignUpModel user in users) {
-    // Log the stored username and password for comparison
+
     print('Stored Username: ${user.username}');
     print('Stored Password: ${user.password}');
 

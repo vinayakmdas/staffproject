@@ -21,7 +21,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-
+ final   _formkey = GlobalKey<FormState>();
   final ValueNotifier<String> currentPasswordNotifier = ValueNotifier("");
   final ValueNotifier<String> newPasswordNotifier = ValueNotifier("");
   final ValueNotifier<String> confirmPasswordNotifier = ValueNotifier("");
@@ -72,7 +72,7 @@ changepassword() async {
     if (newpassword == conformpasword) {
       print("Password is equal");
 
-      int userIndex = 0;  // Assuming userIndex is 0
+      int userIndex = 0;  
       SignUpModel user = datamanging.getUserAt(userIndex)!;
       user.password = newpassword;
 
@@ -82,18 +82,22 @@ changepassword() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("userpassword", newpassword);
 
-      _logout(context);  // Logout after successful password change
+      _logout(context);  
       navigatepushreplacement(context, Loginpage());
     } else {
-      print("Passwords do not match");
+     print("password do not match ");
+        
+      
     }
   } else {
-    print("Current password is incorrect");
+   print("current pasword is incorrect");
+
+   
   }
 }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 72, 180, 76),
+        backgroundColor: const  Color.fromRGBO(22, 38, 52, 1),
         foregroundColor: Colors.white,
         title: const Apptext("Settings"),
         centerTitle: true,
@@ -115,7 +119,8 @@ changepassword() async {
                     "Welcome back    !",
                     fontSize: 25,
                     fontweight: FontWeight.bold,
-                    Colors: Color.fromARGB(255, 70, 155, 72),
+                    Colors: Color.  fromRGBO(22, 38, 52, 1),
+                        
                   )
                 ],
               ),
@@ -139,58 +144,93 @@ changepassword() async {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 27, right: 27),
-              child: Column(
-                children: [
-                  CostomTextField(
-                      iconcolors: Colors.grey,
-                      controller: passwordcontroller,
-                      prefixicon: Icons.lock,
-                      filedcolor: Colors.white,
-                      lebelname: "current password",
-                      lebelcolor: Colors.grey,
-                      bordercolor: Colors.grey,
-                      textcontrollercolor: Colors.black),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CostomTextField(
-                      iconcolors: Colors.grey,
-                      controller: newpasswordcontroller,
-                      prefixicon: Icons.lock,
-                      filedcolor: Colors.white,
-                      lebelname: "New password",
-                      lebelcolor: Colors.grey,
-                      bordercolor: Colors.grey,
-                      textcontrollercolor: Colors.black),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CostomTextField(
-                      iconcolors: Colors.grey,
-                      controller: conformpassword,
-                      prefixicon: Icons.lock,
-                      filedcolor: Colors.white,
-                      lebelname: "Conform  password",
-                      lebelcolor: Colors.grey,
-                      bordercolor: Colors.grey,
-                      textcontrollercolor: Colors.black),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 72, 180, 76),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8))),
-                      onPressed: () {
-                        checkpassword();
-                      },
-                      child: const Apptext(
-                        "Change password ",
-                        Colors: Colors.white,
-                        fontweight: FontWeight.bold,
-                      )),
-                ],
+            Form(
+              key: _formkey,
+              
+              child: Padding(
+                padding: EdgeInsets.only(left: 27, right: 27),
+                child: Column(
+                  children: [
+                    CostomTextField(
+                        iconcolors: Colors.grey,
+                        controller: passwordcontroller,
+                        prefixicon: Icons.lock,
+                        filedcolor: Colors.white,
+                        lebelname: "current password",
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        lebelcolor: Colors.grey,
+                        bordercolor: Colors.grey,
+                        textcontrollercolor: Colors.black),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CostomTextField(
+                        iconcolors: Colors.grey,
+                        controller: newpasswordcontroller,
+                        prefixicon: Icons.lock,
+                        filedcolor: Colors.white,
+                        lebelname: "New password",
+                        lebelcolor: Colors.grey,
+                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        bordercolor: Colors.grey,
+                        textcontrollercolor: Colors.black,
+                        validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                        ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CostomTextField(
+                        iconcolors: Colors.grey,
+                        controller: conformpassword,
+                        prefixicon: Icons.lock,
+                        filedcolor: Colors.white,
+                        lebelname: "Conform  password",
+                        lebelcolor: Colors.grey,
+                        bordercolor: Colors.grey,
+                        
+                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        textcontrollercolor: Colors.black,
+                        validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                        
+                        ),
+                       SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const   Color.fromRGBO(22, 38, 52, 1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        onPressed: () {
+                          if(_formkey.currentState!.validate() ){
+                            checkpassword();
+                          }
+                          
+                        },
+                        child: const Apptext(
+                          "Change password ",
+                          Colors: Colors.white,
+                          fontweight: FontWeight.bold,
+                        )),
+                  ],
+                ),
               ),
             )
           ],

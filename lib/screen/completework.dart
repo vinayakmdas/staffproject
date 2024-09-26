@@ -39,12 +39,7 @@ class _CompleteworkState extends State<Completework> {
                 final work = completeValues[index];
                 return Card(
                   child: ListTile(
-                    // onTap: () {
-                    //   navigatepush(
-                    //     context,
-                    //     Workview(work:work ),
-                    //   );
-                    // },
+                    
                     title: Text(work.staffname),
                     subtitle: Text(work.project),
                     trailing:  Row(
