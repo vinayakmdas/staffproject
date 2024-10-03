@@ -81,7 +81,8 @@ showalertdelete(context,index);
   
   showalertdelete(context,index){
     showDialog(context: context, builder:(context)=>AlertDialog(
-    title:Apptext("Delte the work.."),
+    backgroundColor: const  Color.fromRGBO(22, 38, 52, 1),
+    title:Apptext("Delte the work..",Colors: Colors.white,),
     actions: [
         Column(
           children: [
@@ -90,10 +91,10 @@ showalertdelete(context,index);
               children: [
                 TextButton(onPressed: (){
                 dleted(index);
-                }, child: Apptext("Delete")),
+                }, child: Apptext("Delete",Colors: Colors.white,)),
                 TextButton(onPressed: (){
                           Navigator.of(context).pop(); 
-                }, child: Apptext("cancel")),
+                }, child: Apptext("cancel",Colors: Colors.white,)),
               ],
             )
 

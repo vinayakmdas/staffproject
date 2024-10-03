@@ -67,7 +67,7 @@ changepassword() async {
   final newpassword = newpasswordcontroller.text.trim();
   final conformpasword = conformpassword.text.trim();
 
-  print(currentpassword);  // For debugging
+  print(currentpassword);  
   if (currentpassword == passwordcontroller.text) {
     if (newpassword == conformpasword) {
       print("Password is equal");
@@ -82,15 +82,26 @@ changepassword() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("userpassword", newpassword);
 
+ ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password changed successfully!'))
+      );
+
       _logout(context);  
       navigatepushreplacement(context, Loginpage());
     } else {
-     print("password do not match ");
+
+     ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Passwords do not match!'))
+
+      );
         
       
     }
   } else {
-   print("current pasword is incorrect");
+   ScaffoldMessenger.of(context).showSnackBar(
+
+        SnackBar(content: Text('current password do not match!'))
+      );
 
    
   }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:staff/add_staff_and_work/staffadd.dart';
@@ -24,8 +23,8 @@ class _StaffScreenState extends State<StaffScreen> {
 
   StaffDatas _staffDatas = StaffDatas();
   List<StaffModel> _list = [];
-  List<StaffModel>_filterstaffdetails=[];
-  
+  List<StaffModel> _filterstaffdetails = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,7 +32,8 @@ class _StaffScreenState extends State<StaffScreen> {
     loadStaff();
     searchcontroller.addListener(_onsearchchanged);
   }
- @override
+
+  @override
   void dispose() {
     // TODO: implement dispose
     searchcontroller.removeListener(_onsearchchanged);
@@ -51,86 +51,97 @@ class _StaffScreenState extends State<StaffScreen> {
         title: Text("STAFF SCREEN"),
         centerTitle: true,
       ),
-      body: 
-      _list.isEmpty?Center(child: Text("No Staff Add")):
-      
-      Column(
-        children: [
-          CostomSerchBar(controller: searchcontroller),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-              
-              itemCount: _filterstaffdetails.length,
-              itemBuilder: (context, index) {
-                
-                final staff = _filterstaffdetails[index];
-               
-               
-                Widget leadingWidget = const CircleAvatar(
-                  child: Icon(Icons.person),
-                );
-              
+      body: _list.isEmpty
+          ? Center(
+              child: Center(
+                  child: Image.asset(
+                      "asset/gif/rag-doll-with-giant-magnifying-glass-red-exclamation-symbol-removebg-preview.png")))
+          : Column(
+              children: [
+                CostomSerchBar(controller: searchcontroller),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _filterstaffdetails.length,
+                    itemBuilder: (context, index) {
+                      final staff = _filterstaffdetails[index];
 
-                if (staff.image != null && File(staff.image!).existsSync()) {
-                  leadingWidget = CircleAvatar(
-                    radius: 40,
-                    backgroundImage: FileImage(
-                        File(staff.image!)),
-                  );
-                }
+                      Widget leadingWidget = const CircleAvatar(
+                        child: Icon(Icons.person),
+                      );
 
-                return Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 10,
-                    child: ListTile(
-                      onTap: (){
-         Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ViewStaff(staff: staff), 
-      ),
-);           },
-                      title: Text(
-                        staff.username,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 16),
-                      ),
-                      subtitle: Text(
-                        staff.domain,
-                      ),
-                      leading: leadingWidget,
-                      
-                      trailing: Container(
-                        constraints: BoxConstraints(maxWidth: 120),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                navigatepush(context, EditStaff(staff: staff,index: index ,),);
-                              },
+                      if (staff.image != null &&
+                          File(staff.image!).existsSync()) {
+                        leadingWidget = CircleAvatar(
+                          radius: 40,
+                          backgroundImage: FileImage(File(staff.image!)),
+                        );
+                      }
+
+                      return Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Card(
+                          elevation: 10,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewStaff(staff: staff),
+                                ),
+                              );
+                            },
+                            title: Text(
+                              staff.username,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800, fontSize: 16),
                             ),
-                            const SizedBox(width: 8,)
-                            ,IconButton(onPressed: (){
-                              showalert(context ,index);
-                    }, icon: const Icon(Icons.delete,color:Colors.redAccent ,))
-                          ],
+                            subtitle: Text(
+                              staff.domain,
+                            ),
+                            leading: leadingWidget,
+                            trailing: Container(
+                              constraints: BoxConstraints(maxWidth: 120),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () {
+                                      navigatepush(
+                                        context,
+                                        EditStaff(
+                                          staff: staff,
+                                          index: index,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        showalert(context, index);
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.redAccent,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -150,45 +161,52 @@ class _StaffScreenState extends State<StaffScreen> {
     List<StaffModel> staffList = await _staffDatas.getstaffdetails();
     setState(() {
       _list = staffList;
-      _filterstaffdetails=List.from(_list);
+      _filterstaffdetails = List.from(_list);
     });
   }
 
-  showalert( context,index){
-    showDialog(context: context, builder:(context)=>  AlertDialog(
-      backgroundColor:   const Color.fromRGBO(22, 38, 52, 1), 
-      title: const Text("Delete Staff",style: TextStyle(color: Colors.white),),
-      content: const Text("Are you sure you want to delete this\n staff ?",style: TextStyle(color: Colors.white),),
-      actions: [
-                   ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(); 
-            },
-            child: const Text("Cancel"),
-                   )
-                   ,      ElevatedButton(
-            onPressed: () {
-             
+  showalert(context, index) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
+              title: const Text(
+                "Delete Staff",
+                style: TextStyle(color: Colors.white),
+              ),
+              content: const Text(
+                "Are you sure you want to delete this\n staff ?",
+                style: TextStyle(color: Colors.white),
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
                     _staffDatas.delete(index);
-                                     
-                                     loadStaff();
-                                   Navigator.of(context).pop(); 
-            },
-            child: const Text("Delete"),
-                   )
-      ],
-    ));
+
+                    loadStaff();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Delete"),
+                )
+              ],
+            ));
   }
-  _onsearchchanged(){
-    String quary=searchcontroller.text.toLowerCase();
+
+  _onsearchchanged() {
+    String quary = searchcontroller.text.toLowerCase();
     setState(() {
-      if(quary.isEmpty){
-        _filterstaffdetails=List.from(_list);
-      } 
-      else{
-       _filterstaffdetails= _list.where((staff){
-        return  staff.username.toLowerCase().contains(quary);
-       }).toList();
+      if (quary.isEmpty) {
+        _filterstaffdetails = List.from(_list);
+      } else {
+        _filterstaffdetails = _list.where((staff) {
+          return staff.username.toLowerCase().contains(quary);
+        }).toList();
       }
     });
   }
