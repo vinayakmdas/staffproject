@@ -2,7 +2,7 @@
     
     
     <application
-        android:label="staff"
+        android:label="Work Managing"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

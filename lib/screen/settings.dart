@@ -118,7 +118,8 @@ changepassword() async {
           children: [
             Center(
                 child: LottieBuilder.asset(
-                    "asset/gif/animation/Animation - 1726819887165.json")),
+                    "asset/gif/animation/Animation - 1726819887165.json")
+                  ),
             SizedBox(
               height: 34,
             ),
