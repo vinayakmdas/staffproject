@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  fake_async:
+    dependency: transitive
+    description:
+      name: fake_async
+      sha256: "511392330127add0b769b75a987850d136345d9227c6b94c96a04cf4a391bf78"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.1"
   ffi:
     dependency: transitive
     description:
@@ -327,10 +335,15 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "9ee02950848f61c4129af3d6ec84a1cfc0e47931abc746b03e7a3bc3e8ff6eda"
+      sha256: "9b78450b89f059e96c9ebb355fa6b3df1d6b330436e0b885fb49594c41721398"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.22"
+    version: "2.0.23"
+  flutter_test:
+    dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -452,10 +465,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: dbd24fc963d2e3e8dd55d9a965a50bab437f15c9d7015b38ceb70c858f9655bb
+      sha256: d3e5e00fdfeca8fd4ffb3227001264d449cc8950414c2ff70b0e06b9c628e643
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12+14"
+    version: "0.8.12+15"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -536,6 +549,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
+  leak_tracker:
+    dependency: transitive
+    description:
+      name: leak_tracker
+      sha256: "3f87a60e8c63aecc975dda1ceedbc8f24de75f09e4856ea27daf8958f2f0ce05"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.5"
+  leak_tracker_flutter_testing:
+    dependency: transitive
+    description:
+      name: leak_tracker_flutter_testing
+      sha256: "932549fb305594d82d7183ecd9fa93463e9914e1b67cacc34bc40906594a1806"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
+  leak_tracker_testing:
+    dependency: transitive
+    description:
+      name: leak_tracker_testing
+      sha256: "6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   lints:
     dependency: transitive
     description:
@@ -604,18 +641,18 @@ packages:
     dependency: "direct main"
     description:
       name: open_file
-      sha256: a070625d8684aa35a35d6701b91d684592f1ea03f5a737ee0d39332526d09421
+      sha256: "2b7dad19db5fd553f9c04e5113a1853e70ed4768e1126e806541307f5964af53"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.7"
+    version: "3.5.8"
   open_file_android:
     dependency: transitive
     description:
       name: open_file_android
-      sha256: eaa52421c5e10ba42eb3958d2632be0fc8b4f7e53556296064339d363caa2233
+      sha256: c29d96112e5092e4871e292b73f71ecf35f262364b11553852a16f36475fe5e0
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.5"
   open_file_ios:
     dependency: transitive
     description:
@@ -708,10 +745,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "6f01f8e37ec30b07bc424b4deabac37cacb1bc7e2e515ad74486039918a37eb7"
+      sha256: c464428172cb986b758c6d1724c603097febb8fb855aa265aeecc9280c294d4a
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.10"
+    version: "2.2.12"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -820,10 +857,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "480ba4345773f56acda9abf5f50bd966f581dac5d514e5fc4a18c62976bbba7e"
+      sha256: "3b9febd815c9ca29c9e3520d50ec32f49157711e143b7a4ca039eb87e8ade5ab"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -1009,18 +1046,18 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: "21b704ce5fa560ea9f3b525b43601c678728ba46725bab9b01187b4831377ed3"
+      sha256: "9d06212b1362abc2f0f0d78e6f09f726608c74e3b9462e8368bb03314aa8d603"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.3.1"
   url_launcher_android:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: a4e5f34f2fadf1fa7b4e69db89189056e313c9c98e8ad420e6b53677b6abc334
+      sha256: "8fc3bae0b68c02c47c5c86fa8bfa74471d42687b0eded01b78de87872db745e2"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.11"
+    version: "6.3.12"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -1085,6 +1122,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vm_service:
+    dependency: transitive
+    description:
+      name: vm_service
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.2.5"
   watcher:
     dependency: transitive
     description:
