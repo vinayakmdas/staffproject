@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:staff/bottomnavoagator/buttomnavigator.dart';
 import 'package:staff/custum/appbaruser.dart';
 import 'package:staff/custum/navigator.dart';
@@ -31,13 +32,13 @@ class _EditStaff extends State<EditStaff> {
 
   ValueNotifier<String?> image = ValueNotifier<String?>(null);
   List<Domainmodel> _domainList = [];
-  String?_selectedDomain;
+  String? _selectedDomain;
   final List<String> _genter = ["Male", "Female", "Other"];
   final ValueNotifier<String?> _selectgenter = ValueNotifier<String?>(null);
   final ValueNotifier<File?> _selectimage = ValueNotifier<File?>(null);
- ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
+  ValueNotifier<String?> _projeccontroller = ValueNotifier<String?>(null);
   final StaffDatas _staffDatas = StaffDatas();
-    final List<String> projectlist = ["Frontend", "Backend"];
+  final List<String> projectlist = ["Frontend", "Backend"];
 
   savestaff() {
     final proofImagePath = _selectimage.value?.path;
@@ -45,15 +46,15 @@ class _EditStaff extends State<EditStaff> {
     final number = userPhoneNumber.text;
     final email = userEmail.text;
 
-    if (_formkey.currentState!.validate() && 
+    if (_formkey.currentState!.validate() &&
         proofImagePath != null &&
-            name.isNotEmpty &&
-          _projeccontroller.value != null &&
-            number.isNotEmpty &&
-            email.isNotEmpty &&
-            _selectedDomain != null &&
-            _genter.isNotEmpty &&
-            image.value != null) {
+        name.isNotEmpty &&
+        _projeccontroller.value != null &&
+        number.isNotEmpty &&
+        email.isNotEmpty &&
+        _selectedDomain != null &&
+        _genter.isNotEmpty &&
+        image.value != null) {
       StaffModel staffModel = StaffModel(
         username: name,
         phonenumber: number,
@@ -62,15 +63,16 @@ class _EditStaff extends State<EditStaff> {
         gender: _selectgenter.value!,
         image: image.value,
         proofimage: _selectimage.value?.path,
-        dropdowntask:  _projeccontroller.value.toString()
+        dropdowntask: _projeccontroller.value.toString(),
       );
       _staffDatas.updatevalue(widget.index, staffModel);
       Navigator.of(context).popUntil((route) => route.isFirst);
       navigatepushreplacement(
-          context,
-          ButtonNavigationbar(
-            currentPage: 1,
-          ));
+        context,
+        ButtonNavigationbar(
+          currentPage: 1,
+        ),
+      );
     }
   }
 
@@ -103,9 +105,8 @@ class _EditStaff extends State<EditStaff> {
     image.value = widget.staff.image;
     _selectgenter.value = widget.staff.gender;
     _selectedDomain = widget.staff.domain;
-    _projeccontroller.value=widget.staff.dropdowntask;
-    _selectimage.value =
-        widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
+    _projeccontroller.value = widget.staff.dropdowntask;
+    _selectimage.value = widget.staff.proofimage != null ? File(widget.staff.proofimage!) : null;
   }
 
   @override
@@ -139,11 +140,17 @@ class _EditStaff extends State<EditStaff> {
                                 ),
                               ),
                             )
-                          : CircleAvatar(
-                              radius: 80,
-                              backgroundColor: Colors.white,
-                              backgroundImage: FileImage(File(image.value!)),
-                            ),
+                          : kIsWeb
+                              ? CircleAvatar(
+                                  radius: 80,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: NetworkImage(image.value!),
+                                )
+                              : CircleAvatar(
+                                  radius: 80,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: FileImage(File(image.value!)),
+                                ),
                       Positioned(
                         child: IconButton(
                           onPressed: () {
@@ -162,10 +169,9 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 43),
                   usertextfield(
-                  
                     controller: usernameController,
                     lebelname: 'NAME  :',
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return " Please enter Staff name";
@@ -176,11 +182,9 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
-                   
                     controller: userPhoneNumber,
-                      
                     lebelname: "PHONE NUMBER  :",
-                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter your Phone number";
@@ -196,58 +200,54 @@ class _EditStaff extends State<EditStaff> {
                   ),
                   const SizedBox(height: 20),
                   usertextfield(
-                    
                     controller: userEmail,
                     lebelname: "E-MAIL  :",
-                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter E mail";
                       } else if (!value.endsWith('@gmail.com')) {
                         return 'Please enter a valid email';
                       } else {
-                        null;
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(width: 2),
+                      ),
+                    ),
+                    value: _selectedDomain,
+                    hint: const Text('Select Domain'),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedDomain = value;
+                      });
+                    },
+                    items: _domainList.map((domain) {
+                      return DropdownMenuItem<String>(
+                        value: domain.domain,
+                        child: Text(domain.domain),
+                      );
+                    }).toList(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a domain';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 20),
-                      DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(width: 2),
-                  ),
-                ),
-                value: _selectedDomain,
-                hint: const Text('Select Domain'),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedDomain = value;
-                  });
-                },
-                items: _domainList.map((domain) {
-                  return DropdownMenuItem<String>(
-                    value: domain.domain,
-                    child: Text(domain.domain),
-                  );
-                }).toList(),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a domain';
-                  }
-                  return null;
-                },
-              ),
-
-                  SizedBox(height: 20,),
-                  
- ValueListenableBuilder<String?>(
+                  ValueListenableBuilder<String?>(
                     valueListenable: _projeccontroller,
                     builder: (context, value, _) {
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                           border: OutlineInputBorder(
+                          border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(width: 1),
                           ),
@@ -275,20 +275,16 @@ class _EditStaff extends State<EditStaff> {
                       );
                     },
                   ),
-                
-
-
                   const SizedBox(height: 20),
-                  
                   ValueListenableBuilder<String?>(
                     valueListenable: _selectgenter,
                     builder: (context, value, _) {
                       return DropdownButtonFormField<String>(
-                        decoration:  InputDecoration(
-                          border:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)
-                            ,borderSide: BorderSide( width: 1)
-                          )
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(width: 1),
+                          ),
                         ),
                         hint: const Text(
                           "Select Gender",
@@ -301,72 +297,25 @@ class _EditStaff extends State<EditStaff> {
                             child: Text(gender),
                           );
                         }).toList(),
-                        
                         onChanged: (String? newValue) {
                           _selectgenter.value = newValue;
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please select a gender';
+                            return 'Please select a Gender';
                           }
-                          return null; 
+                          return null;
                         },
                       );
                     },
                   ),
-
                   const SizedBox(height: 20),
-                  TextButton(
-                    onPressed: () {
-                      proofimage();
-                    },
-                    child: const Text(
-                      "Upload proof",
-                      style: TextStyle(fontSize: 21),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: savestaff,
+                      child: const Text("Save Staff"),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  DottedBorder(
-                    color: Colors.blueAccent,
-                    strokeWidth: 2,
-                    dashPattern: const [5, 5],
-                    child: Container(
-                      height: 170,
-                      width: 290,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: _selectimage.value == null
-                          ? const Center(child: Text('No Image Selected'))
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                _selectimage.value!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(22, 38, 52, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onPressed: () {
-                          savestaff();
-                        },
-                        child: const Text(
-                          "Submit",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -377,35 +326,65 @@ class _EditStaff extends State<EditStaff> {
     );
   }
 
+  // Function to show image picker options
+  void Showimageplace(BuildContext context, Function pickImage, Function cameraImage) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Gallery'),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Camera'),
+                onTap: () {
+                  Navigator.pop(context);
+                  cameraImage();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to pick an image from the gallery
   Future<void> pickimage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      File selectedFile = File(file.path!);
-      Directory direc = await getApplicationDocumentsDirectory();
-      String newPath = '${direc.path}/${file.name}';
-      File savedFile = await selectedFile.copy(newPath);
-      image.value = savedFile.path;
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      // For web
+      if (kIsWeb) {
+        // Convert picked file to a URL if required
+        image.value = pickedFile.path; // Replace with your URL logic
+      } else {
+        _selectimage.value = File(pickedFile.path);
+        image.value = pickedFile.path;
+      }
     }
   }
 
+  // Function to capture an image using the camera
   Future<void> cameraimage() async {
-    final cameraimage = ImagePicker();
-    final camera = await cameraimage.pickImage(source: ImageSource.camera);
-    if (camera != null) {
-      image.value = camera.path;
-    }
-  }
-
-  Future<void> proofimage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      File selectedfile = File(file.path!);
-      Directory direc = await getApplicationDocumentsDirectory();
-      String newPath = '${direc.path}/${file.name}';
-      File savedFile = await selectedfile.copy(newPath);
-      _selectimage.value = savedFile;
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      // For web
+      if (kIsWeb) {
+        // Convert picked file to a URL if required
+        image.value = pickedFile.path; // Replace with your URL logic
+      } else {
+        _selectimage.value = File(pickedFile.path);
+        image.value = pickedFile.path;
+      }
     }
   }
 }

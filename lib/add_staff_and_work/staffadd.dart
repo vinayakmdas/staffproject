@@ -80,7 +80,7 @@ class _StaffAddState extends State<StaffAdd> {
           proofimage: _selectedProofImage.value.toString(),
           dropdowntask: _selectedProject.value!,
         );
-
+                print("data is saved ");
         _staffDatas.adddetails(staffModel);
         Navigator.of(context).popUntil((route) => route.isFirst);
         navigatepushreplacement(
@@ -431,3 +431,4 @@ class _StaffAddState extends State<StaffAdd> {
     );
   }
 }
+  

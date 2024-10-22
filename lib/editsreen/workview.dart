@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staff/custum/customdropdown.dart';
@@ -9,7 +8,7 @@ import 'package:staff/pdfview.dart';
 
 class Workview extends StatefulWidget {
   final WorkModel work;
-  
+
   const Workview({super.key, required this.work});
 
   @override
@@ -34,156 +33,156 @@ class _WorkviewState extends State<Workview> {
         foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04), // Dynamic padding
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center, // Centering the column
             children: [
-               
-              const Apptext(
-                "Domain :",Colors: Colors.white,fontSize: 17,
+              Apptext(
+                "Domain :",
+                Colors: Colors.white,
+                fontSize: 17,
               ),
-              const SizedBox(height: 10,)
-              ,cusstomContainer(
-              data: Center(
-                child: Apptext(
-                  widget.work.domainname,  
-                  Colors: Colors.white,
-                  fontSize: 18,
+              const SizedBox(height: 10),
+              cusstomContainer(
+                data: Center(
+                  child: Apptext(
+                    widget.work.domainname,
+                    Colors: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            
-            const SizedBox(height: 20,),
-         const Apptext("project :",Colors: Colors.white,fontSize:17 ,)
-         ,const SizedBox(height: 10,)
-         
-          ,cusstomContainer(
-              data: Center(
-                child: Apptext(
-                  widget.work.project,  
-                  Colors: Colors.white,
-                  fontSize: 18,
+              const SizedBox(height: 20),
+              Apptext("Project :", Colors: Colors.white, fontSize: 17),
+              const SizedBox(height: 10),
+              cusstomContainer(
+                data: Center(
+                  child: Apptext(
+                    widget.work.project,
+                    Colors: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            )
-            
-
-             
-              , const SizedBox(height: 20),
-               const Apptext("Date :",Colors: Colors.white,)
-               ,const SizedBox(height: 10),
-                 cusstomContainer(
-              data: Center(
-                child: Apptext(
-                formattedDate
-                 , Colors: Colors.white,
-                  fontSize: 18,
+              const SizedBox(height: 20),
+              Apptext("Date :", Colors: Colors.white),
+              const SizedBox(height: 10),
+              cusstomContainer(
+                data: Center(
+                  child: Apptext(
+                    formattedDate,
+                    Colors: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-               const SizedBox(height: 20,)
-               ,const Apptext("Description",Colors: Colors.white,fontSize: 17)
-               ,const SizedBox(height: 10,)
-                ,cusstomContainer(
-              data: Center(
-                child: Apptext(
-                widget.work.description
-                 , Colors: Colors.white,
-                  fontSize: 18,
-                ), 
+              const SizedBox(height: 20),
+              Apptext("Description", Colors: Colors.white, fontSize: 17),
+              const SizedBox(height: 10),
+              cusstomContainer(
+                data: Center(
+                  child: Apptext(
+                    widget.work.description,
+                    Colors: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
               ),
-            ),
-                
               const SizedBox(height: 20),
               const Text("Attached File:",
-                  style: TextStyle( 
+                  style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-                  if (file != null &&
-                      file.path.endsWith('.pdf')) {
+                  if (file != null && file.path.endsWith('.pdf')) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            PdfViewerScreen(pdfFile: file),
+                        builder: (context) => PdfViewerScreen(pdfFile: file),
                       ),
                     );
                   }
                 },
                 child: Container(
                   height: 200,
-              width: double.infinity,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: displayFile(file),
-                ), 
+                ),
               ),
-              const SizedBox(height: 10,),
-           const   Divider(), 
-        const   SizedBox(height: 10,),
-        cusstomContainer(data: Center(child:TextButton(onPressed: (){}, child: const Apptext("EDIT",Colors: Colors.white,fontSize: 21))))
-       , const SizedBox(height: 10,)
-          ,cusstomContainer(data: Center(child:TextButton(onPressed: (){}, child: const Apptext("DELETE",Colors: Colors.white,fontSize: 21))))
-         , const Divider()
+              const SizedBox(height: 20), // Added spacing before buttons
+              const Divider(),
+              const SizedBox(height: 10),
+              cusstomContainer(
+                  data: Center(
+                      child: TextButton(
+                          onPressed: () {},
+                          child: const Apptext("EDIT", Colors: Colors.white, fontSize: 21)))),
+              const SizedBox(height: 10),
+              cusstomContainer(
+                  data: Center(
+                      child: TextButton(
+                          onPressed: () {},
+                          child: const Apptext("DELETE", Colors: Colors.white, fontSize: 21)))),
+              const Divider(),
             ],
           ),
         ),
       ),
     );
   }
+
   Widget displayFile(File? file) {
-  if (file == null) {
-    return const Center(
-      child: Text("No Document",
-          style: TextStyle(color: Colors.white)),
-    );
+    if (file == null) {
+      return const Center(
+        child: Text("No Document",
+            style: TextStyle(color: Colors.white)),
+      );
+    }
+
+    final fileExtension = file.path.split('.').last.toLowerCase();
+
+    if (fileExtension == 'pdf') {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.picture_as_pdf,
+                size: 50, color: Colors.red),
+            Text('PDF File: ${file.uri.pathSegments.last}',
+                style: const TextStyle(color: Colors.white)),
+          ],
+        ),
+      );
+    } else if (['jpg', 'jpeg', 'png'].contains(fileExtension)) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.file(
+          file,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else if (['doc', 'docx'].contains(fileExtension)) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.description,
+                size: 50, color: Colors.blue),
+            Text('Document File: ${file.uri.pathSegments.last}',
+                style: const TextStyle(color: Colors.white)),
+          ],
+        ),
+      );
+    } else {
+      return const Center(
+          child: Text('Unsupported File Type',
+              style: TextStyle(color: Colors.white)));
+    }
   }
-
-  final fileExtension = file.path.split('.').last.toLowerCase();
-
-  if (fileExtension == 'pdf') {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.picture_as_pdf,
-              size: 50, color: Colors.red),
-          Text('PDF File: ${file.uri.pathSegments.last}',
-              style: const TextStyle(color: Colors.white)),
-        ],
-      ),
-    );
-  } else if (['jpg', 'jpeg', 'png'].contains(fileExtension)) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Image.file(
-        file,
-        fit: BoxFit.cover,
-      ),
-    );
-  } else if (['doc', 'docx'].contains(fileExtension)) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.description,
-              size: 50, color: Colors.blue),
-          Text('Document File: ${file.uri.pathSegments.last}',
-              style: const TextStyle(color: Colors.white)),
-        ],
-      ),
-    );
-  } else {
-    return const Center(
-        child: Text('Unsupported File Type',
-            style: TextStyle(color: Colors.white)));
-  }
-}
-
-
 }
